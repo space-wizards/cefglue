@@ -19,13 +19,14 @@
         /// thread after the manager's storage has been initialized. Equivalent to
         /// calling CefRequestContext::GetGlobalContext()->GetMediaRouter().
         /// </summary>
+#nullable enable
         public static CefMediaRouter GetGlobalMediaRouter(CefCompletionCallback? callback)
         {
             var nCallback = callback != null ? callback.ToNative() : null;
             var nResult = cef_media_router_t.get_global(nCallback);
             return CefMediaRouter.FromNative(nResult);
         }
-
+#nullable disable
         /// <summary>
         /// Add an observer for MediaRouter events. The observer will remain registered
         /// until the returned Registration object is destroyed.
