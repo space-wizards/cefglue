@@ -444,11 +444,13 @@
         /// is non-NULL it will be executed asnychronously on the UI thread after the
         /// manager's context has been initialized.
         /// </summary>
+#nullable enable
         public CefMediaRouter GetMediaRouter(CefCompletionCallback? callback)
         {
             var nCallback = callback != null ? callback.ToNative() : null;
             var nResult = cef_request_context_t.get_media_router(_self, nCallback);
             return CefMediaRouter.FromNative(nResult);
         }
+#nullable disable
     }
 }
