@@ -156,9 +156,7 @@
         /// CefLifeSpanHandler::OnBeforeClose() during browser destruction then
         /// CefBrowser::IsValid() will return false for |browser|.
         /// </summary>
-#nullable disable
         protected virtual void OnMainFrameChanged(CefBrowser browser, CefFrame? oldFrame, CefFrame? newFrame)
         { }
-#nullable enable
     }
 }

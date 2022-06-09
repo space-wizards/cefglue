@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>net6.0</TargetFrameworks>
 
     <AssemblyName>Xilium.CefGlue</AssemblyName>
     <RootNamespace>Xilium.CefGlue</RootNamespace>
@@ -10,7 +11,6 @@
 
     <Version>102.0.3</Version>
     <IsPackable>true</IsPackable>
-    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
