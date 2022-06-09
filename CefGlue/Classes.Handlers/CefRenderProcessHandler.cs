@@ -38,6 +38,7 @@
             OnBrowserCreated(m_browser, m_extraInfo);
         }
 
+#nullable enable
         /// <summary>
         /// Called after a browser has been created. When browsing cross-origin a new
         /// browser will be created before the old browser with the same identifier is
@@ -48,7 +49,7 @@
         protected virtual void OnBrowserCreated(CefBrowser browser, CefDictionaryValue? extraInfo)
         {
         }
-
+#nullable disable
 
         private void on_browser_destroyed(cef_render_process_handler_t* self, cef_browser_t* browser)
         {
