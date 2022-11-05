@@ -1,4 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\MSBuild\common.targets" />
+  <Import Project="..\MSBuild\common.props" />
 
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
