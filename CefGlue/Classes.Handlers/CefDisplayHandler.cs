@@ -79,8 +79,12 @@
         /// Called when web content in the page has toggled fullscreen mode. If
         /// |fullscreen| is true the content will automatically be sized to fill the
         /// browser content area. If |fullscreen| is false the content will
-        /// automatically return to its original size and position. The client is
-        /// responsible for resizing the browser if desired.
+        /// automatically return to its original size and position. With the Alloy
+        /// runtime the client is responsible for triggering the fullscreen transition
+        /// (for example, by calling CefWindow::SetFullscreen when using Views). With
+        /// the Chrome runtime the fullscreen transition will be triggered
+        /// automatically. The CefWindowDelegate::OnWindowFullscreenTransition method
+        /// will be called during the fullscreen transition for notification purposes.
         /// </summary>
         protected virtual void OnFullscreenModeChange(CefBrowser browser, bool fullscreen) { }
 
@@ -167,10 +171,10 @@
         }
 
         /// <summary>
-        /// Called when auto-resize is enabled via CefBrowserHost::SetAutoResizeEnabled
-        /// and the contents have auto-resized. |new_size| will be the desired size in
-        /// view coordinates. Return true if the resize was handled or false for
-        /// default handling.
+        /// Called when auto-resize is enabled via
+        /// CefBrowserHost::SetAutoResizeEnabled and the contents have auto-resized.
+        /// |new_size| will be the desired size in view coordinates. Return true if
+        /// the resize was handled or false for default handling.
         /// </summary>
         protected virtual bool OnAutoResize(CefBrowser browser, ref CefSize newSize)
         {
@@ -209,9 +213,29 @@
         /// <summary>
         /// Called when the browser's cursor has changed. If |type| is CT_CUSTOM then
         /// |custom_cursor_info| will be populated with the custom cursor information.
-        /// Return true if the cursor change was handled or false for default handling.
+        /// Return true if the cursor change was handled or false for default
+        /// handling.
         /// </summary>
         protected virtual bool OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
             => false;
+
+
+        private void on_media_access_change(cef_display_handler_t* self, cef_browser_t* browser, int has_video_access, int has_audio_access)
+        {
+            CheckSelf(self);
+
+            var mBrowser = CefBrowser.FromNative(browser);
+
+            OnMediaAccessChange(mBrowser,
+                hasVideoAccess: has_video_access != 0,
+                hasAudioAccess: has_audio_access != 0);
+        }
+
+        /// <summary>
+        /// Called when the browser's access to an audio and/or video source has
+        /// changed.
+        /// </summary>
+        protected virtual void OnMediaAccessChange(CefBrowser browser, bool hasVideoAccess, bool hasAudioAccess)
+        { }
     }
 }
