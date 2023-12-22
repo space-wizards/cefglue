@@ -177,10 +177,12 @@ c2cs_enumtypes = {
     'cef_permission_request_result_t': 'CefPermissionRequestResult',
     'cef_preferences_type_t': 'CefPreferencesType',
     'cef_chrome_page_action_icon_type_t': 'CefChromePageActionIconType',
-    'cef_chrome_toolbar_button_type_t': 'CefChromeToolbarButtonType',
+    'cef_chrome_toolbar_button_type_t': 'CefChromeToolbarButtonType', 
     'cef_download_interrupt_reason_t': 'CefDownloadInterruptReason',
     'cef_content_setting_types_t': 'CefContentSettingTypes',
     'cef_content_setting_values_t': 'CefContentSettingValues',
+    'cef_zoom_command_t': 'CefZoomCommand',
+    'cef_dom_form_control_type_t': 'CefDomFormControlType',
     }
 
 c2cs_structtypes = { }

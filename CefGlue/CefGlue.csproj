@@ -9,7 +9,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
 
-    <Version>118.1.1</Version>
+    <Version>120.1.9</Version>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
@@ -164,6 +164,7 @@
     <Compile Include="Enums\CefDomDocumentType.cs" />
     <Compile Include="Enums\CefDomEventCategory.cs" />
     <Compile Include="Enums\CefDomEventPhase.cs" />
+    <Compile Include="Enums\CefDomFormControlType.cs" />
     <Compile Include="Enums\CefDomNodeType.cs" />
     <Compile Include="Enums\CefDownloadInterruptReason.cs" />
     <Compile Include="Enums\CefDragOperationsMask.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Enums\CefWindowOpenDisposition.cs" />
     <Compile Include="Enums\CefXmlEncodingType.cs" />
     <Compile Include="Enums\CefXmlNodeType.cs" />
+    <Compile Include="Enums\CefZoomCommand.cs" />
     <Compile Include="ExceptionBuilder.cs" />
     <Compile Include="Exceptions\CefRuntimeException.cs" />
     <Compile Include="Exceptions\CefVersionMismatchException.cs" />
