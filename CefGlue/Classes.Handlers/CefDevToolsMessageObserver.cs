@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefDevToolsMessageObserver
     {
-        private int on_dev_tools_message(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, void* message, UIntPtr message_size)
+        internal int on_dev_tools_message(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, void* message, UIntPtr message_size)
         {
             CheckSelf(self);
 
@@ -47,7 +47,7 @@
         protected abstract bool OnDevToolsMessage(CefBrowser browser, IntPtr message, int messageSize);
 
 
-        private void on_dev_tools_method_result(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, int message_id, int success, void* result, UIntPtr result_size)
+        internal void on_dev_tools_method_result(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, int message_id, int success, void* result, UIntPtr result_size)
         {
             CheckSelf(self);
 
@@ -71,7 +71,7 @@
         protected abstract void OnDevToolsMethodResult(CefBrowser browser, int messageId, bool success, IntPtr result, int resultSize);
 
 
-        private void on_dev_tools_event(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, cef_string_t* method, void* @params, UIntPtr params_size)
+        internal void on_dev_tools_event(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, cef_string_t* method, void* @params, UIntPtr params_size)
         {
             CheckSelf(self);
 
@@ -92,7 +92,7 @@
         protected abstract void OnDevToolsEvent(CefBrowser browser, string method, IntPtr parameters, int parametersSize);
 
 
-        private void on_dev_tools_agent_attached(cef_dev_tools_message_observer_t* self, cef_browser_t* browser)
+        internal void on_dev_tools_agent_attached(cef_dev_tools_message_observer_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 
@@ -109,7 +109,7 @@
         protected abstract void OnDevToolsAgentAttached(CefBrowser browser);
 
 
-        private void on_dev_tools_agent_detached(cef_dev_tools_message_observer_t* self, cef_browser_t* browser)
+        internal void on_dev_tools_agent_detached(cef_dev_tools_message_observer_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 

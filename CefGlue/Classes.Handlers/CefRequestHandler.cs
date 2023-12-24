@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefRequestHandler
     {
-        private int on_before_browse(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int user_gesture, int is_redirect)
+        internal int on_before_browse(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int user_gesture, int is_redirect)
         {
             CheckSelf(self);
 
@@ -45,7 +45,7 @@
         }
 
 
-        private int on_open_urlfrom_tab(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* target_url, CefWindowOpenDisposition target_disposition, int user_gesture)
+        internal int on_open_urlfrom_tab(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* target_url, CefWindowOpenDisposition target_disposition, int user_gesture)
         {
             CheckSelf(self);
 
@@ -81,7 +81,7 @@
         }
 
 
-        private cef_resource_request_handler_t* get_resource_request_handler(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, cef_string_t* request_initiator, int* disable_default_handling)
+        internal cef_resource_request_handler_t* get_resource_request_handler(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, cef_string_t* request_initiator, int* disable_default_handling)
         {
             CheckSelf(self);
 
@@ -118,7 +118,7 @@
         protected abstract CefResourceRequestHandler GetResourceRequestHandler(CefBrowser browser, CefFrame frame, CefRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref bool disableDefaultHandling);
 
 
-        private int get_auth_credentials(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, int isProxy, cef_string_t* host, int port, cef_string_t* realm, cef_string_t* scheme, cef_auth_callback_t* callback)
+        internal int get_auth_credentials(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, int isProxy, cef_string_t* host, int port, cef_string_t* realm, cef_string_t* scheme, cef_auth_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -152,7 +152,7 @@
         }
 
 
-        private int on_certificate_error(cef_request_handler_t* self, cef_browser_t* browser, CefErrorCode cert_error, cef_string_t* request_url, cef_sslinfo_t* ssl_info, cef_callback_t* callback)
+        internal int on_certificate_error(cef_request_handler_t* self, cef_browser_t* browser, CefErrorCode cert_error, cef_string_t* request_url, cef_sslinfo_t* ssl_info, cef_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -180,7 +180,7 @@
         }
 
 
-        private int on_select_client_certificate(cef_request_handler_t* self, cef_browser_t* browser, int isProxy, cef_string_t* host, int port, UIntPtr certificatesCount, cef_x509certificate_t** certificates, cef_select_client_certificate_callback_t* callback)
+        internal int on_select_client_certificate(cef_request_handler_t* self, cef_browser_t* browser, int isProxy, cef_string_t* host, int port, UIntPtr certificatesCount, cef_x509certificate_t** certificates, cef_select_client_certificate_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -226,7 +226,7 @@
         }
 
 
-        private void on_render_view_ready(cef_request_handler_t* self, cef_browser_t* browser)
+        internal void on_render_view_ready(cef_request_handler_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 
@@ -244,7 +244,7 @@
         }
 
 
-        private void on_render_process_terminated(cef_request_handler_t* self, cef_browser_t* browser, CefTerminationStatus status)
+        internal void on_render_process_terminated(cef_request_handler_t* self, cef_browser_t* browser, CefTerminationStatus status)
         {
             CheckSelf(self);
 
@@ -263,7 +263,7 @@
         }
 
 
-        private void on_document_available_in_main_frame(cef_request_handler_t* self, cef_browser_t* browser)
+        internal void on_document_available_in_main_frame(cef_request_handler_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 

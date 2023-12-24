@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefNavigationEntryVisitor
     {
-        private int visit(cef_navigation_entry_visitor_t* self, cef_navigation_entry_t* entry, int current, int index, int total)
+        internal int visit(cef_navigation_entry_visitor_t* self, cef_navigation_entry_t* entry, int current, int index, int total)
         {
             CheckSelf(self);
             using (var m_entry = CefNavigationEntry.FromNative(entry))

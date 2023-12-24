@@ -36,7 +36,7 @@
         }
 
 
-        private int open(cef_resource_handler_t* self, cef_request_t* request, int* handle_request, cef_callback_t* callback)
+        internal int open(cef_resource_handler_t* self, cef_request_t* request, int* handle_request, cef_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -63,7 +63,7 @@
         protected abstract bool Open(CefRequest request, out bool handleRequest, CefCallback callback);
 
 
-        private int process_request(cef_resource_handler_t* self, cef_request_t* request, cef_callback_t* callback)
+        internal int process_request(cef_resource_handler_t* self, cef_request_t* request, cef_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -93,7 +93,7 @@
         }
 
 
-        private void get_response_headers(cef_resource_handler_t* self, cef_response_t* response, long* response_length, cef_string_t* redirectUrl)
+        internal void get_response_headers(cef_resource_handler_t* self, cef_response_t* response, long* response_length, cef_string_t* redirectUrl)
         {
             CheckSelf(self);
 
@@ -129,7 +129,7 @@
         protected abstract void GetResponseHeaders(CefResponse response, out long responseLength, out string redirectUrl);
 
 
-        private int skip(cef_resource_handler_t* self, long bytes_to_skip, long* bytes_skipped, cef_resource_skip_callback_t* callback)
+        internal int skip(cef_resource_handler_t* self, long bytes_to_skip, long* bytes_skipped, cef_resource_skip_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -154,7 +154,7 @@
         protected abstract bool Skip(long bytesToSkip, out long bytesSkipped, CefResourceSkipCallback callback);
 
 
-        private int read(cef_resource_handler_t* self, void* data_out, int bytes_to_read, int* bytes_read, cef_resource_read_callback_t* callback)
+        internal int read(cef_resource_handler_t* self, void* data_out, int bytes_to_read, int* bytes_read, cef_resource_read_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -181,7 +181,7 @@
         protected abstract bool Read(Span<byte> response, out int bytesRead, CefResourceReadCallback callback);
 
 
-        private int read_response(cef_resource_handler_t* self, void* data_out, int bytes_to_read, int* bytes_read, cef_callback_t* callback)
+        internal int read_response(cef_resource_handler_t* self, void* data_out, int bytes_to_read, int* bytes_read, cef_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -214,7 +214,7 @@
         }
 
 
-        private void cancel(cef_resource_handler_t* self)
+        internal void cancel(cef_resource_handler_t* self)
         {
             CheckSelf(self);
 

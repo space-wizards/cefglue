@@ -42,7 +42,7 @@ def get_func_parts(func, slot, is_global = False):
         if carg != "void":
           type = schema.c2cs_type( carg[:carg.rindex(' ')] )
           name = schema.quote_name( carg[carg.rindex(' ')+1:] )
-          csn_args.append({'name' : name, 'type' : type})
+          csn_args.append({'name' : name, 'type' : type, 'cast': ''})
 
     iname = ''
     if virtual:
@@ -68,6 +68,7 @@ def get_func_parts(func, slot, is_global = False):
         'csn_entrypoint': capi_parts['name'],
 
         'csn_args_proto': ', '.join(map(lambda x: '%s %s' % (x['type'], x['name']), csn_args)),
+        'csn_args_types': ', '.join(map(lambda x: x['type'], csn_args)),
 
         'iname': iname,
         }
@@ -100,9 +101,10 @@ def get_base_func(cls, slot, name, cname):
 
             'csn_name': cname,
             'csn_retval': cretval,
-            'csn_args': [ { 'type': '%s*' % cls.get_capi_name(), 'name': 'self' } ],
+            'csn_args': [ { 'type': '%s*' % cls.get_capi_name(), 'name': 'self', 'cast': f"({cls.get_parent_capi_name()}*)" } ],
 
             'csn_args_proto': '%s* self' % cls.get_capi_name(),
+            'csn_args_types': '%s*' % cls.get_capi_name(),
 
             'iname': schema.get_iname(cls),
         }
@@ -219,22 +221,18 @@ def make_struct_members(cls):
     result.append('internal {0} _base;'.format(parentClassName))
     for func in funcs:
         if not func['basefunc']:
-            result.append('internal IntPtr %(field_name)s;' % func)
+            if func['csn_args_proto']:
+                result.append('internal delegate* unmanaged<%(csn_args_types)s, %(csn_retval)s> %(field_name)s;' % func)
+            else:
+                result.append('internal delegate* unmanaged<%(csn_retval)s> %(field_name)s;' % func)
     result.append('')
+
+    if schema.is_handler(cls):
+        result.append(f'internal GCHandle _obj;')
+        result.append('')
 
     for func in static_funcs:
         append_dllimport(result, func)
-
-    for func in funcs:
-        postfixs = schema.get_platform_retval_postfixs(func['csn_retval'])
-        for px in postfixs:
-            func['px'] = px
-            result.append('[UnmanagedFunctionPointer(%s)]' % schema.CEF_CALLBACK)
-            result.append('#if !DEBUG')
-            result.append('[SuppressUnmanagedCodeSecurity]')
-            result.append('#endif')
-            result.append(delegate_visibility + ' delegate %(csn_retval)s%(px)s %(delegate_type)s%(px)s(%(csn_args_proto)s);' % func)
-            result.append('')
 
     for func in funcs:
         if schema.is_proxy(cls):
@@ -242,49 +240,55 @@ def make_struct_members(cls):
             for px in postfixs:
                 func['px'] = px
                 result.append('// %(name)s' % func)
-                result.append('private static IntPtr _p%(slot)s%(px)s;' % func)
-                result.append('private static %(delegate_type)s%(px)s _d%(slot)s%(px)s;' % func)
                 result.append('')
                 result.append('public static %(csn_retval)s%(px)s %(csn_name)s%(px)s(%(csn_args_proto)s)' % func)
                 result.append('{')
-                result.append('    %(delegate_type)s%(px)s d;' % func)
-                result.append('    var p = self->%(field_name)s;' % func)
-                result.append('    if (p == _p%(slot)s%(px)s) { d = _d%(slot)s%(px)s; }' % func)
-                result.append('    else')
-                result.append('    {')
-                result.append('        d = (%(delegate_type)s%(px)s)Marshal.GetDelegateForFunctionPointer(p, typeof(%(delegate_type)s%(px)s));' % func)
-                result.append('        if (_p%(slot)s%(px)s == IntPtr.Zero) { _d%(slot)s%(px)s = d; _p%(slot)s%(px)s = p; }' % func)
-                result.append('    }')
-                args = ', '.join(map(lambda x: x['name'], func['csn_args']))
+                args = ', '.join(map(lambda x: x['cast'] + x['name'], func['csn_args']))
                 if func['csn_retval'] == 'void':
-                    result.append('    d(%s);' % args)
+                    result.append(f'    self->{func["field_name"]}({args});')
                 else:
-                    result.append('    return d(%s);' % args)
+                    result.append(f'    return self->{func["field_name"]}({args});')
                 result.append('}')
                 result.append('')
 
     if schema.is_handler(cls):
         iname = schema.get_iname(cls)
-        result.append('private static int _sizeof;')
-        result.append('')
-        result.append('static %s()' % iname)
-        result.append('{')
-        result.append(indent + '_sizeof = Marshal.SizeOf(typeof(%s));' % iname)
-        result.append('}')
-        result.append('')
 
-        result.append('internal static %s* Alloc()' % iname)
+        for func in funcs:
+            result.append("[UnmanagedCallersOnly]")
+            result.append(f'public static {func["csn_retval"]} {func["csn_name"]}({func["csn_args_proto"]})')
+            result.append('{')
+            result.append(indent + f'var obj = ({schema.cpp2csname(cls.get_name())})self->_obj.Target;')
+            args = ', '.join(map(lambda x: x['name'], func['csn_args']))
+            if func['csn_retval'] == 'void':
+                result.append(f'    obj.{func["csn_name"]}({args});')
+            else:
+                result.append(f'    return obj.{func["csn_name"]}({args});')
+            result.append('}')
+            result.append('')
+
+        result.append('internal static %s* Alloc(%s obj)' % (iname, schema.cpp2csname(cls.get_name())))
         result.append('{')
-        result.append(indent + 'var ptr = (%s*)Marshal.AllocHGlobal(_sizeof);' % iname)
-        result.append(indent + '*ptr = new %s();' % iname)
-        result.append(indent + 'ptr->_base._size = (UIntPtr)_sizeof;')
+        result.append(indent + 'var ptr = (%s*)NativeMemory.Alloc((UIntPtr)sizeof(%s));' % (iname, iname))
+        result.append(indent + '*ptr = default(%s);' % iname)
+        result.append(indent + 'ptr->_base._size = (UIntPtr)sizeof(%s);' % iname)
+        result.append(indent + 'ptr->_obj = GCHandle.Alloc(obj);')
+
+        for func in funcs:
+            cast = ""
+            if func['basefunc']:
+                cast += f"(delegate* unmanaged<{cls.get_parent_capi_name()}*, {func['csn_retval']}>)"
+                cast += "(delegate* unmanaged<%(csn_args_types)s, %(csn_retval)s>)" % func
+            result.append(indent + f'ptr->{func["field_name"]} = {cast}&{func["csn_name"]};')
+
         result.append(indent + 'return ptr;')
         result.append('}')
         result.append('')
 
         result.append('internal static void Free(%s* ptr)' % iname)
         result.append('{')
-        result.append(indent + 'Marshal.FreeHGlobal((IntPtr)ptr);')
+        result.append(indent + 'ptr->_obj.Free();')
+        result.append(indent + 'NativeMemory.Free((void*)ptr);')
         result.append('}')
         result.append('')
 
@@ -557,18 +561,10 @@ def make_handler_g_body(cls):
         result.append('}')
         result.append('')
 
-    for func in funcs:
-        result.append('private %(iname)s.%(delegate_type)s %(delegate_slot)s;' % func)
-    result.append('')
-
     # ctor
     result.append('protected %s()' % csname)
     result.append('{')
-    result.append(indent + '_self = %s.Alloc();' % iname)
-    result.append('');
-    for func in funcs:
-        result.append(indent + '%(delegate_slot)s = new %(iname)s.%(delegate_type)s(%(csn_name)s);' % func)
-        result.append(indent + '_self->%(field_name)s = Marshal.GetFunctionPointerForDelegate(%(delegate_slot)s);' % func)
+    result.append(indent + '_self = %s.Alloc(this);' % iname)
     result.append('}')
     result.append('')
 
@@ -600,7 +596,7 @@ def make_handler_g_body(cls):
 
     # todo: this methods must throw exception if object already disposed
     # todo: verify self pointer in debug
-    result.append('private void add_ref(%s* self)' % iname)
+    result.append('internal void add_ref(%s* self)' % iname)
     result.append('{')
     result.append(indent + 'lock (SyncRoot)')
     result.append(indent + '{')
@@ -613,7 +609,7 @@ def make_handler_g_body(cls):
     result.append('}')
     result.append('')
 
-    result.append('private int release(%s* self)' % iname)
+    result.append('internal int release(%s* self)' % iname)
     result.append('{')
     result.append(indent + 'lock (SyncRoot)')
     result.append(indent + '{')
@@ -630,13 +626,13 @@ def make_handler_g_body(cls):
     result.append('}')
     result.append('')
 
-    result.append('private int has_one_ref(%s* self)' % iname)
+    result.append('internal int has_one_ref(%s* self)' % iname)
     result.append('{')
     result.append(indent + 'lock (SyncRoot) { return _refct == 1 ? 1 : 0; }')
     result.append('}')
     result.append('')
 
-    result.append('private int has_at_least_one_ref(%s* self)' % iname)
+    result.append('internal int has_at_least_one_ref(%s* self)' % iname)
     result.append('{')
     result.append(indent + 'lock (SyncRoot) { return _refct != 0 ? 1 : 0; }')
     result.append('}')
@@ -873,19 +869,19 @@ def write_interop(header, filepath, backup, schema_name, cppheaderdir):
 
     # libcef.g.cs
     writect += update_file(project_props_compile_items, filepath + '/' + schema.libcef_path, schema.libcef_filename, make_libcef_file(header), backup)
-    
+
     # wrapper
     for cls in header.get_classes():
         content = make_wrapper_g_file(cls)
         writect += update_file(project_props_compile_items, filepath + '/' + schema.wrapper_g_path, schema.cpp2csname(cls.get_name()) + ".g.cs", content, backup)
 
-    # userdata    
+    # userdata
     userdatacls = obj_class(header, 'CefUserData', '', 'CefUserData', 'CefBaseRefCounted', '', '', '', [])
     content = make_struct_file(userdatacls)
     writect += update_file(project_props_compile_items, filepath + '/' + schema.struct_path, userdatacls.get_capi_name() + ".g.cs", content, backup)
     content = make_wrapper_g_file(userdatacls)
     writect += update_file(project_props_compile_items, filepath + '/' + schema.wrapper_g_path, schema.cpp2csname(userdatacls.get_name()) + ".g.cs", content, backup)
-    
+
     # impl template
     for cls in header.get_classes():
         content = make_impl_tmpl_file(cls)
@@ -918,7 +914,7 @@ def make_props_file(filelist, basedir):
         compileElement = document.createElementNS(None, "Compile")
         compileElement.setAttribute("Include", x)
         itemGroupElement.appendChild(compileElement)
-      
+
     return documentElement.toprettyxml(indent = "    ", newl = "\n", encoding = None)
 
     # return "\n".join(list1)

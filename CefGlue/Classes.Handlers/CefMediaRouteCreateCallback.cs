@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefMediaRouteCreateCallback
     {
-        private void on_media_route_create_finished(cef_media_route_create_callback_t* self, CefMediaRouteCreateResult result, cef_string_t* error, cef_media_route_t* route)
+        internal void on_media_route_create_finished(cef_media_route_create_callback_t* self, CefMediaRouteCreateResult result, cef_string_t* error, cef_media_route_t* route)
         {
             CheckSelf(self);
 

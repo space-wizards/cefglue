@@ -15,7 +15,7 @@
         private static readonly CefRectangle[] s_emptyRectangleArray = new CefRectangle[0];
 
 
-        private cef_accessibility_handler_t* get_accessibility_handler(cef_render_handler_t* self)
+        internal cef_accessibility_handler_t* get_accessibility_handler(cef_render_handler_t* self)
         {
             CheckSelf(self);
             var result = GetAccessibilityHandler();
@@ -30,7 +30,7 @@
         protected abstract CefAccessibilityHandler GetAccessibilityHandler();
 
 
-        private int get_root_screen_rect(cef_render_handler_t* self, cef_browser_t* browser, cef_rect_t* rect)
+        internal int get_root_screen_rect(cef_render_handler_t* self, cef_browser_t* browser, cef_rect_t* rect)
         {
             CheckSelf(self);
 
@@ -62,7 +62,7 @@
         }
 
 
-        private void get_view_rect(cef_render_handler_t* self, cef_browser_t* browser, cef_rect_t* rect)
+        internal void get_view_rect(cef_render_handler_t* self, cef_browser_t* browser, cef_rect_t* rect)
         {
             CheckSelf(self);
 
@@ -84,7 +84,7 @@
         protected abstract void GetViewRect(CefBrowser browser, out CefRectangle rect);
 
 
-        private int get_screen_point(cef_render_handler_t* self, cef_browser_t* browser, int viewX, int viewY, int* screenX, int* screenY)
+        internal int get_screen_point(cef_render_handler_t* self, cef_browser_t* browser, int viewX, int viewY, int* screenX, int* screenY)
         {
             CheckSelf(self);
 
@@ -116,7 +116,7 @@
         }
 
 
-        private int get_screen_info(cef_render_handler_t* self, cef_browser_t* browser, cef_screen_info_t* screen_info)
+        internal int get_screen_info(cef_render_handler_t* self, cef_browser_t* browser, cef_screen_info_t* screen_info)
         {
             CheckSelf(self);
 
@@ -142,7 +142,7 @@
         protected abstract bool GetScreenInfo(CefBrowser browser, CefScreenInfo screenInfo);
 
 
-        private void on_popup_show(cef_render_handler_t* self, cef_browser_t* browser, int show)
+        internal void on_popup_show(cef_render_handler_t* self, cef_browser_t* browser, int show)
         {
             CheckSelf(self);
 
@@ -160,7 +160,7 @@
         }
 
 
-        private void on_popup_size(cef_render_handler_t* self, cef_browser_t* browser, cef_rect_t* rect)
+        internal void on_popup_size(cef_render_handler_t* self, cef_browser_t* browser, cef_rect_t* rect)
         {
             CheckSelf(self);
 
@@ -177,7 +177,7 @@
         protected abstract void OnPopupSize(CefBrowser browser, CefRectangle rect);
 
 
-        private void on_paint(cef_render_handler_t* self, cef_browser_t* browser, CefPaintElementType type, UIntPtr dirtyRectsCount, cef_rect_t* dirtyRects, void* buffer, int width, int height)
+        internal void on_paint(cef_render_handler_t* self, cef_browser_t* browser, CefPaintElementType type, UIntPtr dirtyRectsCount, cef_rect_t* dirtyRects, void* buffer, int width, int height)
         {
             CheckSelf(self);
 
@@ -215,7 +215,7 @@
         protected abstract void OnPaint(CefBrowser browser, CefPaintElementType type, CefRectangle[] dirtyRects, IntPtr buffer, int width, int height);
 
 
-        private void on_accelerated_paint(cef_render_handler_t* self, cef_browser_t* browser, CefPaintElementType type, UIntPtr dirtyRectsCount, cef_rect_t* dirtyRects, void* shared_handle)
+        internal void on_accelerated_paint(cef_render_handler_t* self, cef_browser_t* browser, CefPaintElementType type, UIntPtr dirtyRectsCount, cef_rect_t* dirtyRects, void* shared_handle)
         {
             CheckSelf(self);
 
@@ -251,7 +251,7 @@
         protected abstract void OnAcceleratedPaint(CefBrowser browser, CefPaintElementType type, CefRectangle[] dirtyRects, IntPtr sharedHandle);
 
 
-        private void get_touch_handle_size(cef_render_handler_t* self, cef_browser_t* browser, CefHorizontalAlignment orientation, cef_size_t* size)
+        internal void get_touch_handle_size(cef_render_handler_t* self, cef_browser_t* browser, CefHorizontalAlignment orientation, cef_size_t* size)
         {
             CheckSelf(self);
 
@@ -270,7 +270,7 @@
             => size = default;
 
 
-        private void on_touch_handle_state_changed(cef_render_handler_t* self, cef_browser_t* browser, cef_touch_handle_state_t* state)
+        internal void on_touch_handle_state_changed(cef_render_handler_t* self, cef_browser_t* browser, cef_touch_handle_state_t* state)
         {
             CheckSelf(self);
 
@@ -288,7 +288,7 @@
         { }
 
 
-        private int start_dragging(cef_render_handler_t* self, cef_browser_t* browser, cef_drag_data_t* drag_data, CefDragOperationsMask allowed_ops, int x, int y)
+        internal int start_dragging(cef_render_handler_t* self, cef_browser_t* browser, cef_drag_data_t* drag_data, CefDragOperationsMask allowed_ops, int x, int y)
         {
             CheckSelf(self);
 
@@ -319,7 +319,7 @@
         }
 
 
-        private void update_drag_cursor(cef_render_handler_t* self, cef_browser_t* browser, CefDragOperationsMask operation)
+        internal void update_drag_cursor(cef_render_handler_t* self, cef_browser_t* browser, CefDragOperationsMask operation)
         {
             CheckSelf(self);
 
@@ -338,7 +338,7 @@
         }
 
 
-        private void on_scroll_offset_changed(cef_render_handler_t* self, cef_browser_t* browser, double x, double y)
+        internal void on_scroll_offset_changed(cef_render_handler_t* self, cef_browser_t* browser, double x, double y)
         {
             CheckSelf(self);
 
@@ -353,7 +353,7 @@
         protected abstract void OnScrollOffsetChanged(CefBrowser browser, double x, double y);
 
 
-        private void on_ime_composition_range_changed(cef_render_handler_t* self, cef_browser_t* browser, cef_range_t* selected_range, UIntPtr character_boundsCount, cef_rect_t* character_bounds)
+        internal void on_ime_composition_range_changed(cef_render_handler_t* self, cef_browser_t* browser, cef_range_t* selected_range, UIntPtr character_boundsCount, cef_rect_t* character_bounds)
         {
             CheckSelf(self);
 
@@ -393,7 +393,7 @@
         protected abstract void OnImeCompositionRangeChanged(CefBrowser browser, CefRange selectedRange, CefRectangle[] characterBounds);
 
 
-        private void on_text_selection_changed(cef_render_handler_t* self, cef_browser_t* browser, cef_string_t* selected_text, cef_range_t* selected_range)
+        internal void on_text_selection_changed(cef_render_handler_t* self, cef_browser_t* browser, cef_string_t* selected_text, cef_range_t* selected_range)
         {
             CheckSelf(self);
 
@@ -412,7 +412,7 @@
         protected virtual void OnTextSelectionChanged(CefBrowser browser, string selectedText, CefRange selectedRange) { }
 
 
-        private void on_virtual_keyboard_requested(cef_render_handler_t* self, cef_browser_t* browser, CefTextInputMode input_mode)
+        internal void on_virtual_keyboard_requested(cef_render_handler_t* self, cef_browser_t* browser, CefTextInputMode input_mode)
         {
             CheckSelf(self);
 

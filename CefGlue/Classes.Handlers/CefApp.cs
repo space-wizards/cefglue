@@ -11,7 +11,7 @@
     /// </summary>
     public abstract unsafe partial class CefApp
     {
-        private void on_before_command_line_processing(cef_app_t* self, cef_string_t* process_type, cef_command_line_t* command_line)
+        internal void on_before_command_line_processing(cef_app_t* self, cef_string_t* process_type, cef_command_line_t* command_line)
         {
             CheckSelf(self);
 
@@ -40,7 +40,7 @@
         }
 
 
-        private void on_register_custom_schemes(cef_app_t* self, cef_scheme_registrar_t* registrar)
+        internal void on_register_custom_schemes(cef_app_t* self, cef_scheme_registrar_t* registrar)
         {
             CheckSelf(self);
 
@@ -67,7 +67,7 @@
         }
 
 
-        private cef_resource_bundle_handler_t* get_resource_bundle_handler(cef_app_t* self)
+        internal cef_resource_bundle_handler_t* get_resource_bundle_handler(cef_app_t* self)
         {
             CheckSelf(self);
 
@@ -88,7 +88,7 @@
         }
 
 
-        private cef_browser_process_handler_t* get_browser_process_handler(cef_app_t* self)
+        internal cef_browser_process_handler_t* get_browser_process_handler(cef_app_t* self)
         {
             CheckSelf(self);
 
@@ -107,7 +107,7 @@
         }
 
 
-        private cef_render_process_handler_t* get_render_process_handler(cef_app_t* self)
+        internal cef_render_process_handler_t* get_render_process_handler(cef_app_t* self)
         {
             CheckSelf(self);
 

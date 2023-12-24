@@ -14,7 +14,7 @@
     /// </summary>
     public abstract unsafe partial class CefTask
     {
-        private void execute(cef_task_t* self)
+        internal void execute(cef_task_t* self)
         {
             CheckSelf(self);
 

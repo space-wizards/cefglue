@@ -5,7 +5,7 @@
     using System.Diagnostics;
     using System.Runtime.InteropServices;
     using Xilium.CefGlue.Interop;
-    
+
     /// <summary>
     /// Implement this interface to filter cookies that may be sent or received from
     /// resource requests. The methods of this class will be called on the IO thread
@@ -13,7 +13,7 @@
     /// </summary>
     public abstract unsafe partial class CefCookieAccessFilter
     {
-        private int can_send_cookie(cef_cookie_access_filter_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_cookie_t* cookie)
+        internal int can_send_cookie(cef_cookie_access_filter_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_cookie_t* cookie)
         {
             CheckSelf(self);
 
@@ -37,7 +37,7 @@
         protected abstract bool CanSendCookie(CefBrowser browser, CefFrame frame, CefRequest request, CefCookie cookie);
 
 
-        private int can_save_cookie(cef_cookie_access_filter_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, cef_cookie_t* cookie)
+        internal int can_save_cookie(cef_cookie_access_filter_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, cef_cookie_t* cookie)
         {
             CheckSelf(self);
 

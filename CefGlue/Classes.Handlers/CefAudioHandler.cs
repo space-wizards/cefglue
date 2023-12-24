@@ -11,7 +11,7 @@
     /// </summary>
     public abstract unsafe partial class CefAudioHandler
     {
-        private int get_audio_parameters(cef_audio_handler_t* self, cef_browser_t* browser, cef_audio_parameters_t* @params)
+        internal int get_audio_parameters(cef_audio_handler_t* self, cef_browser_t* browser, cef_audio_parameters_t* @params)
         {
             CheckSelf(self);
 
@@ -30,7 +30,7 @@
         protected abstract bool GetAudioParameters(CefBrowser browser, CefAudioParameters parameters);
 
 
-        private void on_audio_stream_started(cef_audio_handler_t* self, cef_browser_t* browser, cef_audio_parameters_t* @params, int channels)
+        internal void on_audio_stream_started(cef_audio_handler_t* self, cef_browser_t* browser, cef_audio_parameters_t* @params, int channels)
         {
             CheckSelf(self);
 
@@ -48,7 +48,7 @@
         protected abstract void OnAudioStreamStarted(CefBrowser browser, in CefAudioParameters parameters, int channels);
 
 
-        private void on_audio_stream_packet(cef_audio_handler_t* self, cef_browser_t* browser, float** data, int frames, long pts)
+        internal void on_audio_stream_packet(cef_audio_handler_t* self, cef_browser_t* browser, float** data, int frames, long pts)
         {
             CheckSelf(self);
 
@@ -69,7 +69,7 @@
         protected abstract void OnAudioStreamPacket(CefBrowser browser, IntPtr data, int frames, long pts);
 
 
-        private void on_audio_stream_stopped(cef_audio_handler_t* self, cef_browser_t* browser)
+        internal void on_audio_stream_stopped(cef_audio_handler_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 
@@ -85,7 +85,7 @@
         protected abstract void OnAudioStreamStopped(CefBrowser browser);
 
 
-        private void on_audio_stream_error(cef_audio_handler_t* self, cef_browser_t* browser, cef_string_t* message)
+        internal void on_audio_stream_error(cef_audio_handler_t* self, cef_browser_t* browser, cef_string_t* message)
         {
             CheckSelf(self);
 

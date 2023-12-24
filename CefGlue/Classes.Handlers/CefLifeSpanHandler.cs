@@ -13,7 +13,7 @@
     /// </summary>
     public abstract unsafe partial class CefLifeSpanHandler
     {
-        private int on_before_popup(cef_life_span_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* target_url, cef_string_t* target_frame_name, CefWindowOpenDisposition target_disposition, int user_gesture, cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, cef_dictionary_value_t** extra_info, int* no_javascript_access)
+        internal int on_before_popup(cef_life_span_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* target_url, cef_string_t* target_frame_name, CefWindowOpenDisposition target_disposition, int user_gesture, cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, cef_dictionary_value_t** extra_info, int* no_javascript_access)
         {
             CheckSelf(self);
 
@@ -83,7 +83,7 @@
         }
 
 
-        private void on_before_dev_tools_popup(cef_life_span_handler_t* self, cef_browser_t* browser, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, cef_dictionary_value_t** extra_info, int* use_default_window)
+        internal void on_before_dev_tools_popup(cef_life_span_handler_t* self, cef_browser_t* browser, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, cef_dictionary_value_t** extra_info, int* use_default_window)
         {
             CheckSelf(self);
 
@@ -120,7 +120,7 @@
 
         }
 
-        private void on_after_created(cef_life_span_handler_t* self, cef_browser_t* browser)
+        internal void on_after_created(cef_life_span_handler_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 
@@ -140,7 +140,7 @@
         }
 
 
-        private int do_close(cef_life_span_handler_t* self, cef_browser_t* browser)
+        internal int do_close(cef_life_span_handler_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 
@@ -236,7 +236,7 @@
         }
 
 
-        private void on_before_close(cef_life_span_handler_t* self, cef_browser_t* browser)
+        internal void on_before_close(cef_life_span_handler_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 

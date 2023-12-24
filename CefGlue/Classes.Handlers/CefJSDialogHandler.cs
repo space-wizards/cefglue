@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefJSDialogHandler
     {
-        private int on_jsdialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, CefJSDialogType dialog_type, cef_string_t* message_text, cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message)
+        internal int on_jsdialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, CefJSDialogType dialog_type, cef_string_t* message_text, cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message)
         {
             CheckSelf(self);
 
@@ -48,7 +48,7 @@
         protected abstract bool OnJSDialog(CefBrowser browser, string originUrl, CefJSDialogType dialogType, string message_text, string default_prompt_text, CefJSDialogCallback callback, out bool suppress_message);
 
 
-        private int on_before_unload_dialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, cef_string_t* message_text, int is_reload, cef_jsdialog_callback_t* callback)
+        internal int on_before_unload_dialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, cef_string_t* message_text, int is_reload, cef_jsdialog_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -70,7 +70,7 @@
         protected abstract bool OnBeforeUnloadDialog(CefBrowser browser, string messageText, bool isReload, CefJSDialogCallback callback);
 
 
-        private void on_reset_dialog_state(cef_jsdialog_handler_t* self, cef_browser_t* browser)
+        internal void on_reset_dialog_state(cef_jsdialog_handler_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 
@@ -87,7 +87,7 @@
         protected abstract void OnResetDialogState(CefBrowser browser);
 
 
-        private void on_dialog_closed(cef_jsdialog_handler_t* self, cef_browser_t* browser)
+        internal void on_dialog_closed(cef_jsdialog_handler_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 

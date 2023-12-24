@@ -5,13 +5,13 @@
     using System.Diagnostics;
     using System.Runtime.InteropServices;
     using Xilium.CefGlue.Interop;
-    
+
     /// <summary>
     /// Callback interface that is passed to CefV8Value::CreateArrayBuffer.
     /// </summary>
     public abstract unsafe partial class CefV8ArrayBufferReleaseCallback
     {
-        private void release_buffer(cef_v8array_buffer_release_callback_t* self, void* buffer)
+        internal void release_buffer(cef_v8array_buffer_release_callback_t* self, void* buffer)
         {
             CheckSelf(self);
 

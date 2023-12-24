@@ -14,7 +14,7 @@
     /// </summary>
     public abstract unsafe partial class CefUrlRequestClient
     {
-        private void on_request_complete(cef_urlrequest_client_t* self, cef_urlrequest_t* request)
+        internal void on_request_complete(cef_urlrequest_client_t* self, cef_urlrequest_t* request)
         {
             CheckSelf(self);
 
@@ -31,7 +31,7 @@
         protected abstract void OnRequestComplete(CefUrlRequest request);
 
 
-        private void on_upload_progress(cef_urlrequest_client_t* self, cef_urlrequest_t* request, long current, long total)
+        internal void on_upload_progress(cef_urlrequest_client_t* self, cef_urlrequest_t* request, long current, long total)
         {
             CheckSelf(self);
 
@@ -49,7 +49,7 @@
         protected abstract void OnUploadProgress(CefUrlRequest request, long current, long total);
 
 
-        private void on_download_progress(cef_urlrequest_client_t* self, cef_urlrequest_t* request, long current, long total)
+        internal void on_download_progress(cef_urlrequest_client_t* self, cef_urlrequest_t* request, long current, long total)
         {
             CheckSelf(self);
 
@@ -66,7 +66,7 @@
         protected abstract void OnDownloadProgress(CefUrlRequest request, long current, long total);
 
 
-        private void on_download_data(cef_urlrequest_client_t* self, cef_urlrequest_t* request, void* data, UIntPtr data_length)
+        internal void on_download_data(cef_urlrequest_client_t* self, cef_urlrequest_t* request, void* data, UIntPtr data_length)
         {
             CheckSelf(self);
 
@@ -86,7 +86,7 @@
         protected abstract void OnDownloadData(CefUrlRequest request, Stream data);
 
 
-        private int get_auth_credentials(cef_urlrequest_client_t* self, int isProxy, cef_string_t* host, int port, cef_string_t* realm, cef_string_t* scheme, cef_auth_callback_t* callback)
+        internal int get_auth_credentials(cef_urlrequest_client_t* self, int isProxy, cef_string_t* host, int port, cef_string_t* realm, cef_string_t* scheme, cef_auth_callback_t* callback)
         {
             CheckSelf(self);
 

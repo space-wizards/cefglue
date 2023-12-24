@@ -13,7 +13,7 @@
     /// </summary>
     public abstract unsafe partial class CefLoadHandler
     {
-        private void on_loading_state_change(cef_load_handler_t* self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward)
+        internal void on_loading_state_change(cef_load_handler_t* self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward)
         {
             CheckSelf(self);
 
@@ -34,7 +34,7 @@
         }
 
 
-        private void on_load_start(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefTransitionType transition_type)
+        internal void on_load_start(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefTransitionType transition_type)
         {
             CheckSelf(self);
 
@@ -61,7 +61,7 @@
         }
 
 
-        private void on_load_end(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode)
+        internal void on_load_end(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode)
         {
             CheckSelf(self);
 
@@ -86,7 +86,7 @@
         }
 
 
-        private void on_load_error(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefErrorCode errorCode, cef_string_t* errorText, cef_string_t* failedUrl)
+        internal void on_load_error(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefErrorCode errorCode, cef_string_t* errorText, cef_string_t* failedUrl)
         {
             CheckSelf(self);
 

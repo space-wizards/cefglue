@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefSchemeHandlerFactory
     {
-        private cef_resource_handler_t* create(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* scheme_name, cef_request_t* request)
+        internal cef_resource_handler_t* create(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* scheme_name, cef_request_t* request)
         {
             CheckSelf(self);
 

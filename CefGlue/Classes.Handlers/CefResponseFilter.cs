@@ -13,7 +13,7 @@
     /// </summary>
     public abstract unsafe partial class CefResponseFilter
     {
-        private int init_filter(cef_response_filter_t* self)
+        internal int init_filter(cef_response_filter_t* self)
         {
             CheckSelf(self);
 
@@ -27,7 +27,7 @@
         protected abstract bool InitFilter();
 
 
-        private CefResponseFilterStatus filter(cef_response_filter_t* self, void* data_in, UIntPtr data_in_size, UIntPtr* data_in_read, void* data_out, UIntPtr data_out_size, UIntPtr* data_out_written)
+        internal CefResponseFilterStatus filter(cef_response_filter_t* self, void* data_in, UIntPtr data_in_size, UIntPtr* data_in_read, void* data_out, UIntPtr data_out_size, UIntPtr* data_out_written)
         {
             CheckSelf(self);
 

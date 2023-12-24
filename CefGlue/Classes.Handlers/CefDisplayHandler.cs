@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefDisplayHandler
     {
-        private void on_address_change(cef_display_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* url)
+        internal void on_address_change(cef_display_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* url)
         {
             CheckSelf(self);
 
@@ -31,7 +31,7 @@
         }
 
 
-        private void on_title_change(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* title)
+        internal void on_title_change(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* title)
         {
             CheckSelf(self);
 
@@ -49,7 +49,7 @@
         }
 
 
-        private void on_favicon_urlchange(cef_display_handler_t* self, cef_browser_t* browser, cef_string_list* icon_urls)
+        internal void on_favicon_urlchange(cef_display_handler_t* self, cef_browser_t* browser, cef_string_list* icon_urls)
         {
             CheckSelf(self);
 
@@ -67,7 +67,7 @@
         }
 
 
-        private void on_fullscreen_mode_change(cef_display_handler_t* self, cef_browser_t* browser, int fullscreen)
+        internal void on_fullscreen_mode_change(cef_display_handler_t* self, cef_browser_t* browser, int fullscreen)
         {
             CheckSelf(self);
 
@@ -89,7 +89,7 @@
         protected virtual void OnFullscreenModeChange(CefBrowser browser, bool fullscreen) { }
 
 
-        private int on_tooltip(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* text)
+        internal int on_tooltip(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* text)
         {
             CheckSelf(self);
 
@@ -113,7 +113,7 @@
         }
 
 
-        private void on_status_message(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* value)
+        internal void on_status_message(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* value)
         {
             CheckSelf(self);
 
@@ -132,7 +132,7 @@
         }
 
 
-        private int on_console_message(cef_display_handler_t* self, cef_browser_t* browser, CefLogSeverity level, cef_string_t* message, cef_string_t* source, int line)
+        internal int on_console_message(cef_display_handler_t* self, cef_browser_t* browser, CefLogSeverity level, cef_string_t* message, cef_string_t* source, int line)
         {
             CheckSelf(self);
 
@@ -153,7 +153,7 @@
         }
 
 
-        private int on_auto_resize(cef_display_handler_t* self, cef_browser_t* browser, cef_size_t* new_size)
+        internal int on_auto_resize(cef_display_handler_t* self, cef_browser_t* browser, cef_size_t* new_size)
         {
             CheckSelf(self);
 
@@ -182,7 +182,7 @@
         }
 
 
-        private void on_loading_progress_change(cef_display_handler_t* self, cef_browser_t* browser, double progress)
+        internal void on_loading_progress_change(cef_display_handler_t* self, cef_browser_t* browser, double progress)
         {
             CheckSelf(self);
 
@@ -197,7 +197,7 @@
         protected virtual void OnLoadingProgressChange(CefBrowser browser, double progress) { }
 
 
-        private int on_cursor_change(cef_display_handler_t* self, cef_browser_t* browser, IntPtr cursor, CefCursorType type, cef_cursor_info_t* custom_cursor_info)
+        internal int on_cursor_change(cef_display_handler_t* self, cef_browser_t* browser, IntPtr cursor, CefCursorType type, cef_cursor_info_t* custom_cursor_info)
         {
             CheckSelf(self);
 
@@ -220,7 +220,7 @@
             => false;
 
 
-        private void on_media_access_change(cef_display_handler_t* self, cef_browser_t* browser, int has_video_access, int has_audio_access)
+        internal void on_media_access_change(cef_display_handler_t* self, cef_browser_t* browser, int has_video_access, int has_audio_access)
         {
             CheckSelf(self);
 

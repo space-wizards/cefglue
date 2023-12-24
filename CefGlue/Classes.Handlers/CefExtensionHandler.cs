@@ -5,7 +5,7 @@
     using System.Diagnostics;
     using System.Runtime.InteropServices;
     using Xilium.CefGlue.Interop;
-    
+
     /// <summary>
     /// Implement this interface to handle events related to browser extensions.
     /// The methods of this class will be called on the UI thread. See
@@ -13,7 +13,7 @@
     /// </summary>
     public abstract unsafe partial class CefExtensionHandler
     {
-        private void on_extension_load_failed(cef_extension_handler_t* self, CefErrorCode result)
+        internal void on_extension_load_failed(cef_extension_handler_t* self, CefErrorCode result)
         {
             CheckSelf(self);
 
@@ -27,7 +27,7 @@
         protected virtual void OnExtensionLoadFailed(CefErrorCode result) { }
 
 
-        private void on_extension_loaded(cef_extension_handler_t* self, cef_extension_t* extension)
+        internal void on_extension_loaded(cef_extension_handler_t* self, cef_extension_t* extension)
         {
             CheckSelf(self);
 
@@ -42,7 +42,7 @@
         protected virtual void OnExtensionLoaded(CefExtension extension) { }
 
 
-        private void on_extension_unloaded(cef_extension_handler_t* self, cef_extension_t* extension)
+        internal void on_extension_unloaded(cef_extension_handler_t* self, cef_extension_t* extension)
         {
             CheckSelf(self);
 
@@ -56,7 +56,7 @@
         protected virtual void OnExtensionUnloaded(CefExtension extension) { }
 
 
-        private int on_before_background_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_string_t* url, cef_client_t** client, cef_browser_settings_t* settings)
+        internal int on_before_background_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_string_t* url, cef_client_t** client, cef_browser_settings_t* settings)
         {
             CheckSelf(self);
 
@@ -99,7 +99,7 @@
         }
 
 
-        private int on_before_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, cef_browser_t* active_browser, int index, cef_string_t* url, int active, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings)
+        internal int on_before_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, cef_browser_t* active_browser, int index, cef_string_t* url, int active, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings)
         {
             CheckSelf(self);
 
@@ -148,7 +148,7 @@
         }
 
 
-        private cef_browser_t* get_active_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, int include_incognito)
+        internal cef_browser_t* get_active_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, int include_incognito)
         {
             CheckSelf(self);
 
@@ -174,7 +174,7 @@
             => null;
 
 
-        private int can_access_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, int include_incognito, cef_browser_t* target_browser)
+        internal int can_access_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, int include_incognito, cef_browser_t* target_browser)
         {
             CheckSelf(self);
 
@@ -187,7 +187,7 @@
 
             return result ? 1 : 0;
         }
-        
+
         /// <summary>
         /// Called when the tabId associated with |target_browser| is specified to an
         /// extension API call that accepts a tabId parameter (e.g. chrome.tabs.*).
@@ -202,7 +202,7 @@
         }
 
 
-        private int get_extension_resource(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, cef_string_t* file, cef_get_extension_resource_callback_t* callback)
+        internal int get_extension_resource(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, cef_string_t* file, cef_get_extension_resource_callback_t* callback)
         {
             CheckSelf(self);
 

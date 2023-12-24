@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefDialogHandler
     {
-        private int on_file_dialog(cef_dialog_handler_t* self, cef_browser_t* browser, CefFileDialogMode mode, cef_string_t* title, cef_string_t* default_file_path, cef_string_list* accept_filters, cef_file_dialog_callback_t* callback)
+        internal int on_file_dialog(cef_dialog_handler_t* self, cef_browser_t* browser, CefFileDialogMode mode, cef_string_t* title, cef_string_t* default_file_path, cef_string_list* accept_filters, cef_file_dialog_callback_t* callback)
         {
             CheckSelf(self);
 

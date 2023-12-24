@@ -16,7 +16,7 @@
     /// </summary>
     public abstract unsafe partial class CefServerHandler
     {
-        private void on_server_created(cef_server_handler_t* self, cef_server_t* server)
+        internal void on_server_created(cef_server_handler_t* self, cef_server_t* server)
         {
             CheckSelf(self);
 
@@ -34,7 +34,7 @@
         protected abstract void OnServerCreated(CefServer server);
 
 
-        private void on_server_destroyed(cef_server_handler_t* self, cef_server_t* server)
+        internal void on_server_destroyed(cef_server_handler_t* self, cef_server_t* server)
         {
             CheckSelf(self);
 
@@ -51,7 +51,7 @@
         protected abstract void OnServerDestroyed(CefServer server);
 
 
-        private void on_client_connected(cef_server_handler_t* self, cef_server_t* server, int connection_id)
+        internal void on_client_connected(cef_server_handler_t* self, cef_server_t* server, int connection_id)
         {
             CheckSelf(self);
 
@@ -67,7 +67,7 @@
         protected abstract void OnClientConnected(CefServer server, int connectionId);
 
 
-        private void on_client_disconnected(cef_server_handler_t* self, cef_server_t* server, int connection_id)
+        internal void on_client_disconnected(cef_server_handler_t* self, cef_server_t* server, int connection_id)
         {
             CheckSelf(self);
 
@@ -86,7 +86,7 @@
         protected abstract void OnClientDisconnected(CefServer server, int connectionId);
 
 
-        private void on_http_request(cef_server_handler_t* self, cef_server_t* server, int connection_id, cef_string_t* client_address, cef_request_t* request)
+        internal void on_http_request(cef_server_handler_t* self, cef_server_t* server, int connection_id, cef_string_t* client_address, cef_request_t* request)
         {
             CheckSelf(self);
 
@@ -107,7 +107,7 @@
         protected abstract void OnHttpRequest(CefServer server, int connectionId, string clientAddress, CefRequest request);
 
 
-        private void on_web_socket_request(cef_server_handler_t* self, cef_server_t* server, int connection_id, cef_string_t* client_address, cef_request_t* request, cef_callback_t* callback)
+        internal void on_web_socket_request(cef_server_handler_t* self, cef_server_t* server, int connection_id, cef_string_t* client_address, cef_request_t* request, cef_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -136,7 +136,7 @@
         protected abstract void OnWebSocketRequest(CefServer server, int connectionId, string clientAddress, CefRequest request, CefCallback callback);
 
 
-        private void on_web_socket_connected(cef_server_handler_t* self, cef_server_t* server, int connection_id)
+        internal void on_web_socket_connected(cef_server_handler_t* self, cef_server_t* server, int connection_id)
         {
             CheckSelf(self);
 
@@ -152,7 +152,7 @@
         protected abstract void OnWebSocketConnected(CefServer server, int connectionId);
 
 
-        private void on_web_socket_message(cef_server_handler_t* self, cef_server_t* server, int connection_id, void* data, UIntPtr data_size)
+        internal void on_web_socket_message(cef_server_handler_t* self, cef_server_t* server, int connection_id, void* data, UIntPtr data_size)
         {
             CheckSelf(self);
 

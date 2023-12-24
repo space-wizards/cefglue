@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefContextMenuHandler
     {
-        private void on_before_context_menu(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model)
+        internal void on_before_context_menu(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model)
         {
             CheckSelf(self);
 
@@ -37,7 +37,7 @@
         }
 
 
-        private int run_context_menu(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model, cef_run_context_menu_callback_t* callback)
+        internal int run_context_menu(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model, cef_run_context_menu_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -67,7 +67,7 @@
         }
 
 
-        private int on_context_menu_command(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, int command_id, CefEventFlags event_flags)
+        internal int on_context_menu_command(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, int command_id, CefEventFlags event_flags)
         {
             CheckSelf(self);
 
@@ -95,7 +95,7 @@
         }
 
 
-        private void on_context_menu_dismissed(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
+        internal void on_context_menu_dismissed(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
         {
             CheckSelf(self);
 
@@ -114,7 +114,7 @@
         }
 
 
-        private int run_quick_menu(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_point_t* location, cef_size_t* size, CefQuickMenuEditStateFlags edit_state_flags, cef_run_quick_menu_callback_t* callback)
+        internal int run_quick_menu(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_point_t* location, cef_size_t* size, CefQuickMenuEditStateFlags edit_state_flags, cef_run_quick_menu_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -144,7 +144,7 @@
             => false;
 
 
-        private int on_quick_menu_command(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int command_id, CefEventFlags event_flags)
+        internal int on_quick_menu_command(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int command_id, CefEventFlags event_flags)
         {
             CheckSelf(self);
 
@@ -165,7 +165,7 @@
             => false;
 
 
-        private void on_quick_menu_dismissed(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
+        internal void on_quick_menu_dismissed(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
         {
             CheckSelf(self);
 

@@ -76,7 +76,7 @@
     /// </summary>
     public abstract unsafe partial class CefFrameHandler
     {
-        private void on_frame_created(cef_frame_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
+        internal void on_frame_created(cef_frame_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
         {
             CheckSelf(self);
 
@@ -95,7 +95,7 @@
         { }
 
 
-        private void on_frame_attached(cef_frame_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int reattached)
+        internal void on_frame_attached(cef_frame_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int reattached)
         {
             CheckSelf(self);
 
@@ -114,7 +114,7 @@
         { }
 
 
-        private void on_frame_detached(cef_frame_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
+        internal void on_frame_detached(cef_frame_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
         {
             CheckSelf(self);
 
@@ -122,7 +122,7 @@
             var mFrame = CefFrame.FromNative(frame);
             OnFrameDetached(mBrowser, mFrame);
         }
-        
+
         /// <summary>
         /// Called when a frame loses its connection to the renderer process and will
         /// be destroyed. Any pending or future commands will be discarded and
@@ -134,7 +134,7 @@
         { }
 
 
-        private void on_main_frame_changed(cef_frame_handler_t* self, cef_browser_t* browser, cef_frame_t* old_frame, cef_frame_t* new_frame)
+        internal void on_main_frame_changed(cef_frame_handler_t* self, cef_browser_t* browser, cef_frame_t* old_frame, cef_frame_t* new_frame)
         {
             CheckSelf(self);
 

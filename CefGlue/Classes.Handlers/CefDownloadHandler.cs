@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefDownloadHandler
     {
-        private int can_download(cef_download_handler_t* self, cef_browser_t* browser, cef_string_t* url, cef_string_t* request_method)
+        internal int can_download(cef_download_handler_t* self, cef_browser_t* browser, cef_string_t* url, cef_string_t* request_method)
         {
             CheckSelf(self);
 
@@ -33,7 +33,7 @@
             => true;
 
 
-        private void on_before_download(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, cef_string_t* suggested_name, cef_before_download_callback_t* callback)
+        internal void on_before_download(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, cef_string_t* suggested_name, cef_before_download_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -59,7 +59,7 @@
         }
 
 
-        private void on_download_updated(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, cef_download_item_callback_t* callback)
+        internal void on_download_updated(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, cef_download_item_callback_t* callback)
         {
             CheckSelf(self);
 

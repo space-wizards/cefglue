@@ -8,7 +8,7 @@
 
     public abstract unsafe partial class CefClient
     {
-        private cef_audio_handler_t* get_audio_handler(cef_client_t* self)
+        internal cef_audio_handler_t* get_audio_handler(cef_client_t* self)
         {
             CheckSelf(self);
             var result = GetAudioHandler();
@@ -21,7 +21,7 @@
         protected virtual CefAudioHandler? GetAudioHandler() => null;
 
 
-        private cef_command_handler_t* get_command_handler(cef_client_t* self)
+        internal cef_command_handler_t* get_command_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -36,7 +36,7 @@
         protected virtual CefCommandHandler? GetCommandHandler() => null;
 
 
-        private cef_context_menu_handler_t* get_context_menu_handler(cef_client_t* self)
+        internal cef_context_menu_handler_t* get_context_menu_handler(cef_client_t* self)
         {
             CheckSelf(self);
             var result = GetContextMenuHandler();
@@ -50,7 +50,7 @@
         protected virtual CefContextMenuHandler? GetContextMenuHandler() => null;
 
 
-        private cef_dialog_handler_t* get_dialog_handler(cef_client_t* self)
+        internal cef_dialog_handler_t* get_dialog_handler(cef_client_t* self)
         {
             CheckSelf(self);
             var result = GetDialogHandler();
@@ -64,7 +64,7 @@
         protected virtual CefDialogHandler? GetDialogHandler() => null;
 
 
-        private cef_display_handler_t* get_display_handler(cef_client_t* self)
+        internal cef_display_handler_t* get_display_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -78,7 +78,7 @@
         protected virtual CefDisplayHandler? GetDisplayHandler() => null;
 
 
-        private cef_download_handler_t* get_download_handler(cef_client_t* self)
+        internal cef_download_handler_t* get_download_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -93,7 +93,7 @@
         protected virtual CefDownloadHandler? GetDownloadHandler() => null;
 
 
-        private cef_drag_handler_t* get_drag_handler(cef_client_t* self)
+        internal cef_drag_handler_t* get_drag_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -107,7 +107,7 @@
         protected virtual CefDragHandler? GetDragHandler() => null;
 
 
-        private cef_find_handler_t* get_find_handler(cef_client_t* self)
+        internal cef_find_handler_t* get_find_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -121,7 +121,7 @@
         protected virtual CefFindHandler? GetFindHandler() => null;
 
 
-        private cef_focus_handler_t* get_focus_handler(cef_client_t* self)
+        internal cef_focus_handler_t* get_focus_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -135,7 +135,7 @@
         protected virtual CefFocusHandler? GetFocusHandler() => null;
 
 
-        private cef_frame_handler_t* get_frame_handler(cef_client_t* self)
+        internal cef_frame_handler_t* get_frame_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -151,7 +151,7 @@
         protected virtual CefFrameHandler? GetFrameHandler() => null;
 
 
-        private cef_permission_handler_t* get_permission_handler(cef_client_t* self)
+        internal cef_permission_handler_t* get_permission_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -165,7 +165,7 @@
         protected virtual CefPermissionHandler? GetPermissionHandler() => null;
 
 
-        private cef_jsdialog_handler_t* get_jsdialog_handler(cef_client_t* self)
+        internal cef_jsdialog_handler_t* get_jsdialog_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -180,7 +180,7 @@
         protected virtual CefJSDialogHandler? GetJSDialogHandler() => null;
 
 
-        private cef_keyboard_handler_t* get_keyboard_handler(cef_client_t* self)
+        internal cef_keyboard_handler_t* get_keyboard_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -194,7 +194,7 @@
         protected virtual CefKeyboardHandler? GetKeyboardHandler() => null;
 
 
-        private cef_life_span_handler_t* get_life_span_handler(cef_client_t* self)
+        internal cef_life_span_handler_t* get_life_span_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -208,7 +208,7 @@
         protected virtual CefLifeSpanHandler? GetLifeSpanHandler() => null;
 
 
-        private cef_load_handler_t* get_load_handler(cef_client_t* self)
+        internal cef_load_handler_t* get_load_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -222,7 +222,7 @@
         protected virtual CefLoadHandler? GetLoadHandler() => null;
 
 
-        private cef_print_handler_t* get_print_handler(cef_client_t* self)
+        internal cef_print_handler_t* get_print_handler(cef_client_t* self)
         {
             CheckSelf(self);
             var result = GetPrintHandler();
@@ -236,7 +236,7 @@
         protected virtual CefPrintHandler? GetPrintHandler() => null;
 
 
-        private cef_render_handler_t* get_render_handler(cef_client_t* self)
+        internal cef_render_handler_t* get_render_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -250,7 +250,7 @@
         protected virtual CefRenderHandler? GetRenderHandler() => null;
 
 
-        private cef_request_handler_t* get_request_handler(cef_client_t* self)
+        internal cef_request_handler_t* get_request_handler(cef_client_t* self)
         {
             CheckSelf(self);
 
@@ -264,7 +264,7 @@
         protected virtual CefRequestHandler? GetRequestHandler() => null;
 
 
-        private int on_process_message_received(cef_client_t* self, cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message)
+        internal int on_process_message_received(cef_client_t* self, cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message)
         {
             CheckSelf(self);
 

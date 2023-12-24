@@ -13,7 +13,7 @@
     /// </summary>
     public abstract unsafe partial class CefResourceRequestHandler
     {
-        private cef_cookie_access_filter_t* get_cookie_access_filter(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)
+        internal cef_cookie_access_filter_t* get_cookie_access_filter(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)
         {
             CheckSelf(self);
 
@@ -36,7 +36,7 @@
         protected abstract CefCookieAccessFilter GetCookieAccessFilter(CefBrowser browser, CefFrame frame, CefRequest request);
 
 
-        private CefReturnValue on_before_resource_load(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_callback_t* callback)
+        internal CefReturnValue on_before_resource_load(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -75,7 +75,7 @@
         }
 
 
-        private cef_resource_handler_t* get_resource_handler(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)
+        internal cef_resource_handler_t* get_resource_handler(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)
         {
             CheckSelf(self);
 
@@ -100,7 +100,7 @@
             => null;
 
 
-        private void on_resource_redirect(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, cef_string_t* new_url)
+        internal void on_resource_redirect(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, cef_string_t* new_url)
         {
             CheckSelf(self);
 
@@ -134,7 +134,7 @@
         }
 
 
-        private int on_resource_response(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response)
+        internal int on_resource_response(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response)
         {
             CheckSelf(self);
 
@@ -166,7 +166,7 @@
         }
 
 
-        private cef_response_filter_t* get_resource_response_filter(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response)
+        internal cef_response_filter_t* get_resource_response_filter(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response)
         {
             CheckSelf(self);
 
@@ -196,7 +196,7 @@
             => null;
 
 
-        private void on_resource_load_complete(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, CefUrlRequestStatus status, long received_content_length)
+        internal void on_resource_load_complete(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, CefUrlRequestStatus status, long received_content_length)
         {
             CheckSelf(self);
 
@@ -229,7 +229,7 @@
         }
 
 
-        private void on_protocol_execution(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int* allow_os_execution)
+        internal void on_protocol_execution(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int* allow_os_execution)
         {
             CheckSelf(self);
 

@@ -13,70 +13,81 @@ namespace Xilium.CefGlue.Interop
     internal unsafe struct cef_permission_handler_t
     {
         internal cef_base_ref_counted_t _base;
-        internal IntPtr _on_request_media_access_permission;
-        internal IntPtr _on_show_permission_prompt;
-        internal IntPtr _on_dismiss_permission_prompt;
+        internal delegate* unmanaged<cef_permission_handler_t*, cef_browser_t*, cef_frame_t*, cef_string_t*, uint, cef_media_access_callback_t*, int> _on_request_media_access_permission;
+        internal delegate* unmanaged<cef_permission_handler_t*, cef_browser_t*, ulong, cef_string_t*, uint, cef_permission_prompt_callback_t*, int> _on_show_permission_prompt;
+        internal delegate* unmanaged<cef_permission_handler_t*, cef_browser_t*, ulong, CefPermissionRequestResult, void> _on_dismiss_permission_prompt;
         
-        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
-        #if !DEBUG
-        [SuppressUnmanagedCodeSecurity]
-        #endif
-        internal delegate void add_ref_delegate(cef_permission_handler_t* self);
+        internal GCHandle _obj;
         
-        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
-        #if !DEBUG
-        [SuppressUnmanagedCodeSecurity]
-        #endif
-        internal delegate int release_delegate(cef_permission_handler_t* self);
-        
-        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
-        #if !DEBUG
-        [SuppressUnmanagedCodeSecurity]
-        #endif
-        internal delegate int has_one_ref_delegate(cef_permission_handler_t* self);
-        
-        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
-        #if !DEBUG
-        [SuppressUnmanagedCodeSecurity]
-        #endif
-        internal delegate int has_at_least_one_ref_delegate(cef_permission_handler_t* self);
-        
-        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
-        #if !DEBUG
-        [SuppressUnmanagedCodeSecurity]
-        #endif
-        internal delegate int on_request_media_access_permission_delegate(cef_permission_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* requesting_origin, uint requested_permissions, cef_media_access_callback_t* callback);
-        
-        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
-        #if !DEBUG
-        [SuppressUnmanagedCodeSecurity]
-        #endif
-        internal delegate int on_show_permission_prompt_delegate(cef_permission_handler_t* self, cef_browser_t* browser, ulong prompt_id, cef_string_t* requesting_origin, uint requested_permissions, cef_permission_prompt_callback_t* callback);
-        
-        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
-        #if !DEBUG
-        [SuppressUnmanagedCodeSecurity]
-        #endif
-        internal delegate void on_dismiss_permission_prompt_delegate(cef_permission_handler_t* self, cef_browser_t* browser, ulong prompt_id, CefPermissionRequestResult result);
-        
-        private static int _sizeof;
-        
-        static cef_permission_handler_t()
+        [UnmanagedCallersOnly]
+        public static void add_ref(cef_permission_handler_t* self)
         {
-            _sizeof = Marshal.SizeOf(typeof(cef_permission_handler_t));
+            var obj = (CefPermissionHandler)self->_obj.Target;
+            obj.add_ref(self);
         }
         
-        internal static cef_permission_handler_t* Alloc()
+        [UnmanagedCallersOnly]
+        public static int release(cef_permission_handler_t* self)
         {
-            var ptr = (cef_permission_handler_t*)Marshal.AllocHGlobal(_sizeof);
-            *ptr = new cef_permission_handler_t();
-            ptr->_base._size = (UIntPtr)_sizeof;
+            var obj = (CefPermissionHandler)self->_obj.Target;
+            return obj.release(self);
+        }
+        
+        [UnmanagedCallersOnly]
+        public static int has_one_ref(cef_permission_handler_t* self)
+        {
+            var obj = (CefPermissionHandler)self->_obj.Target;
+            return obj.has_one_ref(self);
+        }
+        
+        [UnmanagedCallersOnly]
+        public static int has_at_least_one_ref(cef_permission_handler_t* self)
+        {
+            var obj = (CefPermissionHandler)self->_obj.Target;
+            return obj.has_at_least_one_ref(self);
+        }
+        
+        [UnmanagedCallersOnly]
+        public static int on_request_media_access_permission(cef_permission_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* requesting_origin, uint requested_permissions, cef_media_access_callback_t* callback)
+        {
+            var obj = (CefPermissionHandler)self->_obj.Target;
+            return obj.on_request_media_access_permission(self, browser, frame, requesting_origin, requested_permissions, callback);
+        }
+        
+        [UnmanagedCallersOnly]
+        public static int on_show_permission_prompt(cef_permission_handler_t* self, cef_browser_t* browser, ulong prompt_id, cef_string_t* requesting_origin, uint requested_permissions, cef_permission_prompt_callback_t* callback)
+        {
+            var obj = (CefPermissionHandler)self->_obj.Target;
+            return obj.on_show_permission_prompt(self, browser, prompt_id, requesting_origin, requested_permissions, callback);
+        }
+        
+        [UnmanagedCallersOnly]
+        public static void on_dismiss_permission_prompt(cef_permission_handler_t* self, cef_browser_t* browser, ulong prompt_id, CefPermissionRequestResult result)
+        {
+            var obj = (CefPermissionHandler)self->_obj.Target;
+            obj.on_dismiss_permission_prompt(self, browser, prompt_id, result);
+        }
+        
+        internal static cef_permission_handler_t* Alloc(CefPermissionHandler obj)
+        {
+            var ptr = (cef_permission_handler_t*)NativeMemory.Alloc((UIntPtr)sizeof(cef_permission_handler_t));
+            *ptr = default(cef_permission_handler_t);
+            ptr->_base._size = (UIntPtr)sizeof(cef_permission_handler_t);
+            ptr->_obj = GCHandle.Alloc(obj);
+            ptr->_base._add_ref = (delegate* unmanaged<cef_base_ref_counted_t*, void>)(delegate* unmanaged<cef_permission_handler_t*, void>)&add_ref;
+            ptr->_base._release = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_permission_handler_t*, int>)&release;
+            ptr->_base._has_one_ref = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_permission_handler_t*, int>)&has_one_ref;
+            ptr->_base._has_at_least_one_ref = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_permission_handler_t*, int>)&has_at_least_one_ref;
+            ptr->_on_request_media_access_permission = &on_request_media_access_permission;
+            ptr->_on_show_permission_prompt = &on_show_permission_prompt;
+            ptr->_on_dismiss_permission_prompt = &on_dismiss_permission_prompt;
             return ptr;
         }
         
         internal static void Free(cef_permission_handler_t* ptr)
         {
-            Marshal.FreeHGlobal((IntPtr)ptr);
+            ptr->_obj.Free();
+            NativeMemory.Free((void*)ptr);
         }
         
     }

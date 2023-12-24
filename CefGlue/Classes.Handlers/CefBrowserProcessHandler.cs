@@ -13,7 +13,7 @@
     /// </summary>
     public abstract unsafe partial class CefBrowserProcessHandler
     {
-        private void on_register_custom_preferences(cef_browser_process_handler_t* self, CefPreferencesType type, cef_preference_registrar_t* registrar)
+        internal void on_register_custom_preferences(cef_browser_process_handler_t* self, CefPreferencesType type, cef_preference_registrar_t* registrar)
         {
             CheckSelf(self);
 
@@ -51,7 +51,7 @@
         protected virtual void OnRegisterCustomPreferences(CefPreferencesType type, CefPreferenceRegistrar registrar)
         { }
 
-        private void on_context_initialized(cef_browser_process_handler_t* self)
+        internal void on_context_initialized(cef_browser_process_handler_t* self)
         {
             CheckSelf(self);
 
@@ -67,7 +67,7 @@
         }
 
 
-        private void on_before_child_process_launch(cef_browser_process_handler_t* self, cef_command_line_t* command_line)
+        internal void on_before_child_process_launch(cef_browser_process_handler_t* self, cef_command_line_t* command_line)
         {
             CheckSelf(self);
 
@@ -88,7 +88,7 @@
         {
         }
 
-        private int on_already_running_app_relaunch(cef_browser_process_handler_t* self, cef_command_line_t* command_line, cef_string_t* current_directory)
+        internal int on_already_running_app_relaunch(cef_browser_process_handler_t* self, cef_command_line_t* command_line, cef_string_t* current_directory)
         {
             CheckSelf(self);
 
@@ -124,7 +124,7 @@
             return false;
         }
 
-        private void on_schedule_message_pump_work(cef_browser_process_handler_t* self, long delay_ms)
+        internal void on_schedule_message_pump_work(cef_browser_process_handler_t* self, long delay_ms)
         {
             CheckSelf(self);
             OnScheduleMessagePumpWork(delay_ms);
@@ -146,7 +146,7 @@
         protected virtual void OnScheduleMessagePumpWork(long delayMs) { }
 
 
-        private cef_client_t* get_default_client(cef_browser_process_handler_t* self)
+        internal cef_client_t* get_default_client(cef_browser_process_handler_t* self)
         {
             CheckSelf(self);
 

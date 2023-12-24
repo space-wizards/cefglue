@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefFocusHandler
     {
-        private void on_take_focus(cef_focus_handler_t* self, cef_browser_t* browser, int next)
+        internal void on_take_focus(cef_focus_handler_t* self, cef_browser_t* browser, int next)
         {
             CheckSelf(self);
 
@@ -32,7 +32,7 @@
         }
 
 
-        private int on_set_focus(cef_focus_handler_t* self, cef_browser_t* browser, CefFocusSource source)
+        internal int on_set_focus(cef_focus_handler_t* self, cef_browser_t* browser, CefFocusSource source)
         {
             CheckSelf(self);
 
@@ -52,7 +52,7 @@
         }
 
 
-        private void on_got_focus(cef_focus_handler_t* self, cef_browser_t* browser)
+        internal void on_got_focus(cef_focus_handler_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 

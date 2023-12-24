@@ -13,7 +13,7 @@
     /// </summary>
     public abstract unsafe partial class CefRenderProcessHandler
     {
-        private void on_web_kit_initialized(cef_render_process_handler_t* self)
+        internal void on_web_kit_initialized(cef_render_process_handler_t* self)
         {
             CheckSelf(self);
 
@@ -28,7 +28,7 @@
         }
 
 
-        private void on_browser_created(cef_render_process_handler_t* self, cef_browser_t* browser, cef_dictionary_value_t* extra_info)
+        internal void on_browser_created(cef_render_process_handler_t* self, cef_browser_t* browser, cef_dictionary_value_t* extra_info)
         {
             CheckSelf(self);
 
@@ -51,7 +51,7 @@
         }
 
 
-        private void on_browser_destroyed(cef_render_process_handler_t* self, cef_browser_t* browser)
+        internal void on_browser_destroyed(cef_render_process_handler_t* self, cef_browser_t* browser)
         {
             CheckSelf(self);
 
@@ -68,7 +68,7 @@
         }
 
 
-        private cef_load_handler_t* get_load_handler(cef_render_process_handler_t* self)
+        internal cef_load_handler_t* get_load_handler(cef_render_process_handler_t* self)
         {
             CheckSelf(self);
 
@@ -86,7 +86,7 @@
         }
 
 
-        private void on_context_created(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)
+        internal void on_context_created(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)
         {
             CheckSelf(self);
 
@@ -109,7 +109,7 @@
         }
 
 
-        private void on_context_released(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)
+        internal void on_context_released(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)
         {
             CheckSelf(self);
 
@@ -129,7 +129,7 @@
         }
 
 
-        private void on_uncaught_exception(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context, cef_v8exception_t* exception, cef_v8stack_trace_t* stackTrace)
+        internal void on_uncaught_exception(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context, cef_v8exception_t* exception, cef_v8stack_trace_t* stackTrace)
         {
             CheckSelf(self);
 
@@ -152,7 +152,7 @@
         }
 
 
-        private void on_focused_node_changed(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_domnode_t* node)
+        internal void on_focused_node_changed(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_domnode_t* node)
         {
             CheckSelf(self);
 
@@ -178,7 +178,7 @@
         }
 
 
-        private int on_process_message_received(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message)
+        internal int on_process_message_received(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message)
         {
             CheckSelf(self);
 

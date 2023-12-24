@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefPermissionHandler
     {
-        private int on_request_media_access_permission(cef_permission_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* requesting_origin, uint requested_permissions, cef_media_access_callback_t* callback)
+        internal int on_request_media_access_permission(cef_permission_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* requesting_origin, uint requested_permissions, cef_media_access_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -50,7 +50,7 @@
             => false;
 
 
-        private int on_show_permission_prompt(cef_permission_handler_t* self, cef_browser_t* browser, ulong prompt_id, cef_string_t* requesting_origin, uint requested_permissions, cef_permission_prompt_callback_t* callback)
+        internal int on_show_permission_prompt(cef_permission_handler_t* self, cef_browser_t* browser, ulong prompt_id, cef_string_t* requesting_origin, uint requested_permissions, cef_permission_prompt_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -85,7 +85,7 @@
             => false;
 
 
-        private void on_dismiss_permission_prompt(cef_permission_handler_t* self, cef_browser_t* browser, ulong prompt_id, CefPermissionRequestResult result)
+        internal void on_dismiss_permission_prompt(cef_permission_handler_t* self, cef_browser_t* browser, ulong prompt_id, CefPermissionRequestResult result)
         {
             CheckSelf(self);
 

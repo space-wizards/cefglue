@@ -13,7 +13,7 @@
     /// </summary>
     public abstract unsafe partial class CefResourceBundleHandler
     {
-        private int get_localized_string(cef_resource_bundle_handler_t* self, int string_id, cef_string_t* @string)
+        internal int get_localized_string(cef_resource_bundle_handler_t* self, int string_id, cef_string_t* @string)
         {
             CheckSelf(self);
 
@@ -41,7 +41,7 @@
         }
 
 
-        private int get_data_resource(cef_resource_bundle_handler_t* self, int resource_id, void** data, UIntPtr* data_size)
+        internal int get_data_resource(cef_resource_bundle_handler_t* self, int resource_id, void** data, UIntPtr* data_size)
         {
             CheckSelf(self);
 
@@ -74,7 +74,7 @@
         }
 
 
-        private int get_data_resource_for_scale(cef_resource_bundle_handler_t* self, int resource_id, CefScaleFactor scale_factor, void** data, UIntPtr* data_size)
+        internal int get_data_resource_for_scale(cef_resource_bundle_handler_t* self, int resource_id, CefScaleFactor scale_factor, void** data, UIntPtr* data_size)
         {
             CheckSelf(self);
 

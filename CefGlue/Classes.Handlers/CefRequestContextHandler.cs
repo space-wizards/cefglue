@@ -13,7 +13,7 @@
     /// </summary>
     public abstract unsafe partial class CefRequestContextHandler
     {
-        private void on_request_context_initialized(cef_request_context_handler_t* self, cef_request_context_t* request_context)
+        internal void on_request_context_initialized(cef_request_context_handler_t* self, cef_request_context_t* request_context)
         {
             CheckSelf(self);
 
@@ -28,7 +28,7 @@
         protected virtual void OnRequestContextInitialized(CefRequestContext requestContext) { }
 
 
-        private cef_resource_request_handler_t* get_resource_request_handler(cef_request_context_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, cef_string_t* request_initiator, int* disable_default_handling)
+        internal cef_resource_request_handler_t* get_resource_request_handler(cef_request_context_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, cef_string_t* request_initiator, int* disable_default_handling)
         {
             CheckSelf(self);
 
