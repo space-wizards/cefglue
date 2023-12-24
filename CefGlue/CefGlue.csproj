@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
 
-    <AssemblyName>Xilium.CefGlue</AssemblyName>
+    <AssemblyName>SpaceWizards.CefGlue</AssemblyName>
     <RootNamespace>Xilium.CefGlue</RootNamespace>
 
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
