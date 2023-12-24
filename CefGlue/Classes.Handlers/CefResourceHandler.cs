@@ -160,12 +160,9 @@
 
             var m_callback = CefResourceReadCallback.FromNative(callback);
 
-            using (var m_stream = new UnmanagedMemoryStream((byte*)data_out, bytes_to_read, bytes_to_read, FileAccess.Write))
-            {
-                var m_result = Read(m_stream, bytes_to_read, out var m_bytesRead, m_callback);
-                *bytes_read = m_bytesRead;
-                return m_result ? 1 : 0;
-            }
+            var m_result = Read(new Span<byte>(data_out, bytes_to_read), out var m_bytesRead, m_callback);
+            *bytes_read = m_bytesRead;
+            return m_result ? 1 : 0;
         }
 
         /// <summary>
@@ -181,7 +178,7 @@
         /// compatibility set |bytes_read| to -1 and return false and the ReadResponse
         /// method will be called.
         /// </summary>
-        protected abstract bool Read(Stream response, int bytesToRead, out int bytesRead, CefResourceReadCallback callback);
+        protected abstract bool Read(Span<byte> response, out int bytesRead, CefResourceReadCallback callback);
 
 
         private int read_response(cef_resource_handler_t* self, void* data_out, int bytes_to_read, int* bytes_read, cef_callback_t* callback)
