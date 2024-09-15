@@ -12,7 +12,7 @@
     <Version>120.1.9</Version>
     <IsPackable>true</IsPackable>
 
-    <NoWarn>CS1591</NoWarn>
+    <NoWarn>CS1591;CS8981</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
