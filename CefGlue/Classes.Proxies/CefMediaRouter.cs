@@ -1,4 +1,5 @@
-﻿namespace Xilium.CefGlue
+﻿#nullable enable
+namespace Xilium.CefGlue
 {
     using System;
     using System.Collections.Generic;
