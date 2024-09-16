@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using System.Diagnostics.CodeAnalysis;
+
 namespace Xilium.CefGlue
 {
     using System;
@@ -45,7 +47,7 @@ namespace Xilium.CefGlue
                 // This is a hacktastic way of getting sysname from uname ()
                 if (uname(buf) == 0)
                 {
-                    string os = Marshal.PtrToStringAnsi(buf);
+                    string? os = Marshal.PtrToStringAnsi(buf);
                     if (os == "Darwin")
                         return true;
                 }
@@ -91,7 +93,7 @@ namespace Xilium.CefGlue
         /// <exception cref="DllNotFoundException"></exception>
         /// <exception cref="CefVersionMismatchException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
-        public static void Load(string path)
+        public static void Load(string? path)
         {
             if (_loaded) return;
 
@@ -135,7 +137,7 @@ namespace Xilium.CefGlue
         private static void CheckVersionByApiHash()
         {
             // get CEF_API_HASH_PLATFORM
-            string actual;
+            string? actual;
             try
             {
                 var n_actual = libcef.api_hash(0);
@@ -519,7 +521,7 @@ namespace Xilium.CefGlue
         ///
         /// This function must be called on the browser process UI thread.
         /// </summary>
-        public static bool BeginTracing(string categories = null, CefCompletionCallback callback = null)
+        public static bool BeginTracing(string? categories = null, CefCompletionCallback? callback = null)
         {
             fixed (char* categories_str = categories)
             {
@@ -542,7 +544,7 @@ namespace Xilium.CefGlue
         ///
         /// This function must be called on the browser process UI thread.
         /// </summary>
-        public static bool EndTracing(string tracingFile = null, CefEndTracingCallback callback = null)
+        public static bool EndTracing(string? tracingFile = null, CefEndTracingCallback? callback = null)
         {
             fixed (char* tracingFile_str = tracingFile)
             {
@@ -574,7 +576,7 @@ namespace Xilium.CefGlue
         /// Parse the specified |url| into its component parts.
         /// Returns false if the URL is empty or invalid.
         /// </summary>
-        public static bool ParseUrl(string url, out CefUrlParts parts)
+        public static bool ParseUrl(string url, [NotNullWhen(true)] out CefUrlParts? parts)
         {
             fixed (char* url_str = url)
             {
@@ -589,7 +591,7 @@ namespace Xilium.CefGlue
             }
         }
 
-        public static bool CreateUrl(CefUrlParts parts, out string url)
+        public static bool CreateUrl(CefUrlParts parts, [NotNullWhen(true)] out string? url)
         {
             if (parts == null) throw new ArgumentNullException("parts");
 

@@ -1,4 +1,5 @@
-﻿namespace Xilium.CefGlue
+﻿#nullable enable
+namespace Xilium.CefGlue
 {
     using System;
     using System.Collections.Generic;
@@ -80,7 +81,7 @@
         /// <summary>
         /// Return the handler for browser load status events.
         /// </summary>
-        protected virtual CefLoadHandler GetLoadHandler()
+        protected virtual CefLoadHandler? GetLoadHandler()
         {
             return null;
         }

@@ -13,6 +13,8 @@
     <IsPackable>true</IsPackable>
 
     <NoWarn>CS1591;CS8981</NoWarn>
+
+    <WarningsAsErrors>nullable</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

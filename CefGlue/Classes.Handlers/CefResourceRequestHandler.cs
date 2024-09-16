@@ -34,7 +34,7 @@ namespace Xilium.CefGlue
         /// optionally filter cookies for the request return a CefCookieAccessFilter
         /// object. The |request| object cannot not be modified in this callback.
         /// </summary>
-        protected abstract CefCookieAccessFilter GetCookieAccessFilter(CefBrowser browser, CefFrame frame, CefRequest request);
+        protected abstract CefCookieAccessFilter? GetCookieAccessFilter(CefBrowser browser, CefFrame frame, CefRequest request);
 
 
         internal CefReturnValue on_before_resource_load(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_callback_t* callback)

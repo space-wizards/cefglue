@@ -223,7 +223,7 @@ namespace Xilium.CefGlue
         /// CefBinaryValue containing the JPEG image data on success or NULL on
         /// failure.
         /// </summary>
-        public CefBinaryValue GetAsJpeg(float scaleFactor, int quality, out int pixelWidth, out int pixelHeight)
+        public CefBinaryValue? GetAsJpeg(float scaleFactor, int quality, out int pixelWidth, out int pixelHeight)
         {
             int n_pixelWidth;
             int n_pixelHeight;

@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using System.Diagnostics.CodeAnalysis;
+
 namespace Xilium.CefGlue
 {
     using System;
@@ -540,7 +542,7 @@ namespace Xilium.CefGlue
         /// Read the keys for the object's values into the specified vector. Integer-
         /// based keys will also be returned as strings.
         /// </summary>
-        public bool TryGetKeys(out string[] keys)
+        public bool TryGetKeys([NotNullWhen(true)] out string[]? keys)
         {
             var list = libcef.string_list_alloc();
             var result = cef_v8value_t.get_keys(_self, list) != 0;
@@ -556,7 +558,7 @@ namespace Xilium.CefGlue
         /// </summary>
         public string[] GetKeys()
         {
-            string[] keys;
+            string[]? keys;
             if (TryGetKeys(out keys)) return keys;
             else throw new InvalidOperationException();
         }
@@ -715,7 +717,7 @@ namespace Xilium.CefGlue
             return CefV8Value.FromNativeOrNull(n_retval);
         }
 
-        private static cef_v8value_t*[] CreateArguments(CefV8Value[] arguments)
+        private static cef_v8value_t*[]? CreateArguments(CefV8Value[] arguments)
         {
             if (arguments == null) return null;
 

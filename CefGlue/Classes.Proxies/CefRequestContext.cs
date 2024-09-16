@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using System.Diagnostics.CodeAnalysis;
+
 namespace Xilium.CefGlue
 {
     using System;
@@ -323,7 +325,7 @@ namespace Xilium.CefGlue
         /// extension ID values. Returns true on success. This method must be called
         /// on the browser process UI thread.
         /// </summary>
-        public bool GetExtensions(out string[] extensionIds)
+        public bool GetExtensions([NotNullWhen(true)] out string[]? extensionIds)
         {
             var n_extensionIds = libcef.string_list_alloc();
 
