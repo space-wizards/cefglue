@@ -49,6 +49,7 @@
         public string StartUrl { get; set; }
 
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public CefBrowserSettings BrowserSettings { get; set; }
 
 		internal void InvokeIfRequired(Action a)
@@ -126,6 +127,7 @@
             if (handler != null) handler(this, e);
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Title { get; private set; }
 
         public event EventHandler<TitleChangedEventArgs> TitleChanged;
@@ -138,6 +140,7 @@
             if (handler != null) handler(this, e);
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Address { get; private set; }
 
         public event EventHandler<AddressChangedEventArgs> AddressChanged;

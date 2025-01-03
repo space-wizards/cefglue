@@ -50,6 +50,7 @@
             _core.Created += new EventHandler(BrowserCreated);
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string StartUrl
         {
             get { return _core.StartUrl; }

@@ -7,7 +7,7 @@
     using System.Text;
     using System.Threading;
 
-    internal sealed class DumpRequestResourceHandler : CefResourceHandler
+    internal sealed class  DumpRequestResourceHandler : CefResourceHandler
     {
         private static int _requestNo;
 
@@ -74,7 +74,7 @@
             return false;
         }
 
-        protected override bool Read(Stream response, int bytesToRead, out int bytesRead, CefResourceReadCallback callback)
+        protected override bool Read(Span<byte> response, out int bytesRead, CefResourceReadCallback callback)
         {
             // Backwards compatibility. ReadResponse will be called.
             callback.Dispose();

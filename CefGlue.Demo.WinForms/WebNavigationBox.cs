@@ -76,26 +76,31 @@
             return type.Assembly.GetManifestResourceStream(type.Namespace + ".Resources." + name);
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string HomeUrl { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Address
         {
             get { return _addressTextBox.Text; }
             set { _addressTextBox.Text = value; }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool CanGoBack
         {
             get { return _goBackButton.Enabled; }
             set { _goBackButton.Enabled = value; }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool CanGoForward
         {
             get { return _goForwardButton.Enabled; }
             set { _goForwardButton.Enabled = value; }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool Loading
         {
             get { return _stopButton.Visible; }
