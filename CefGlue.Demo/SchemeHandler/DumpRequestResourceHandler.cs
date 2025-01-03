@@ -7,7 +7,8 @@
     using System.Text;
     using System.Threading;
 
-    internal sealed class  DumpRequestResourceHandler : CefResourceHandler
+    internal sealed class DumpRequestResourceHandler : CefResourceHandler
+
     {
         private static int _requestNo;
 
