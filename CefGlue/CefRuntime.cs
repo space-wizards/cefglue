@@ -12,58 +12,23 @@ namespace Xilium.CefGlue
 
     public static unsafe class CefRuntime
     {
-        private static readonly CefRuntimePlatform _platform;
+        private static readonly CefRuntimePlatform _platform = DetectPlatform();
 
         private static bool _loaded;
         private static bool _initialized;
 
-        static CefRuntime()
-        {
-            _platform = DetectPlatform();
-        }
-
         #region Platform Detection
         private static CefRuntimePlatform DetectPlatform()
         {
-            var platformId = Environment.OSVersion.Platform;
-
-            if (platformId == PlatformID.MacOSX)
+            if (OperatingSystem.IsWindows())
+                return CefRuntimePlatform.Windows;
+            if (OperatingSystem.IsLinux())
+                return CefRuntimePlatform.Linux;
+            if (OperatingSystem.IsMacOS())
                 return CefRuntimePlatform.MacOS;
 
-            int p = (int)platformId;
-            if ((p == 4) || (p == 128))
-                return IsRunningOnMac() ? CefRuntimePlatform.MacOS : CefRuntimePlatform.Linux;
-
-            return CefRuntimePlatform.Windows;
+            throw new InvalidOperationException("Unsupported operating system.");
         }
-
-        //From Managed.Windows.Forms/XplatUI
-        private static bool IsRunningOnMac()
-        {
-            IntPtr buf = IntPtr.Zero;
-            try
-            {
-                buf = Marshal.AllocHGlobal(8192);
-                // This is a hacktastic way of getting sysname from uname ()
-                if (uname(buf) == 0)
-                {
-                    string? os = Marshal.PtrToStringAnsi(buf);
-                    if (os == "Darwin")
-                        return true;
-                }
-            }
-            catch { }
-            finally
-            {
-                if (buf != IntPtr.Zero)
-                    Marshal.FreeHGlobal(buf);
-            }
-
-            return false;
-        }
-
-        [DllImport("libc")]
-        private static extern int uname(IntPtr buf);
 
         public static CefRuntimePlatform Platform
         {
