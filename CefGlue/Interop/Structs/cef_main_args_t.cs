@@ -13,24 +13,18 @@
         public IntPtr instance;
 
         #region Alloc & Free
-        private static int _sizeof;
-
-        static cef_main_args_t_windows()
-        {
-            _sizeof = Marshal.SizeOf(typeof(cef_main_args_t_windows));
-        }
 
         public static cef_main_args_t_windows* Alloc()
         {
-            var ptr = (cef_main_args_t_windows*)Marshal.AllocHGlobal(_sizeof);
-            *ptr = new cef_main_args_t_windows();
+            var ptr = (cef_main_args_t_windows*)NativeMemory.AllocZeroed((UIntPtr)sizeof(cef_main_args_t_windows));
             return ptr;
         }
 
         public static void Free(cef_main_args_t_windows* ptr)
         {
-            Marshal.FreeHGlobal((IntPtr)ptr);
+            NativeMemory.Free(ptr);
         }
+
         #endregion
     }
 
@@ -38,26 +32,18 @@
     internal unsafe struct cef_main_args_t_posix
     {
         public int argc;
-        public IntPtr argv;
+        public byte** argv;
 
         #region Alloc & Free
-        private static int _sizeof;
-
-        static cef_main_args_t_posix()
-        {
-            _sizeof = Marshal.SizeOf(typeof(cef_main_args_t_posix));
-        }
-
         public static cef_main_args_t_posix* Alloc()
         {
-            var ptr = (cef_main_args_t_posix*)Marshal.AllocHGlobal(_sizeof);
-            *ptr = new cef_main_args_t_posix();
+            var ptr = (cef_main_args_t_posix*)NativeMemory.AllocZeroed((nuint)sizeof(cef_main_args_t_posix));
             return ptr;
         }
 
         public static void Free(cef_main_args_t_posix* ptr)
         {
-            Marshal.FreeHGlobal((IntPtr)ptr);
+            NativeMemory.Free(ptr);
         }
         #endregion
     }

@@ -46,24 +46,16 @@ namespace Xilium.CefGlue.Interop
         public int chrome_app_icon_id;
 
         #region Alloc & Free
-        private static int _sizeof;
-
-        static cef_settings_t()
-        {
-            _sizeof = Marshal.SizeOf(typeof(cef_settings_t));
-        }
-
         public static cef_settings_t* Alloc()
         {
-            var ptr = (cef_settings_t*)Marshal.AllocHGlobal(_sizeof);
-            *ptr = new cef_settings_t();
-            ptr->size = (UIntPtr)_sizeof;
+            var ptr = (cef_settings_t*)NativeMemory.AllocZeroed((UIntPtr)sizeof(cef_settings_t));
+            ptr->size = (UIntPtr)sizeof(cef_settings_t);
             return ptr;
         }
 
         public static void Free(cef_settings_t* ptr)
         {
-            Marshal.FreeHGlobal((IntPtr)ptr);
+            NativeMemory.Free(ptr);
         }
         #endregion
     }

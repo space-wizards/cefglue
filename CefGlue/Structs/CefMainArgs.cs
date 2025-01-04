@@ -57,42 +57,42 @@
         }
 
         // TODO: check this, and reimplement CefMainArgs to do not leak memory
-        private IntPtr MarshallArgcArgvBlock(string[] args)
+        private byte** MarshallArgcArgvBlock(string[] args)
         {
             Debug.Assert(args != null);
 
             var encoding = Encoding.UTF8;
 
             // calculate required block length
-            var sizeOfArray = sizeof(IntPtr) * (args.Length + 1); // sizeof array of pointers to arguments
+            var sizeOfArray = sizeof(byte*) * (args.Length + 1); // sizeof array of pointers to arguments
             var size = sizeOfArray; // size for entire block
             foreach (var arg in args)
             {
                 size += 1 + encoding.GetByteCount(arg ?? "");
             }
 
-            byte** argv = (byte**)Marshal.AllocHGlobal(size);
+            byte** argv = (byte**)NativeMemory.Alloc((nuint)size);
             byte* data = (byte*)argv + sizeOfArray;
 
             for (var i=0; i < args.Length; i++)
             {
                 argv[i] = data;
 
-                var bytes = encoding.GetBytes(args[i]);
-                Marshal.Copy(bytes, 0, (IntPtr)data, bytes.Length);
-                data += bytes.Length;
+                var length = encoding.GetByteCount(args[i]);
+                encoding.GetBytes(args[i], new Span<byte>(data, length));
+                data += length;
                 data[0] = 0;
                 data++;
             }
 
-            argv[args.Length] = (byte*)0;
+            argv[args.Length] = null;
 
-            return (IntPtr)argv;
+            return argv;
         }
 
-        private void FreeArgcArgvBlock(IntPtr ptr)
+        private static void FreeArgcArgvBlock(void* ptr)
         {
-            Marshal.FreeHGlobal(ptr);
+            NativeMemory.Free(ptr);
         }
 
         internal static void Free(cef_main_args_t* ptr)
@@ -105,6 +105,7 @@
 
                 case CefRuntimePlatform.Linux:
                 case CefRuntimePlatform.MacOS:
+                    FreeArgcArgvBlock(((cef_main_args_t_posix*)ptr)->argv);
                     cef_main_args_t_posix.Free((cef_main_args_t_posix*)ptr);
                     return;
 

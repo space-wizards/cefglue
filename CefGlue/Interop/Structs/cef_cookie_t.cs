@@ -31,23 +31,15 @@ namespace Xilium.CefGlue.Interop
         }
 
         #region Alloc & Free
-        private static int _sizeof;
-
-        static cef_cookie_t()
-        {
-            _sizeof = Marshal.SizeOf(typeof(cef_cookie_t));
-        }
-
         public static cef_cookie_t* Alloc()
         {
-            var ptr = (cef_cookie_t*)Marshal.AllocHGlobal(_sizeof);
-            *ptr = new cef_cookie_t();
+            var ptr = (cef_cookie_t*)NativeMemory.AllocZeroed((UIntPtr)sizeof(cef_cookie_t));
             return ptr;
         }
 
         public static void Free(cef_cookie_t* ptr)
         {
-            Marshal.FreeHGlobal((IntPtr)ptr);
+            NativeMemory.Free(ptr);
         }
         #endregion
     }

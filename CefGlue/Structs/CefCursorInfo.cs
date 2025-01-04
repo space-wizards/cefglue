@@ -52,9 +52,7 @@
         {
             ThrowIfDisposed();
             var bufferLength = _ptr->size.width * _ptr->size.height * 4;
-            var bytes = new byte[bufferLength];
-            Marshal.Copy((IntPtr)_ptr->buffer, bytes, 0, bufferLength);
-            return bytes;
+            return new Span<byte>(_ptr->buffer, bufferLength).ToArray();
         }
 
         public CefSize Size
