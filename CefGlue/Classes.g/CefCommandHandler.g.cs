@@ -12,8 +12,6 @@ namespace Xilium.CefGlue
     // Role: HANDLER
     public abstract unsafe partial class CefCommandHandler
     {
-        private static Dictionary<IntPtr, CefCommandHandler> _roots = new Dictionary<IntPtr, CefCommandHandler>();
-        
         private int _refct;
         private cef_command_handler_t* _self;
         
@@ -21,7 +19,7 @@ namespace Xilium.CefGlue
         
         protected CefCommandHandler()
         {
-            _self = cef_command_handler_t.Alloc(this);
+            _self = cef_command_handler_t.Alloc();
         }
         
         ~CefCommandHandler()
@@ -45,7 +43,7 @@ namespace Xilium.CefGlue
                 var result = ++_refct;
                 if (result == 1)
                 {
-                    lock (_roots) { _roots.Add((IntPtr)_self, this); }
+                    _self->_obj = GCHandle.Alloc(this);
                 }
             }
         }
@@ -57,7 +55,7 @@ namespace Xilium.CefGlue
                 var result = --_refct;
                 if (result == 0)
                 {
-                    lock (_roots) { _roots.Remove((IntPtr)_self); }
+                    _self->_obj.Free();
                     return 1;
                 }
                 return 0;

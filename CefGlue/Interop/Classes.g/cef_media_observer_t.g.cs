@@ -76,12 +76,11 @@ namespace Xilium.CefGlue.Interop
             obj.on_route_message_received(self, route, message, message_size);
         }
         
-        internal static cef_media_observer_t* Alloc(CefMediaObserver obj)
+        internal static cef_media_observer_t* Alloc()
         {
             var ptr = (cef_media_observer_t*)NativeMemory.Alloc((UIntPtr)sizeof(cef_media_observer_t));
             *ptr = default(cef_media_observer_t);
             ptr->_base._size = (UIntPtr)sizeof(cef_media_observer_t);
-            ptr->_obj = GCHandle.Alloc(obj);
             ptr->_base._add_ref = (delegate* unmanaged<cef_base_ref_counted_t*, void>)(delegate* unmanaged<cef_media_observer_t*, void>)&add_ref;
             ptr->_base._release = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_media_observer_t*, int>)&release;
             ptr->_base._has_one_ref = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_media_observer_t*, int>)&has_one_ref;
@@ -95,7 +94,6 @@ namespace Xilium.CefGlue.Interop
         
         internal static void Free(cef_media_observer_t* ptr)
         {
-            ptr->_obj.Free();
             NativeMemory.Free((void*)ptr);
         }
         

@@ -12,8 +12,6 @@ namespace Xilium.CefGlue
     // Role: HANDLER
     public abstract unsafe partial class CefStringVisitor
     {
-        private static Dictionary<IntPtr, CefStringVisitor> _roots = new Dictionary<IntPtr, CefStringVisitor>();
-        
         private int _refct;
         private cef_string_visitor_t* _self;
         
@@ -21,7 +19,7 @@ namespace Xilium.CefGlue
         
         protected CefStringVisitor()
         {
-            _self = cef_string_visitor_t.Alloc(this);
+            _self = cef_string_visitor_t.Alloc();
         }
         
         ~CefStringVisitor()
@@ -51,7 +49,7 @@ namespace Xilium.CefGlue
                 var result = ++_refct;
                 if (result == 1)
                 {
-                    lock (_roots) { _roots.Add((IntPtr)_self, this); }
+                    _self->_obj = GCHandle.Alloc(this);
                 }
             }
         }
@@ -63,7 +61,7 @@ namespace Xilium.CefGlue
                 var result = --_refct;
                 if (result == 0)
                 {
-                    lock (_roots) { _roots.Remove((IntPtr)_self); }
+                    _self->_obj.Free();
                     Dispose();
                     return 1;
                 }

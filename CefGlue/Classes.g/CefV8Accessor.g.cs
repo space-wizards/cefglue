@@ -12,8 +12,6 @@ namespace Xilium.CefGlue
     // Role: HANDLER
     public abstract unsafe partial class CefV8Accessor
     {
-        private static Dictionary<IntPtr, CefV8Accessor> _roots = new Dictionary<IntPtr, CefV8Accessor>();
-        
         private int _refct;
         private cef_v8accessor_t* _self;
         
@@ -21,7 +19,7 @@ namespace Xilium.CefGlue
         
         protected CefV8Accessor()
         {
-            _self = cef_v8accessor_t.Alloc(this);
+            _self = cef_v8accessor_t.Alloc();
         }
         
         ~CefV8Accessor()
@@ -45,7 +43,7 @@ namespace Xilium.CefGlue
                 var result = ++_refct;
                 if (result == 1)
                 {
-                    lock (_roots) { _roots.Add((IntPtr)_self, this); }
+                    _self->_obj = GCHandle.Alloc(this);
                 }
             }
         }
@@ -57,7 +55,7 @@ namespace Xilium.CefGlue
                 var result = --_refct;
                 if (result == 0)
                 {
-                    lock (_roots) { _roots.Remove((IntPtr)_self); }
+                    _self->_obj.Free();
                     return 1;
                 }
                 return 0;

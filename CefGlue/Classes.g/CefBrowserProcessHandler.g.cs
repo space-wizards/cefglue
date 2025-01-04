@@ -12,8 +12,6 @@ namespace Xilium.CefGlue
     // Role: HANDLER
     public abstract unsafe partial class CefBrowserProcessHandler
     {
-        private static Dictionary<IntPtr, CefBrowserProcessHandler> _roots = new Dictionary<IntPtr, CefBrowserProcessHandler>();
-        
         private int _refct;
         private cef_browser_process_handler_t* _self;
         
@@ -21,7 +19,7 @@ namespace Xilium.CefGlue
         
         protected CefBrowserProcessHandler()
         {
-            _self = cef_browser_process_handler_t.Alloc(this);
+            _self = cef_browser_process_handler_t.Alloc();
         }
         
         ~CefBrowserProcessHandler()
@@ -45,7 +43,7 @@ namespace Xilium.CefGlue
                 var result = ++_refct;
                 if (result == 1)
                 {
-                    lock (_roots) { _roots.Add((IntPtr)_self, this); }
+                    _self->_obj = GCHandle.Alloc(this);
                 }
             }
         }
@@ -57,7 +55,7 @@ namespace Xilium.CefGlue
                 var result = --_refct;
                 if (result == 0)
                 {
-                    lock (_roots) { _roots.Remove((IntPtr)_self); }
+                    _self->_obj.Free();
                     return 1;
                 }
                 return 0;

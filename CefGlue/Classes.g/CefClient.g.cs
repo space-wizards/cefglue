@@ -39,7 +39,7 @@ namespace Xilium.CefGlue
         
         protected CefClient()
         {
-            _self = cef_client_t.Alloc(this);
+            _self = cef_client_t.Alloc();
         }
         
         ~CefClient()
@@ -63,6 +63,7 @@ namespace Xilium.CefGlue
                 var result = ++_refct;
                 if (result == 1)
                 {
+                    _self->_obj = GCHandle.Alloc(this);
                     lock (_roots) { _roots.Add((IntPtr)_self, this); }
                 }
             }
@@ -75,6 +76,7 @@ namespace Xilium.CefGlue
                 var result = --_refct;
                 if (result == 0)
                 {
+                    _self->_obj.Free();
                     lock (_roots) { _roots.Remove((IntPtr)_self); }
                     return 1;
                 }

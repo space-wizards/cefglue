@@ -60,12 +60,11 @@ namespace Xilium.CefGlue.Interop
             return obj.filter(self, data_in, data_in_size, data_in_read, data_out, data_out_size, data_out_written);
         }
         
-        internal static cef_response_filter_t* Alloc(CefResponseFilter obj)
+        internal static cef_response_filter_t* Alloc()
         {
             var ptr = (cef_response_filter_t*)NativeMemory.Alloc((UIntPtr)sizeof(cef_response_filter_t));
             *ptr = default(cef_response_filter_t);
             ptr->_base._size = (UIntPtr)sizeof(cef_response_filter_t);
-            ptr->_obj = GCHandle.Alloc(obj);
             ptr->_base._add_ref = (delegate* unmanaged<cef_base_ref_counted_t*, void>)(delegate* unmanaged<cef_response_filter_t*, void>)&add_ref;
             ptr->_base._release = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_response_filter_t*, int>)&release;
             ptr->_base._has_one_ref = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_response_filter_t*, int>)&has_one_ref;
@@ -77,7 +76,6 @@ namespace Xilium.CefGlue.Interop
         
         internal static void Free(cef_response_filter_t* ptr)
         {
-            ptr->_obj.Free();
             NativeMemory.Free((void*)ptr);
         }
         

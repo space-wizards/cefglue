@@ -52,12 +52,11 @@ namespace Xilium.CefGlue.Interop
             obj.execute(self);
         }
         
-        internal static cef_task_t* Alloc(CefTask obj)
+        internal static cef_task_t* Alloc()
         {
             var ptr = (cef_task_t*)NativeMemory.Alloc((UIntPtr)sizeof(cef_task_t));
             *ptr = default(cef_task_t);
             ptr->_base._size = (UIntPtr)sizeof(cef_task_t);
-            ptr->_obj = GCHandle.Alloc(obj);
             ptr->_base._add_ref = (delegate* unmanaged<cef_base_ref_counted_t*, void>)(delegate* unmanaged<cef_task_t*, void>)&add_ref;
             ptr->_base._release = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_task_t*, int>)&release;
             ptr->_base._has_one_ref = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_task_t*, int>)&has_one_ref;
@@ -68,7 +67,6 @@ namespace Xilium.CefGlue.Interop
         
         internal static void Free(cef_task_t* ptr)
         {
-            ptr->_obj.Free();
             NativeMemory.Free((void*)ptr);
         }
         

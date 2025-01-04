@@ -132,12 +132,11 @@ namespace Xilium.CefGlue.Interop
             obj.on_media_access_change(self, browser, has_video_access, has_audio_access);
         }
         
-        internal static cef_display_handler_t* Alloc(CefDisplayHandler obj)
+        internal static cef_display_handler_t* Alloc()
         {
             var ptr = (cef_display_handler_t*)NativeMemory.Alloc((UIntPtr)sizeof(cef_display_handler_t));
             *ptr = default(cef_display_handler_t);
             ptr->_base._size = (UIntPtr)sizeof(cef_display_handler_t);
-            ptr->_obj = GCHandle.Alloc(obj);
             ptr->_base._add_ref = (delegate* unmanaged<cef_base_ref_counted_t*, void>)(delegate* unmanaged<cef_display_handler_t*, void>)&add_ref;
             ptr->_base._release = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_display_handler_t*, int>)&release;
             ptr->_base._has_one_ref = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_display_handler_t*, int>)&has_one_ref;
@@ -158,7 +157,6 @@ namespace Xilium.CefGlue.Interop
         
         internal static void Free(cef_display_handler_t* ptr)
         {
-            ptr->_obj.Free();
             NativeMemory.Free((void*)ptr);
         }
         

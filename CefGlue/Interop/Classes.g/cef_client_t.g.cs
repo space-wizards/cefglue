@@ -196,12 +196,11 @@ namespace Xilium.CefGlue.Interop
             return obj.on_process_message_received(self, browser, frame, source_process, message);
         }
         
-        internal static cef_client_t* Alloc(CefClient obj)
+        internal static cef_client_t* Alloc()
         {
             var ptr = (cef_client_t*)NativeMemory.Alloc((UIntPtr)sizeof(cef_client_t));
             *ptr = default(cef_client_t);
             ptr->_base._size = (UIntPtr)sizeof(cef_client_t);
-            ptr->_obj = GCHandle.Alloc(obj);
             ptr->_base._add_ref = (delegate* unmanaged<cef_base_ref_counted_t*, void>)(delegate* unmanaged<cef_client_t*, void>)&add_ref;
             ptr->_base._release = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_client_t*, int>)&release;
             ptr->_base._has_one_ref = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_client_t*, int>)&has_one_ref;
@@ -230,7 +229,6 @@ namespace Xilium.CefGlue.Interop
         
         internal static void Free(cef_client_t* ptr)
         {
-            ptr->_obj.Free();
             NativeMemory.Free((void*)ptr);
         }
         

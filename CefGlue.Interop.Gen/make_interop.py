@@ -267,12 +267,11 @@ def make_struct_members(cls):
             result.append('}')
             result.append('')
 
-        result.append('internal static %s* Alloc(%s obj)' % (iname, schema.cpp2csname(cls.get_name())))
+        result.append('internal static %s* Alloc()' % (iname))
         result.append('{')
         result.append(indent + 'var ptr = (%s*)NativeMemory.Alloc((UIntPtr)sizeof(%s));' % (iname, iname))
         result.append(indent + '*ptr = default(%s);' % iname)
         result.append(indent + 'ptr->_base._size = (UIntPtr)sizeof(%s);' % iname)
-        result.append(indent + 'ptr->_obj = GCHandle.Alloc(obj);')
 
         for func in funcs:
             cast = ""
@@ -287,7 +286,6 @@ def make_struct_members(cls):
 
         result.append('internal static void Free(%s* ptr)' % iname)
         result.append('{')
-        result.append(indent + 'ptr->_obj.Free();')
         result.append(indent + 'NativeMemory.Free((void*)ptr);')
         result.append('}')
         result.append('')
@@ -528,9 +526,9 @@ def make_handler_g_body(cls):
 
     result = []
 
-    # this dictionary used to keep object alive even when we doesn't reference object directly, but it can be referenced only from native side
-    result.append('private static Dictionary<IntPtr, %(csname)s> _roots = new Dictionary<IntPtr, %(csname)s>();' % { 'csname' : csname })
-    result.append('')
+    if schema.is_reversible(cls):
+        result.append('private static Dictionary<IntPtr, %(csname)s> _roots = new Dictionary<IntPtr, %(csname)s>();' % { 'csname' : csname })
+        result.append('')
 
     result.append('private int _refct;')
     result.append('private %s* _self;' % iname)
@@ -564,7 +562,7 @@ def make_handler_g_body(cls):
     # ctor
     result.append('protected %s()' % csname)
     result.append('{')
-    result.append(indent + '_self = %s.Alloc(this);' % iname)
+    result.append(indent + '_self = %s.Alloc();' % iname)
     result.append('}')
     result.append('')
 
@@ -603,7 +601,9 @@ def make_handler_g_body(cls):
     result.append(indent + indent + 'var result = ++_refct;')
     result.append(indent + indent + 'if (result == 1)')
     result.append(indent + indent + '{')
-    result.append(indent + indent + indent + 'lock (_roots) { _roots.Add((IntPtr)_self, this); }')
+    result.append(indent + indent + indent + '_self->_obj = GCHandle.Alloc(this);')
+    if schema.is_reversible(cls):
+        result.append(indent + indent + indent + 'lock (_roots) { _roots.Add((IntPtr)_self, this); }')
     result.append(indent + indent + '}')
     result.append(indent + '}')
     result.append('}')
@@ -616,7 +616,9 @@ def make_handler_g_body(cls):
     result.append(indent + indent + 'var result = --_refct;')
     result.append(indent + indent + 'if (result == 0)')
     result.append(indent + indent + '{')
-    result.append(indent + indent + indent + 'lock (_roots) { _roots.Remove((IntPtr)_self); }')
+    result.append(indent + indent + indent + '_self->_obj.Free();')
+    if schema.is_reversible(cls):
+        result.append(indent + indent + indent + 'lock (_roots) { _roots.Remove((IntPtr)_self); }')
     if schema.is_autodispose(cls):
         result.append(indent + indent + indent + 'Dispose();')
     result.append(indent + indent + indent + 'return 1;')

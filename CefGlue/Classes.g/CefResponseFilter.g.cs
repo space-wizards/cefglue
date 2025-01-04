@@ -12,8 +12,6 @@ namespace Xilium.CefGlue
     // Role: HANDLER
     public abstract unsafe partial class CefResponseFilter
     {
-        private static Dictionary<IntPtr, CefResponseFilter> _roots = new Dictionary<IntPtr, CefResponseFilter>();
-        
         private int _refct;
         private cef_response_filter_t* _self;
         
@@ -21,7 +19,7 @@ namespace Xilium.CefGlue
         
         protected CefResponseFilter()
         {
-            _self = cef_response_filter_t.Alloc(this);
+            _self = cef_response_filter_t.Alloc();
         }
         
         ~CefResponseFilter()
@@ -51,7 +49,7 @@ namespace Xilium.CefGlue
                 var result = ++_refct;
                 if (result == 1)
                 {
-                    lock (_roots) { _roots.Add((IntPtr)_self, this); }
+                    _self->_obj = GCHandle.Alloc(this);
                 }
             }
         }
@@ -63,7 +61,7 @@ namespace Xilium.CefGlue
                 var result = --_refct;
                 if (result == 0)
                 {
-                    lock (_roots) { _roots.Remove((IntPtr)_self); }
+                    _self->_obj.Free();
                     Dispose();
                     return 1;
                 }
