@@ -13,7 +13,8 @@ namespace Xilium.CefGlue.Interop
     internal unsafe struct cef_life_span_handler_t
     {
         internal cef_base_ref_counted_t _base;
-        internal delegate* unmanaged<cef_life_span_handler_t*, cef_browser_t*, cef_frame_t*, cef_string_t*, cef_string_t*, CefWindowOpenDisposition, int, cef_popup_features_t*, cef_window_info_t*, cef_client_t**, cef_browser_settings_t*, cef_dictionary_value_t**, int*, int> _on_before_popup;
+        internal delegate* unmanaged<cef_life_span_handler_t*, cef_browser_t*, cef_frame_t*, int, cef_string_t*, cef_string_t*, CefWindowOpenDisposition, int, cef_popup_features_t*, cef_window_info_t*, cef_client_t**, cef_browser_settings_t*, cef_dictionary_value_t**, int*, int> _on_before_popup;
+        internal delegate* unmanaged<cef_life_span_handler_t*, cef_browser_t*, int, void> _on_before_popup_aborted;
         internal delegate* unmanaged<cef_life_span_handler_t*, cef_browser_t*, cef_window_info_t*, cef_client_t**, cef_browser_settings_t*, cef_dictionary_value_t**, int*, void> _on_before_dev_tools_popup;
         internal delegate* unmanaged<cef_life_span_handler_t*, cef_browser_t*, void> _on_after_created;
         internal delegate* unmanaged<cef_life_span_handler_t*, cef_browser_t*, int> _do_close;
@@ -50,10 +51,17 @@ namespace Xilium.CefGlue.Interop
         }
         
         [UnmanagedCallersOnly]
-        public static int on_before_popup(cef_life_span_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* target_url, cef_string_t* target_frame_name, CefWindowOpenDisposition target_disposition, int user_gesture, cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, cef_dictionary_value_t** extra_info, int* no_javascript_access)
+        public static int on_before_popup(cef_life_span_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int popup_id, cef_string_t* target_url, cef_string_t* target_frame_name, CefWindowOpenDisposition target_disposition, int user_gesture, cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, cef_dictionary_value_t** extra_info, int* no_javascript_access)
         {
             var obj = (CefLifeSpanHandler)self->_obj.Target;
-            return obj.on_before_popup(self, browser, frame, target_url, target_frame_name, target_disposition, user_gesture, popupFeatures, windowInfo, client, settings, extra_info, no_javascript_access);
+            return obj.on_before_popup(self, browser, frame, popup_id, target_url, target_frame_name, target_disposition, user_gesture, popupFeatures, windowInfo, client, settings, extra_info, no_javascript_access);
+        }
+        
+        [UnmanagedCallersOnly]
+        public static void on_before_popup_aborted(cef_life_span_handler_t* self, cef_browser_t* browser, int popup_id)
+        {
+            var obj = (CefLifeSpanHandler)self->_obj.Target;
+            obj.on_before_popup_aborted(self, browser, popup_id);
         }
         
         [UnmanagedCallersOnly]
@@ -95,6 +103,7 @@ namespace Xilium.CefGlue.Interop
             ptr->_base._has_one_ref = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_life_span_handler_t*, int>)&has_one_ref;
             ptr->_base._has_at_least_one_ref = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_life_span_handler_t*, int>)&has_at_least_one_ref;
             ptr->_on_before_popup = &on_before_popup;
+            ptr->_on_before_popup_aborted = &on_before_popup_aborted;
             ptr->_on_before_dev_tools_popup = &on_before_dev_tools_popup;
             ptr->_on_after_created = &on_after_created;
             ptr->_do_close = &do_close;

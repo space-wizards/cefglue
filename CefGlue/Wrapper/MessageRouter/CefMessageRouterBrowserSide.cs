@@ -339,12 +339,12 @@
             if (messageName == _queryMessageName)
             {
                 var args = message.Arguments;
-                Debug.Assert(args.Count == 6);
+                Debug.Assert(args.Count == 4);
 
-                var contextId = args.GetInt(2);
-                var requestId = args.GetInt(3);
-                var request = args.GetString(4);
-                var persistent = args.GetBool(5);
+                var contextId = args.GetInt(0);
+                var requestId = args.GetInt(1);
+                var request = args.GetString(2);
+                var persistent = args.GetBool(3);
 
                 if (_handlerSet.Count == 0)
                 {

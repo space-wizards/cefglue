@@ -14,6 +14,7 @@ namespace Xilium.CefGlue.Interop
     {
         internal cef_base_ref_counted_t _base;
         internal delegate* unmanaged<cef_frame_handler_t*, cef_browser_t*, cef_frame_t*, void> _on_frame_created;
+        internal delegate* unmanaged<cef_frame_handler_t*, cef_browser_t*, cef_frame_t*, void> _on_frame_destroyed;
         internal delegate* unmanaged<cef_frame_handler_t*, cef_browser_t*, cef_frame_t*, int, void> _on_frame_attached;
         internal delegate* unmanaged<cef_frame_handler_t*, cef_browser_t*, cef_frame_t*, void> _on_frame_detached;
         internal delegate* unmanaged<cef_frame_handler_t*, cef_browser_t*, cef_frame_t*, cef_frame_t*, void> _on_main_frame_changed;
@@ -56,6 +57,13 @@ namespace Xilium.CefGlue.Interop
         }
         
         [UnmanagedCallersOnly]
+        public static void on_frame_destroyed(cef_frame_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
+        {
+            var obj = (CefFrameHandler)self->_obj.Target;
+            obj.on_frame_destroyed(self, browser, frame);
+        }
+        
+        [UnmanagedCallersOnly]
         public static void on_frame_attached(cef_frame_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int reattached)
         {
             var obj = (CefFrameHandler)self->_obj.Target;
@@ -87,6 +95,7 @@ namespace Xilium.CefGlue.Interop
             ptr->_base._has_one_ref = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_frame_handler_t*, int>)&has_one_ref;
             ptr->_base._has_at_least_one_ref = (delegate* unmanaged<cef_base_ref_counted_t*, int>)(delegate* unmanaged<cef_frame_handler_t*, int>)&has_at_least_one_ref;
             ptr->_on_frame_created = &on_frame_created;
+            ptr->_on_frame_destroyed = &on_frame_destroyed;
             ptr->_on_frame_attached = &on_frame_attached;
             ptr->_on_frame_detached = &on_frame_detached;
             ptr->_on_main_frame_changed = &on_main_frame_changed;

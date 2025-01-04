@@ -79,12 +79,12 @@
         /// Called when web content in the page has toggled fullscreen mode. If
         /// |fullscreen| is true the content will automatically be sized to fill the
         /// browser content area. If |fullscreen| is false the content will
-        /// automatically return to its original size and position. With the Alloy
-        /// runtime the client is responsible for triggering the fullscreen transition
-        /// (for example, by calling CefWindow::SetFullscreen when using Views). With
-        /// the Chrome runtime the fullscreen transition will be triggered
-        /// automatically. The CefWindowDelegate::OnWindowFullscreenTransition method
-        /// will be called during the fullscreen transition for notification purposes.
+        /// automatically return to its original size and position. With Alloy style
+        /// the client is responsible for triggering the fullscreen transition (for
+        /// example, by calling CefWindow::SetFullscreen when using Views). With
+        /// Chrome style the fullscreen transition will be triggered automatically.
+        /// The CefWindowDelegate::OnWindowFullscreenTransition method will be called
+        /// during the fullscreen transition for notification purposes.
         /// </summary>
         protected virtual void OnFullscreenModeChange(CefBrowser browser, bool fullscreen) { }
 

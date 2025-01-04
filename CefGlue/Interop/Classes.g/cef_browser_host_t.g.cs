@@ -16,9 +16,11 @@ namespace Xilium.CefGlue.Interop
         internal delegate* unmanaged<cef_browser_host_t*, cef_browser_t*> _get_browser;
         internal delegate* unmanaged<cef_browser_host_t*, int, void> _close_browser;
         internal delegate* unmanaged<cef_browser_host_t*, int> _try_close_browser;
+        internal delegate* unmanaged<cef_browser_host_t*, int> _is_ready_to_be_closed;
         internal delegate* unmanaged<cef_browser_host_t*, int, void> _set_focus;
         internal delegate* unmanaged<cef_browser_host_t*, IntPtr> _get_window_handle;
         internal delegate* unmanaged<cef_browser_host_t*, IntPtr> _get_opener_window_handle;
+        internal delegate* unmanaged<cef_browser_host_t*, int> _get_opener_identifier;
         internal delegate* unmanaged<cef_browser_host_t*, int> _has_view;
         internal delegate* unmanaged<cef_browser_host_t*, cef_client_t*> _get_client;
         internal delegate* unmanaged<cef_browser_host_t*, cef_request_context_t*> _get_request_context;
@@ -71,14 +73,14 @@ namespace Xilium.CefGlue.Interop
         internal delegate* unmanaged<cef_browser_host_t*, cef_navigation_entry_t*> _get_visible_navigation_entry;
         internal delegate* unmanaged<cef_browser_host_t*, CefState, void> _set_accessibility_state;
         internal delegate* unmanaged<cef_browser_host_t*, int, cef_size_t*, cef_size_t*, void> _set_auto_resize_enabled;
-        internal delegate* unmanaged<cef_browser_host_t*, cef_extension_t*> _get_extension;
-        internal delegate* unmanaged<cef_browser_host_t*, int> _is_background_host;
         internal delegate* unmanaged<cef_browser_host_t*, int, void> _set_audio_muted;
         internal delegate* unmanaged<cef_browser_host_t*, int> _is_audio_muted;
         internal delegate* unmanaged<cef_browser_host_t*, int> _is_fullscreen;
         internal delegate* unmanaged<cef_browser_host_t*, int, void> _exit_fullscreen;
         internal delegate* unmanaged<cef_browser_host_t*, int, int> _can_execute_chrome_command;
         internal delegate* unmanaged<cef_browser_host_t*, int, CefWindowOpenDisposition, void> _execute_chrome_command;
+        internal delegate* unmanaged<cef_browser_host_t*, int> _is_render_process_unresponsive;
+        internal delegate* unmanaged<cef_browser_host_t*, CefRuntimeStyle> _get_runtime_style;
         
         // CreateBrowser
         [DllImport(libcef.DllName, EntryPoint = "cef_browser_host_create_browser", CallingConvention = libcef.CEF_CALL)]
@@ -87,6 +89,10 @@ namespace Xilium.CefGlue.Interop
         // CreateBrowserSync
         [DllImport(libcef.DllName, EntryPoint = "cef_browser_host_create_browser_sync", CallingConvention = libcef.CEF_CALL)]
         public static extern cef_browser_t* create_browser_sync(cef_window_info_t* windowInfo, cef_client_t* client, cef_string_t* url, cef_browser_settings_t* settings, cef_dictionary_value_t* extra_info, cef_request_context_t* request_context);
+        
+        // GetBrowserByIdentifier
+        [DllImport(libcef.DllName, EntryPoint = "cef_browser_host_get_browser_by_identifier", CallingConvention = libcef.CEF_CALL)]
+        public static extern cef_browser_t* get_browser_by_identifier(int browser_id);
         
         // AddRef
         
@@ -137,6 +143,13 @@ namespace Xilium.CefGlue.Interop
             return self->_try_close_browser(self);
         }
         
+        // IsReadyToBeClosed
+        
+        public static int is_ready_to_be_closed(cef_browser_host_t* self)
+        {
+            return self->_is_ready_to_be_closed(self);
+        }
+        
         // SetFocus
         
         public static void set_focus(cef_browser_host_t* self, int focus)
@@ -156,6 +169,13 @@ namespace Xilium.CefGlue.Interop
         public static IntPtr get_opener_window_handle(cef_browser_host_t* self)
         {
             return self->_get_opener_window_handle(self);
+        }
+        
+        // GetOpenerIdentifier
+        
+        public static int get_opener_identifier(cef_browser_host_t* self)
+        {
+            return self->_get_opener_identifier(self);
         }
         
         // HasView
@@ -522,20 +542,6 @@ namespace Xilium.CefGlue.Interop
             self->_set_auto_resize_enabled(self, enabled, min_size, max_size);
         }
         
-        // GetExtension
-        
-        public static cef_extension_t* get_extension(cef_browser_host_t* self)
-        {
-            return self->_get_extension(self);
-        }
-        
-        // IsBackgroundHost
-        
-        public static int is_background_host(cef_browser_host_t* self)
-        {
-            return self->_is_background_host(self);
-        }
-        
         // SetAudioMuted
         
         public static void set_audio_muted(cef_browser_host_t* self, int mute)
@@ -576,6 +582,20 @@ namespace Xilium.CefGlue.Interop
         public static void execute_chrome_command(cef_browser_host_t* self, int command_id, CefWindowOpenDisposition disposition)
         {
             self->_execute_chrome_command(self, command_id, disposition);
+        }
+        
+        // IsRenderProcessUnresponsive
+        
+        public static int is_render_process_unresponsive(cef_browser_host_t* self)
+        {
+            return self->_is_render_process_unresponsive(self);
+        }
+        
+        // GetRuntimeStyle
+        
+        public static CefRuntimeStyle get_runtime_style(cef_browser_host_t* self)
+        {
+            return self->_get_runtime_style(self);
         }
         
     }

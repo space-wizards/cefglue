@@ -37,7 +37,7 @@ extern "C" {
 
 ///
 /// Supported content setting types. Some types are platform-specific or only
-/// supported with the Chrome runtime. Should be kept in sync with Chromium's
+/// supported with Chrome style. Should be kept in sync with Chromium's
 /// ContentSettingsType type.
 ///
 typedef enum {
@@ -119,8 +119,8 @@ typedef enum {
   /// permission to respond to accessibility events, which can be used to
   /// provide a custom accessibility experience. Requires explicit user consent
   /// because some users may not want sites to know they're using assistive
-  /// technology.
-  CEF_CONTENT_SETTING_TYPE_ACCESSIBILITY_EVENTS,
+  /// technology. Deprecated in M131.
+  CEF_CONTENT_SETTING_TYPE_DEPRECATED_ACCESSIBILITY_EVENTS,
 
   /// Used to store whether to allow a website to install a payment handler.
   CEF_CONTENT_SETTING_TYPE_PAYMENT_HANDLER,
@@ -251,8 +251,7 @@ typedef enum {
   /// use by the File System Access API.
   CEF_CONTENT_SETTING_TYPE_FILE_SYSTEM_LAST_PICKED_DIRECTORY,
 
-  /// Controls access to the getDisplayMedia API when {preferCurrentTab: true}
-  /// is specified.
+  /// Controls access to the getDisplayMedia API.
   CEF_CONTENT_SETTING_TYPE_DISPLAY_CAPTURE,
 
   /// Website setting to store permissions metadata granted to paths on the
@@ -289,7 +288,8 @@ typedef enum {
   /// a specified account. When this is present it allows access to session
   /// management capabilities between the sites. This setting is associated
   /// with the relying party's origin.
-  CEF_CONTENT_SETTING_TYPE_FEDERATED_IDENTITY_ACTIVE_SESSION,
+  // Obsolete on Nov 2023.
+  CEF_CONTENT_SETTING_TYPE_DEPRECATED_FEDERATED_IDENTITY_ACTIVE_SESSION,
 
   /// Setting to indicate whether Chrome should automatically apply darkening to
   /// web content.
@@ -362,17 +362,34 @@ typedef enum {
   /// Stores per origin metadata for cookie controls.
   CEF_CONTENT_SETTING_TYPE_COOKIE_CONTROLS_METADATA,
 
-  /// Content Setting for 3PC accesses granted via 3PC deprecation trial.
-  CEF_CONTENT_SETTING_TYPE_TPCD_SUPPORT,
-
-  /// Content setting used to indicate whether entering picture-in-picture
-  /// automatically should be enabled.
-  CEF_CONTENT_SETTING_TYPE_AUTO_PICTURE_IN_PICTURE,
+  /// Content Setting for temporary 3PC accesses granted by user behavior
+  /// heuristics.
+  CEF_CONTENT_SETTING_TYPE_TPCD_HEURISTICS_GRANTS,
 
   /// Content Setting for 3PC accesses granted by metadata delivered via the
   /// component updater service. This type will only be used when
   /// `net::features::kTpcdMetadataGrants` is enabled.
   CEF_CONTENT_SETTING_TYPE_TPCD_METADATA_GRANTS,
+
+  /// Content Setting for 3PC accesses granted via 3PC deprecation trial.
+  CEF_CONTENT_SETTING_TYPE_TPCD_TRIAL,
+
+  /// Content Setting for 3PC accesses granted via top-level 3PC deprecation
+  /// trial. Similar to TPCD_TRIAL, but applicable at the page-level for the
+  /// lifetime of the page that served the token, rather than being specific to
+  /// a requesting-origin/top-level-site combination and persistent.
+  CEF_CONTENT_SETTING_TYPE_TOP_LEVEL_TPCD_TRIAL,
+
+  /// Content Setting for a first-party origin trial that allows websites to
+  /// enable third-party cookie deprecation.
+  /// ALLOW (default): no effect (e.g. third-party cookies allowed, if not
+  ///                  blocked otherwise).
+  /// BLOCK: third-party cookies blocked, but 3PCD mitigations enabled.
+  CEF_CONTENT_SETTING_TOP_LEVEL_TPCD_ORIGIN_TRIAL,
+
+  /// Content setting used to indicate whether entering picture-in-picture
+  /// automatically should be enabled.
+  CEF_CONTENT_SETTING_TYPE_AUTO_PICTURE_IN_PICTURE,
 
   /// Whether user has opted into keeping file/directory permissions persistent
   /// between visits for a given origin. When enabled, permission metadata
@@ -380,11 +397,87 @@ typedef enum {
   /// permission request.
   CEF_CONTENT_SETTING_TYPE_FILE_SYSTEM_ACCESS_EXTENDED_PERMISSION,
 
-  /// Content Setting for temporary 3PC accesses granted by user behavior
-  /// heuristics.
-  CEF_CONTENT_SETTING_TYPE_TPCD_HEURISTICS_GRANTS,
+  /// Whether the FSA Persistent Permissions restore prompt is eligible to be
+  /// shown to the user, for a given origin.
+  CEF_CONTENT_SETTING_TYPE_FILE_SYSTEM_ACCESS_RESTORE_PERMISSION,
 
-  CEF_CONTENT_SETTING_TYPE_NUM_TYPES,
+  /// Whether an application capturing another tab, may scroll and zoom
+  /// the captured tab.
+  CEF_CONTENT_SETTING_TYPE_CAPTURED_SURFACE_CONTROL,
+
+  /// Content setting for access to smart card readers.
+  /// The "guard" content setting stores whether to allow sites to access the
+  /// Smart Card API.
+  CEF_CONTENT_SETTING_TYPE_SMART_CARD_GUARD,
+  CEF_CONTENT_SETTING_TYPE_SMART_CARD_DATA,
+
+  /// Content settings for access to printers for the Web Printing API.
+  CEF_CONTENT_SETTING_TYPE_WEB_PRINTING,
+
+  /// Content setting used to indicate whether entering HTML Fullscreen
+  /// automatically (i.e. without transient activation) should be enabled.
+  CEF_CONTENT_SETTING_TYPE_AUTOMATIC_FULLSCREEN,
+
+  /// Content settings used to indicate that a web app is allowed to prompt the
+  /// user for the installation of sub apps.
+  CEF_CONTENT_SETTING_TYPE_SUB_APP_INSTALLATION_PROMPTS,
+
+  /// Whether an application can enumerate audio output device.
+  CEF_CONTENT_SETTING_TYPE_SPEAKER_SELECTION,
+
+  /// Content settings for access to the Direct Sockets API.
+  CEF_CONTENT_SETTING_TYPE_DIRECT_SOCKETS,
+
+  /// Keyboard Lock API allows a site to capture keyboard inputs that would
+  /// otherwise be handled by the OS or the browser.
+  CEF_CONTENT_SETTING_TYPE_KEYBOARD_LOCK,
+
+  /// Pointer Lock API allows a site to hide the cursor and have exclusive
+  /// access to mouse inputs.
+  CEF_CONTENT_SETTING_TYPE_POINTER_LOCK,
+
+  /// Website setting which is used for UnusedSitePermissionsService to store
+  /// auto-revoked notification permissions from abusive sites.
+  CEF_CONTENT_SETTING_TYPE_REVOKED_ABUSIVE_NOTIFICATION_PERMISSIONS,
+
+  /// Content setting that controls tracking protection status per site.
+  /// BLOCK: Protections enabled. This is the default state.
+  /// ALLOW: Protections disabled.
+  CEF_CONTENT_SETTING_TYPE_TRACKING_PROTECTION,
+
+  /// With this permission, when the application calls `getDisplayMedia()`, a
+  /// system audio track can be returned without showing the display media
+  /// selection picker. The application can explicitly specify
+  /// `systemAudio: 'exclude'` or `video: true` to still show the display media
+  /// selection picker if needed. Please note that the setting only works for
+  /// WebUI.
+  CEF_CONTENT_SETTING_TYPE_DISPLAY_MEDIA_SYSTEM_AUDIO,
+
+  /// Whether to use the higher-tier v8 optimizers for running JavaScript on the
+  /// page.
+  CEF_CONTENT_SETTING_TYPE_JAVASCRIPT_OPTIMIZER,
+
+  /// Content Setting for the Storage Access Headers persistent origin trial
+  /// that allows origins to opt into the storage access header behavior. Should
+  /// be scoped to `REQUESTING_ORIGIN_AND_TOP_SCHEMEFUL_SITE_SCOPE` in order to
+  /// correspond to the design of persistent origin trials. See also:
+  /// https://github.com/cfredric/storage-access-headers
+  /// ALLOW: storage access request headers will be attached to cross-site
+  ///        requests, and url requests will look for response headers from
+  ///        origins to retry a request or load with storage access.
+  /// BLOCK (default): no effect.
+  CEF_CONTENT_SETTING_TYPE_STORAGE_ACCESS_HEADER_ORIGIN_TRIAL,
+
+  /// Whether or not sites can request Hand Tracking data within WebXR Sessions.
+  CEF_CONTENT_SETTING_TYPE_HAND_TRACKING,
+
+  /// Website setting to indicate whether user has opted in to allow web apps to
+  /// install other web apps.
+  CEF_CONTENT_SETTING_TYPE_WEB_APP_INSTALLATION,
+
+  /// Content settings for private network access in the context of the
+  /// Direct Sockets API.
+  CEF_CONTENT_SETTING_TYPE_DIRECT_SOCKETS_PRIVATE_NETWORK_ACCESS,
 } cef_content_setting_types_t;
 
 ///

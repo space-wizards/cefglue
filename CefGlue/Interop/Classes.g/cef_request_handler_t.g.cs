@@ -20,7 +20,9 @@ namespace Xilium.CefGlue.Interop
         internal delegate* unmanaged<cef_request_handler_t*, cef_browser_t*, CefErrorCode, cef_string_t*, cef_sslinfo_t*, cef_callback_t*, int> _on_certificate_error;
         internal delegate* unmanaged<cef_request_handler_t*, cef_browser_t*, int, cef_string_t*, int, UIntPtr, cef_x509certificate_t**, cef_select_client_certificate_callback_t*, int> _on_select_client_certificate;
         internal delegate* unmanaged<cef_request_handler_t*, cef_browser_t*, void> _on_render_view_ready;
-        internal delegate* unmanaged<cef_request_handler_t*, cef_browser_t*, CefTerminationStatus, void> _on_render_process_terminated;
+        internal delegate* unmanaged<cef_request_handler_t*, cef_browser_t*, cef_unresponsive_process_callback_t*, int> _on_render_process_unresponsive;
+        internal delegate* unmanaged<cef_request_handler_t*, cef_browser_t*, void> _on_render_process_responsive;
+        internal delegate* unmanaged<cef_request_handler_t*, cef_browser_t*, CefTerminationStatus, int, cef_string_t*, void> _on_render_process_terminated;
         internal delegate* unmanaged<cef_request_handler_t*, cef_browser_t*, void> _on_document_available_in_main_frame;
         
         internal GCHandle _obj;
@@ -103,10 +105,24 @@ namespace Xilium.CefGlue.Interop
         }
         
         [UnmanagedCallersOnly]
-        public static void on_render_process_terminated(cef_request_handler_t* self, cef_browser_t* browser, CefTerminationStatus status)
+        public static int on_render_process_unresponsive(cef_request_handler_t* self, cef_browser_t* browser, cef_unresponsive_process_callback_t* callback)
         {
             var obj = (CefRequestHandler)self->_obj.Target;
-            obj.on_render_process_terminated(self, browser, status);
+            return obj.on_render_process_unresponsive(self, browser, callback);
+        }
+        
+        [UnmanagedCallersOnly]
+        public static void on_render_process_responsive(cef_request_handler_t* self, cef_browser_t* browser)
+        {
+            var obj = (CefRequestHandler)self->_obj.Target;
+            obj.on_render_process_responsive(self, browser);
+        }
+        
+        [UnmanagedCallersOnly]
+        public static void on_render_process_terminated(cef_request_handler_t* self, cef_browser_t* browser, CefTerminationStatus status, int error_code, cef_string_t* error_string)
+        {
+            var obj = (CefRequestHandler)self->_obj.Target;
+            obj.on_render_process_terminated(self, browser, status, error_code, error_string);
         }
         
         [UnmanagedCallersOnly]
@@ -133,6 +149,8 @@ namespace Xilium.CefGlue.Interop
             ptr->_on_certificate_error = &on_certificate_error;
             ptr->_on_select_client_certificate = &on_select_client_certificate;
             ptr->_on_render_view_ready = &on_render_view_ready;
+            ptr->_on_render_process_unresponsive = &on_render_process_unresponsive;
+            ptr->_on_render_process_responsive = &on_render_process_responsive;
             ptr->_on_render_process_terminated = &on_render_process_terminated;
             ptr->_on_document_available_in_main_frame = &on_document_available_in_main_frame;
             return ptr;

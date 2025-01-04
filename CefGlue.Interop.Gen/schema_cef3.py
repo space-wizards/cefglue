@@ -144,10 +144,6 @@ classdef = {
 	'CefWaitableEvent': { 'role': ROLE_PROXY },
     # 59
     'CefAccessibilityHandler': { 'role': ROLE_HANDLER },
-    # 62
-    'CefExtension': { 'role': ROLE_PROXY },
-    'CefExtensionHandler': { 'role': ROLE_HANDLER, 'reversible': True },
-    'CefGetExtensionResourceCallback': { 'role': ROLE_PROXY },
     # 63
     'CefServer': { 'role': ROLE_PROXY },
     'CefServerHandler': { 'role': ROLE_HANDLER },
@@ -185,4 +181,7 @@ classdef = {
     # 108
     'CefPreferenceRegistrar': { 'role': ROLE_PROXY },
     'CefPreferenceManager': { 'role': ROLE_PROXY, 'abstract': True },
+    # Idk what the above numbers mean. Versioning?
+    'CefTaskManager': { 'role': ROLE_PROXY },
+    'CefUnresponsiveProcessCallback': { 'role': ROLE_PROXY },
     }

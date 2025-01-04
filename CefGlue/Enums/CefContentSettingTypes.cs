@@ -8,7 +8,7 @@ namespace Xilium.CefGlue
 
     /// <summary>
     /// Supported content setting types. Some types are platform-specific or only
-    /// supported with the Chrome runtime. Should be kept in sync with Chromium's
+    /// supported with Chrome style. Should be kept in sync with Chromium's
     /// ContentSettingsType type.
     /// </summary>
     public enum CefContentSettingTypes
@@ -91,7 +91,7 @@ namespace Xilium.CefGlue
         /// permission to respond to accessibility events, which can be used to
         /// provide a custom accessibility experience. Requires explicit user consent
         /// because some users may not want sites to know they're using assistive
-        /// technology.
+        /// technology. Deprecated in M131.
         AccessibilityEvents,
 
         /// Used to store whether to allow a website to install a payment handler.
@@ -223,8 +223,7 @@ namespace Xilium.CefGlue
         /// use by the File System Access API.
         FileSystemLastPickedDirectory,
 
-        /// Controls access to the getDisplayMedia API when {preferCurrentTab: true}
-        /// is specified.
+        /// Controls access to the getDisplayMedia API
         DisplayCapture,
 
         /// Website setting to store permissions metadata granted to paths on the
@@ -257,7 +256,7 @@ namespace Xilium.CefGlue
         /// a specified account. When this is present it allows access to session
         /// management capabilities between the sites. This setting is associated
         /// with the relying party's origin.
-        FederatedIdentityActiveSession,
+        DeprecatedFederatedIdentityActiveSession,
 
         /// Setting to indicate whether Chrome should automatically apply darkening to
         /// web content.
@@ -330,16 +329,25 @@ namespace Xilium.CefGlue
         /// Stores per origin metadata for cookie controls.
         CookieControlsMetadata,
 
-        /// Content Setting for 3PC accesses granted via 3PC deprecation trial.
-        TpcdSupport,
-
-        /// Content setting used to indicate whether entering picture-in-picture
-        /// automatically should be enabled.
-        AutoPictureInPicture,
+        /// Content Setting for temporary 3PC accesses granted by user behavior
+        /// heuristics.
+        TpcdHeuristicsGrants,
 
         /// Content Setting for 3PC accesses granted by metadata delivered via the
         /// component updater service. This type will only be used when
         /// `net::features::kTpcdMetadataGrants` is enabled.
         TpcdMetadataGrants,
+
+        TpcdTrial,
+
+        TopLevelTpcdTrial,
+
+        TopLevelTpcdOriginTrial,
+
+        AutoPictureInPicture,
+
+        FileSystemAccessExtendedPermission,
+
+        // Nevermind I ain't bothering to fill the rest of this out. Who even needs this?
     }
 }

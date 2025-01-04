@@ -25,6 +25,7 @@ namespace Xilium.CefGlue.Interop
         public cef_string_t header_template;
         public cef_string_t footer_template;
         public int generate_tagged_pdf;
+        public int generate_document_outline;
 
         internal static void Clear(cef_pdf_print_settings_t* ptr)
         {

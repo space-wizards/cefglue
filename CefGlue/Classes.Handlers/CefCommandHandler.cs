@@ -28,7 +28,7 @@
         /// intended command target. Return true if the command was handled or false
         /// for the default implementation. For context menu commands this will be
         /// called after CefContextMenuHandler::OnContextMenuCommand. Only used with
-        /// the Chrome runtime.
+        /// Chrome style.
         /// </summary>
         protected abstract bool OnChromeCommand(CefBrowser browser, int commandId, CefWindowOpenDisposition disposition);
 
@@ -44,8 +44,7 @@
         /// <summary>
         /// Called to check if a Chrome app menu item should be visible. Values for
         /// |command_id| can be found in the cef_command_ids.h file. Only called for
-        /// menu items that would be visible by default. Only used with the Chrome
-        /// runtime.
+        /// menu items that would be visible by default. Only used with Chrome style.
         /// </summary>
         protected virtual bool IsChromeAppMenuItemVisible(CefBrowser browser, int commandId)
             => true;
@@ -62,8 +61,7 @@
         /// <summary>
         /// Called to check if a Chrome app menu item should be enabled. Values for
         /// |command_id| can be found in the cef_command_ids.h file. Only called for
-        /// menu items that would be enabled by default. Only used with the Chrome
-        /// runtime.
+        /// menu items that would be enabled by default. Only used with Chrome style.
         /// </summary>
         protected virtual bool IsChromeAppMenuItemEnabled(CefBrowser browser, int commandId)
             => true;
@@ -79,7 +77,7 @@
         /// <summary>
         /// Called during browser creation to check if a Chrome page action icon
         /// should be visible. Only called for icons that would be visible by default.
-        /// Only used with the Chrome runtime.
+        /// Only used with Chrome style.
         /// </summary>
         protected virtual bool IsChromePageActionIconVisible(CefChromePageActionIconType iconType)
             => true;
@@ -95,7 +93,7 @@
         /// <summary>
         /// Called during browser creation to check if a Chrome toolbar button
         /// should be visible. Only called for buttons that would be visible by
-        /// default. Only used with the Chrome runtime.
+        /// default. Only used with Chrome style.
         /// </summary>
         protected virtual bool IsChromeToolbarButtonVisible(CefChromeToolbarButtonType buttonType)
             => true;

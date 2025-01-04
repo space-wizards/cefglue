@@ -62,6 +62,14 @@
             cef_frame_t.paste(_self);
         }
 
+        ///
+        /// Execute paste and match style in this frame.
+        ///
+        public void PasteAndMatchStyle()
+        {
+            cef_frame_t.paste_and_match_style(_self);
+        }
+
         /// <summary>
         /// Execute delete in this frame.
         /// </summary>
@@ -189,9 +197,13 @@
         /// Returns the globally unique identifier for this frame or &lt; 0 if the
         /// underlying frame does not yet exist.
         /// </summary>
-        public long Identifier
+        public string Identifier
         {
-            get { return cef_frame_t.get_identifier(_self); }
+            get
+            {
+                var n_result = cef_frame_t.get_identifier(_self);
+                return cef_string_userfree.ToString(n_result);
+            }
         }
 
         /// <summary>

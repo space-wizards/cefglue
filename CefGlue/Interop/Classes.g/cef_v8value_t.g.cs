@@ -48,7 +48,7 @@ namespace Xilium.CefGlue.Interop
         internal delegate* unmanaged<cef_v8value_t*, int, cef_v8value_t*> _get_value_byindex;
         internal delegate* unmanaged<cef_v8value_t*, cef_string_t*, cef_v8value_t*, CefV8PropertyAttribute, int> _set_value_bykey;
         internal delegate* unmanaged<cef_v8value_t*, int, cef_v8value_t*, int> _set_value_byindex;
-        internal delegate* unmanaged<cef_v8value_t*, cef_string_t*, CefV8AccessControl, CefV8PropertyAttribute, int> _set_value_byaccessor;
+        internal delegate* unmanaged<cef_v8value_t*, cef_string_t*, CefV8PropertyAttribute, int> _set_value_byaccessor;
         internal delegate* unmanaged<cef_v8value_t*, cef_string_list*, int> _get_keys;
         internal delegate* unmanaged<cef_v8value_t*, cef_base_ref_counted_t*, int> _set_user_data;
         internal delegate* unmanaged<cef_v8value_t*, cef_base_ref_counted_t*> _get_user_data;
@@ -109,6 +109,10 @@ namespace Xilium.CefGlue.Interop
         // CreateArrayBuffer
         [DllImport(libcef.DllName, EntryPoint = "cef_v8value_create_array_buffer", CallingConvention = libcef.CEF_CALL)]
         public static extern cef_v8value_t* create_array_buffer(void* buffer, UIntPtr length, cef_v8array_buffer_release_callback_t* release_callback);
+        
+        // CreateArrayBufferWithCopy
+        [DllImport(libcef.DllName, EntryPoint = "cef_v8value_create_array_buffer_with_copy", CallingConvention = libcef.CEF_CALL)]
+        public static extern cef_v8value_t* create_array_buffer_with_copy(void* buffer, UIntPtr length);
         
         // CreateFunction
         [DllImport(libcef.DllName, EntryPoint = "cef_v8value_create_function", CallingConvention = libcef.CEF_CALL)]
@@ -393,9 +397,9 @@ namespace Xilium.CefGlue.Interop
         
         // SetValue
         
-        public static int set_value_byaccessor(cef_v8value_t* self, cef_string_t* key, CefV8AccessControl settings, CefV8PropertyAttribute attribute)
+        public static int set_value_byaccessor(cef_v8value_t* self, cef_string_t* key, CefV8PropertyAttribute attribute)
         {
-            return self->_set_value_byaccessor(self, key, settings, attribute);
+            return self->_set_value_byaccessor(self, key, attribute);
         }
         
         // GetKeys

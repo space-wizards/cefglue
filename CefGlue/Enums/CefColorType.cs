@@ -1,5 +1,5 @@
 ﻿//
-// This file manually written from cef/include/internal/cef_types.h.
+// This file manually written from cef/include/internal/cef_types_color.h.
 // C API name: cef_color_type_t.
 //
 namespace Xilium.CefGlue

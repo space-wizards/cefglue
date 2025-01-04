@@ -76,6 +76,13 @@
             }
         }
 
+        /// <summary>
+        /// Returns the browser (if any) with the specified identifier.
+        /// </summary>
+        static CefBrowser GetBrowserByIdentifier(int browserId)
+        {
+            return CefBrowser.FromNative(cef_browser_host_t.get_browser_by_identifier(browserId));
+        }
 
         /// <summary>
         /// Returns the hosted browser object.
@@ -85,34 +92,51 @@
             return CefBrowser.FromNative(cef_browser_host_t.get_browser(_self));
         }
 
-        /// <summary>
-        /// Request that the browser close. The JavaScript 'onbeforeunload' event will
-        /// be fired. If |force_close| is false the event handler, if any, will be
-        /// allowed to prompt the user and the user can optionally cancel the close.
-        /// If |force_close| is true the prompt will not be displayed and the close
-        /// will proceed. Results in a call to CefLifeSpanHandler::DoClose() if the
-        /// event handler allows the close or if |force_close| is true. See
-        /// CefLifeSpanHandler::DoClose() documentation for additional usage
-        /// information.
-        /// </summary>
+        ///
+        /// Request that the browser close. Closing a browser is a multi-stage process
+        /// that may complete either synchronously or asynchronously, and involves
+        /// callbacks such as CefLifeSpanHandler::DoClose (Alloy style only),
+        /// CefLifeSpanHandler::OnBeforeClose, and a top-level window close handler
+        /// such as CefWindowDelegate::CanClose (or platform-specific equivalent). In
+        /// some cases a close request may be delayed or canceled by the user. Using
+        /// TryCloseBrowser() instead of CloseBrowser() is recommended for most use
+        /// cases. See CefLifeSpanHandler::DoClose() documentation for detailed usage
+        /// and examples.
+        ///
+        /// If |force_close| is false then JavaScript unload handlers, if any, may be
+        /// fired and the close may be delayed or canceled by the user. If
+        /// |force_close| is true then the user will not be prompted and the close
+        /// will proceed immediately (possibly asynchronously). If browser close is
+        /// delayed and not canceled the default behavior is to call the top-level
+        /// window close handler once the browser is ready to be closed. This default
+        /// behavior can be changed for Alloy style browsers by implementing
+        /// CefLifeSpanHandler::DoClose(). IsReadyToBeClosed() can be used to detect
+        /// mandatory browser close events when customizing close behavior on the
+        /// browser process UI thread.
+        ///
         public void CloseBrowser(bool forceClose = false)
         {
             cef_browser_host_t.close_browser(_self, forceClose ? 1 : 0);
         }
 
         /// <summary>
-        /// Helper for closing a browser. Call this method from the top-level window
-        /// close handler (if any). Internally this calls CloseBrowser(false) if the
-        /// close has not yet been initiated. This method returns false while the
-        /// close is pending and true after the close has completed. See
-        /// CloseBrowser() and CefLifeSpanHandler::DoClose() documentation for
-        /// additional usage information. This method must be called on the browser
-        /// process UI thread.
+        /// Helper for closing a browser. This is similar in behavior to
+        /// CLoseBrowser(false) but returns a boolean to reflect the immediate close
+        /// status. Call this method from a top-level window close handler such as
+        /// CefWindowDelegate::CanClose (or platform-specific equivalent) to request
+        /// that the browser close, and return the result to indicate if the window
+        /// close should proceed. Returns false if the close will be delayed
+        /// (JavaScript unload handlers triggered but still pending) or true if the
+        /// close will proceed immediately (possibly asynchronously). See
+        /// CloseBrowser() documentation for additional usage information. This method
+        /// must be called on the browser process UI thread.
         /// </summary>
         public bool TryCloseBrowser()
         {
             return cef_browser_host_t.try_close_browser(_self) != 0;
         }
+
+        public bool IsReadyToBeClosed => cef_browser_host_t.is_ready_to_be_closed(_self) != 0;
 
         /// <summary>
         /// Set whether the browser is focused.
@@ -143,6 +167,8 @@
         {
             return cef_browser_host_t.get_opener_window_handle(_self);
         }
+
+        public int OpenerIdentifier => cef_browser_host_t.get_opener_identifier(_self);
 
         /// <summary>
         /// Returns true if this browser is wrapped in a CefBrowserView.
@@ -846,29 +872,6 @@
         }
 
         /// <summary>
-        /// Returns the extension hosted in this browser or NULL if no extension is
-        /// hosted. See CefRequestContext::LoadExtension for details.
-        /// </summary>
-        public CefExtension GetExtension()
-        {
-            var nExtension = cef_browser_host_t.get_extension(_self);
-            return CefExtension.FromNativeOrNull(nExtension);
-        }
-
-        /// <summary>
-        /// Returns true if this browser is hosting an extension background script.
-        /// Background hosts do not have a window and are not displayable. See
-        /// CefRequestContext::LoadExtension for details.
-        /// </summary>
-        public bool IsBackgroundHost
-        {
-            get
-            {
-                return cef_browser_host_t.is_background_host(_self) != 0;
-            }
-        }
-
-        /// <summary>
         /// Set whether the browser's audio is muted.
         /// </summary>
         public void SetAudioMuted(bool value)
@@ -887,5 +890,9 @@
                 return cef_browser_host_t.is_audio_muted(_self) != 0;
             }
         }
+
+        public bool IsRenderProcessUnresponsive => cef_browser_host_t.is_render_process_unresponsive(_self) != 0;
+
+        public CefRuntimeStyle RuntimeStyle => cef_browser_host_t.get_runtime_style(_self);
     }
 }

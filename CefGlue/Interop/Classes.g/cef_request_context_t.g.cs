@@ -30,16 +30,15 @@ namespace Xilium.CefGlue.Interop
         internal delegate* unmanaged<cef_request_context_t*, cef_completion_callback_t*, void> _clear_http_auth_credentials;
         internal delegate* unmanaged<cef_request_context_t*, cef_completion_callback_t*, void> _close_all_connections;
         internal delegate* unmanaged<cef_request_context_t*, cef_string_t*, cef_resolve_callback_t*, void> _resolve_host;
-        internal delegate* unmanaged<cef_request_context_t*, cef_string_t*, cef_dictionary_value_t*, cef_extension_handler_t*, void> _load_extension;
-        internal delegate* unmanaged<cef_request_context_t*, cef_string_t*, int> _did_load_extension;
-        internal delegate* unmanaged<cef_request_context_t*, cef_string_t*, int> _has_extension;
-        internal delegate* unmanaged<cef_request_context_t*, cef_string_list*, int> _get_extensions;
-        internal delegate* unmanaged<cef_request_context_t*, cef_string_t*, cef_extension_t*> _get_extension;
         internal delegate* unmanaged<cef_request_context_t*, cef_completion_callback_t*, cef_media_router_t*> _get_media_router;
         internal delegate* unmanaged<cef_request_context_t*, cef_string_t*, cef_string_t*, CefContentSettingTypes, cef_value_t*> _get_website_setting;
         internal delegate* unmanaged<cef_request_context_t*, cef_string_t*, cef_string_t*, CefContentSettingTypes, cef_value_t*, void> _set_website_setting;
         internal delegate* unmanaged<cef_request_context_t*, cef_string_t*, cef_string_t*, CefContentSettingTypes, CefContentSettingValues> _get_content_setting;
         internal delegate* unmanaged<cef_request_context_t*, cef_string_t*, cef_string_t*, CefContentSettingTypes, CefContentSettingValues, void> _set_content_setting;
+        internal delegate* unmanaged<cef_request_context_t*, CefColorVariant, uint, void> _set_chrome_color_scheme;
+        internal delegate* unmanaged<cef_request_context_t*, CefColorVariant> _get_chrome_color_scheme_mode;
+        internal delegate* unmanaged<cef_request_context_t*, uint> _get_chrome_color_scheme_color;
+        internal delegate* unmanaged<cef_request_context_t*, CefColorVariant> _get_chrome_color_scheme_variant;
         
         // GetGlobalContext
         [DllImport(libcef.DllName, EntryPoint = "cef_request_context_get_global_context", CallingConvention = libcef.CEF_CALL)]
@@ -200,41 +199,6 @@ namespace Xilium.CefGlue.Interop
             self->_resolve_host(self, origin, callback);
         }
         
-        // LoadExtension
-        
-        public static void load_extension(cef_request_context_t* self, cef_string_t* root_directory, cef_dictionary_value_t* manifest, cef_extension_handler_t* handler)
-        {
-            self->_load_extension(self, root_directory, manifest, handler);
-        }
-        
-        // DidLoadExtension
-        
-        public static int did_load_extension(cef_request_context_t* self, cef_string_t* extension_id)
-        {
-            return self->_did_load_extension(self, extension_id);
-        }
-        
-        // HasExtension
-        
-        public static int has_extension(cef_request_context_t* self, cef_string_t* extension_id)
-        {
-            return self->_has_extension(self, extension_id);
-        }
-        
-        // GetExtensions
-        
-        public static int get_extensions(cef_request_context_t* self, cef_string_list* extension_ids)
-        {
-            return self->_get_extensions(self, extension_ids);
-        }
-        
-        // GetExtension
-        
-        public static cef_extension_t* get_extension(cef_request_context_t* self, cef_string_t* extension_id)
-        {
-            return self->_get_extension(self, extension_id);
-        }
-        
         // GetMediaRouter
         
         public static cef_media_router_t* get_media_router(cef_request_context_t* self, cef_completion_callback_t* callback)
@@ -268,6 +232,34 @@ namespace Xilium.CefGlue.Interop
         public static void set_content_setting(cef_request_context_t* self, cef_string_t* requesting_url, cef_string_t* top_level_url, CefContentSettingTypes content_type, CefContentSettingValues value)
         {
             self->_set_content_setting(self, requesting_url, top_level_url, content_type, value);
+        }
+        
+        // SetChromeColorScheme
+        
+        public static void set_chrome_color_scheme(cef_request_context_t* self, CefColorVariant variant, uint user_color)
+        {
+            self->_set_chrome_color_scheme(self, variant, user_color);
+        }
+        
+        // GetChromeColorSchemeMode
+        
+        public static CefColorVariant get_chrome_color_scheme_mode(cef_request_context_t* self)
+        {
+            return self->_get_chrome_color_scheme_mode(self);
+        }
+        
+        // GetChromeColorSchemeColor
+        
+        public static uint get_chrome_color_scheme_color(cef_request_context_t* self)
+        {
+            return self->_get_chrome_color_scheme_color(self);
+        }
+        
+        // GetChromeColorSchemeVariant
+        
+        public static CefColorVariant get_chrome_color_scheme_variant(cef_request_context_t* self)
+        {
+            return self->_get_chrome_color_scheme_variant(self);
         }
         
     }

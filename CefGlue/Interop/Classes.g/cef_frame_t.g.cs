@@ -19,6 +19,7 @@ namespace Xilium.CefGlue.Interop
         internal delegate* unmanaged<cef_frame_t*, void> _cut;
         internal delegate* unmanaged<cef_frame_t*, void> _copy;
         internal delegate* unmanaged<cef_frame_t*, void> _paste;
+        internal delegate* unmanaged<cef_frame_t*, void> _paste_and_match_style;
         internal delegate* unmanaged<cef_frame_t*, void> _del;
         internal delegate* unmanaged<cef_frame_t*, void> _select_all;
         internal delegate* unmanaged<cef_frame_t*, void> _view_source;
@@ -30,7 +31,7 @@ namespace Xilium.CefGlue.Interop
         internal delegate* unmanaged<cef_frame_t*, int> _is_main;
         internal delegate* unmanaged<cef_frame_t*, int> _is_focused;
         internal delegate* unmanaged<cef_frame_t*, cef_string_userfree*> _get_name;
-        internal delegate* unmanaged<cef_frame_t*, long> _get_identifier;
+        internal delegate* unmanaged<cef_frame_t*, cef_string_userfree*> _get_identifier;
         internal delegate* unmanaged<cef_frame_t*, cef_frame_t*> _get_parent;
         internal delegate* unmanaged<cef_frame_t*, cef_string_userfree*> _get_url;
         internal delegate* unmanaged<cef_frame_t*, cef_browser_t*> _get_browser;
@@ -107,6 +108,13 @@ namespace Xilium.CefGlue.Interop
         public static void paste(cef_frame_t* self)
         {
             self->_paste(self);
+        }
+        
+        // PasteAndMatchStyle
+        
+        public static void paste_and_match_style(cef_frame_t* self)
+        {
+            self->_paste_and_match_style(self);
         }
         
         // Delete
@@ -188,7 +196,7 @@ namespace Xilium.CefGlue.Interop
         
         // GetIdentifier
         
-        public static long get_identifier(cef_frame_t* self)
+        public static cef_string_userfree* get_identifier(cef_frame_t* self)
         {
             return self->_get_identifier(self);
         }

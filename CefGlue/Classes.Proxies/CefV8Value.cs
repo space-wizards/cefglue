@@ -147,6 +147,8 @@ namespace Xilium.CefGlue
         /// be called from within the scope of a CefRenderProcessHandler, CefV8Handler
         /// or CefV8Accessor callback, or in combination with calling Enter() and
         /// Exit() on a stored CefV8Context reference.
+        ///
+        /// NOTE: Always returns null when V8 sandbox is enabled.
         /// </summary>
         public static CefV8Value CreateArrayBuffer(IntPtr buffer, ulong length, CefV8ArrayBufferReleaseCallback releaseCallback)
         {
@@ -157,6 +159,16 @@ namespace Xilium.CefGlue
                 checked((UIntPtr)length),
                 releaseCallback.ToNative()
                 );
+
+            return CefV8Value.FromNative(n_value);
+        }
+
+        public static CefV8Value CreateArrayBufferWithCopy(IntPtr buffer, ulong length)
+        {
+            var n_value = cef_v8value_t.create_array_buffer_with_copy(
+                (void*)buffer,
+                checked((UIntPtr)length)
+            );
 
             return CefV8Value.FromNative(n_value);
         }
@@ -529,12 +541,12 @@ namespace Xilium.CefGlue
         /// incorrectly or an exception is thrown. For read-only values this method
         /// will return true even though assignment failed.
         /// </summary>
-        public bool SetValue(string key, CefV8AccessControl settings, CefV8PropertyAttribute attribute = CefV8PropertyAttribute.None)
+        public bool SetValue(string key, CefV8PropertyAttribute attribute = CefV8PropertyAttribute.None)
         {
             fixed (char* key_str = key)
             {
                 var n_key = new cef_string_t(key_str, key != null ? key.Length : 0);
-                return cef_v8value_t.set_value_byaccessor(_self, &n_key, settings, attribute) != 0;
+                return cef_v8value_t.set_value_byaccessor(_self, &n_key, attribute) != 0;
             }
         }
 

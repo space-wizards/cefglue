@@ -25,6 +25,7 @@ namespace Xilium.CefGlue.Interop
         public int shared_texture_enabled;
         public int external_begin_frame_enabled;
         public IntPtr window;
+        public CefRuntimeStyle runtime_style;
 
         #region Alloc & Free
         private static int _sizeof;
@@ -61,6 +62,7 @@ namespace Xilium.CefGlue.Interop
         public int shared_texture_enabled;
         public int external_begin_frame_enabled;
         public IntPtr window;
+        public CefRuntimeStyle runtime_style;
 
         #region Alloc & Free
         private static int _sizeof;
@@ -98,6 +100,7 @@ namespace Xilium.CefGlue.Interop
         public int shared_texture_enabled;
         public int external_begin_frame_enabled;
         public IntPtr view;
+        public CefRuntimeStyle runtime_style;
 
         #region Alloc & Free
         private static int _sizeof;

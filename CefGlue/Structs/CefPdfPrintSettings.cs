@@ -100,6 +100,11 @@
         /// </summary>
         public bool GenerateTaggedPdf { get; set; }
 
+        /// <summary>
+        /// Set to true (1) to generate a document outline.
+        /// </summary>
+        public bool GenerateDocumentOutline { get; set; }
+
         internal unsafe cef_pdf_print_settings_t* ToNative()
         {
             var ptr = cef_pdf_print_settings_t.Alloc();
@@ -120,6 +125,7 @@
             cef_string_t.Copy(HeaderTemplate, &ptr->header_template);
             cef_string_t.Copy(FooterTemplate, &ptr->footer_template);
             ptr->generate_tagged_pdf = GenerateTaggedPdf ? 1 : 0;
+            ptr->generate_document_outline = GenerateDocumentOutline ? 1 : 0;
 
             return ptr;
         }

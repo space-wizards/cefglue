@@ -10,52 +10,52 @@ namespace Xilium.CefGlue.Interop
     
     [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
     [SuppressMessage("Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable")]
-    internal unsafe struct cef_get_extension_resource_callback_t
+    internal unsafe struct cef_unresponsive_process_callback_t
     {
         internal cef_base_ref_counted_t _base;
-        internal delegate* unmanaged<cef_get_extension_resource_callback_t*, cef_stream_reader_t*, void> _cont;
-        internal delegate* unmanaged<cef_get_extension_resource_callback_t*, void> _cancel;
+        internal delegate* unmanaged<cef_unresponsive_process_callback_t*, void> _wait;
+        internal delegate* unmanaged<cef_unresponsive_process_callback_t*, void> _terminate;
         
         // AddRef
         
-        public static void add_ref(cef_get_extension_resource_callback_t* self)
+        public static void add_ref(cef_unresponsive_process_callback_t* self)
         {
             self->_base._add_ref((cef_base_ref_counted_t*)self);
         }
         
         // Release
         
-        public static int release(cef_get_extension_resource_callback_t* self)
+        public static int release(cef_unresponsive_process_callback_t* self)
         {
             return self->_base._release((cef_base_ref_counted_t*)self);
         }
         
         // HasOneRef
         
-        public static int has_one_ref(cef_get_extension_resource_callback_t* self)
+        public static int has_one_ref(cef_unresponsive_process_callback_t* self)
         {
             return self->_base._has_one_ref((cef_base_ref_counted_t*)self);
         }
         
         // HasAtLeastOneRef
         
-        public static int has_at_least_one_ref(cef_get_extension_resource_callback_t* self)
+        public static int has_at_least_one_ref(cef_unresponsive_process_callback_t* self)
         {
             return self->_base._has_at_least_one_ref((cef_base_ref_counted_t*)self);
         }
         
-        // Continue
+        // Wait
         
-        public static void cont(cef_get_extension_resource_callback_t* self, cef_stream_reader_t* stream)
+        public static void wait(cef_unresponsive_process_callback_t* self)
         {
-            self->_cont(self, stream);
+            self->_wait(self);
         }
         
-        // Cancel
+        // Terminate
         
-        public static void cancel(cef_get_extension_resource_callback_t* self)
+        public static void terminate(cef_unresponsive_process_callback_t* self)
         {
-            self->_cancel(self);
+            self->_terminate(self);
         }
         
     }

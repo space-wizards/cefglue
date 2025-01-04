@@ -19,6 +19,7 @@ namespace Xilium.CefGlue.Interop
         internal delegate* unmanaged<cef_browser_process_handler_t*, cef_command_line_t*, cef_string_t*, int> _on_already_running_app_relaunch;
         internal delegate* unmanaged<cef_browser_process_handler_t*, long, void> _on_schedule_message_pump_work;
         internal delegate* unmanaged<cef_browser_process_handler_t*, cef_client_t*> _get_default_client;
+        internal delegate* unmanaged<cef_browser_process_handler_t*, cef_request_context_handler_t*> _get_default_request_context_handler;
         
         internal GCHandle _obj;
         
@@ -92,6 +93,13 @@ namespace Xilium.CefGlue.Interop
             return obj.get_default_client(self);
         }
         
+        [UnmanagedCallersOnly]
+        public static cef_request_context_handler_t* get_default_request_context_handler(cef_browser_process_handler_t* self)
+        {
+            var obj = (CefBrowserProcessHandler)self->_obj.Target;
+            return obj.get_default_request_context_handler(self);
+        }
+        
         internal static cef_browser_process_handler_t* Alloc(CefBrowserProcessHandler obj)
         {
             var ptr = (cef_browser_process_handler_t*)NativeMemory.Alloc((UIntPtr)sizeof(cef_browser_process_handler_t));
@@ -108,6 +116,7 @@ namespace Xilium.CefGlue.Interop
             ptr->_on_already_running_app_relaunch = &on_already_running_app_relaunch;
             ptr->_on_schedule_message_pump_work = &on_schedule_message_pump_work;
             ptr->_get_default_client = &get_default_client;
+            ptr->_get_default_request_context_handler = &get_default_request_context_handler;
             return ptr;
         }
         

@@ -145,6 +145,8 @@
         /// </summary>
         public abstract bool ExternalBeginFrameEnabled { get; set; }
 
+        public abstract CefRuntimeStyle RuntimeStyle { get; set; }
+
         public void SetAsChild(IntPtr parentHandle, CefRectangle bounds)
         {
             ThrowIfDisposed();
@@ -185,6 +187,7 @@
         {
             WindowlessRenderingEnabled = true;
             ParentHandle = parentHandle;
+            RuntimeStyle = CefRuntimeStyle.Alloy;
         }
     }
 }

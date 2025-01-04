@@ -95,10 +95,9 @@
 
                     var context = CefV8Context.GetCurrentContext();
                     var contextId = GetIDForContext(context);
-                    var frameId = context.GetFrame().Identifier;
                     var persistent = (persistentVal != null && persistentVal.GetBoolValue());
 
-                    var requestId = _router.SendQuery(context.GetBrowser(), frameId, contextId,
+                    var requestId = _router.SendQuery(context.GetBrowser(), context.GetFrame(), contextId,
                         requestVal.GetStringValue(), persistent, successVal, failureVal);
                     returnValue = CefV8Value.CreateInt(requestId);
                     exception = null;
@@ -121,7 +120,7 @@
                         var contextId = GetIDForContext(context);
                         var frameId = context.GetFrame().Identifier;
 
-                        result = _router.SendCancel(context.GetBrowser(), frameId, contextId, requestId);
+                        result = _router.SendCancel(context.GetBrowser(), context.GetFrame(), contextId, requestId);
                     }
                     returnValue = CefV8Value.CreateBool(result);
                     exception = null;
@@ -277,7 +276,7 @@
             if (contextId != CefMessageRouter.ReservedId)
             {
                 // Cancel all pending requests for the context.
-                SendCancel(browser, frame.Identifier, contextId, CefMessageRouter.ReservedId);
+                SendCancel(browser, frame, contextId, CefMessageRouter.ReservedId);
             }
         }
 
@@ -362,7 +361,7 @@
         }
 
         // Returns the new request ID.
-        private int SendQuery(CefBrowser browser, long frameId, int contextId, string request, bool persistent, CefV8Value successCallback, CefV8Value failureCallback)
+        private int SendQuery(CefBrowser browser, CefFrame frame, int contextId, string request, bool persistent, CefV8Value successCallback, CefV8Value failureCallback)
         {
             Helpers.RequireRendererThread();
 
@@ -378,16 +377,12 @@
 
             var message = CefProcessMessage.Create(_queryMessageName);
             var args = message.Arguments;
-            args.SetInt(0, Helpers.Int64GetLow(frameId));
-            args.SetInt(1, Helpers.Int64GetHigh(frameId));
-            args.SetInt(2, contextId);
-            args.SetInt(3, requestId);
-            args.SetString(4, request);
-            args.SetBool(5, persistent);
+            args.SetInt(0, contextId);
+            args.SetInt(1, requestId);
+            args.SetString(2, request);
+            args.SetBool(3, persistent);
 
-            var frame = browser.GetFrame(frameId);
-            if (frame.IsValid)
-                browser.GetFrame(frameId).SendProcessMessage(CefProcessId.Browser, message);
+            frame.SendProcessMessage(CefProcessId.Browser, message);
 
             args.Dispose();
             message.Dispose();
@@ -398,7 +393,7 @@
         // If |requestId| is kReservedId all requests associated with |contextId|
         // will be canceled, otherwise only the specified |requestId| will be
         // canceled. Returns true if any request was canceled.
-        private bool SendCancel(CefBrowser browser, long frameId, int contextId, int requestId)
+        private bool SendCancel(CefBrowser browser, CefFrame frame, int contextId, int requestId)
         {
             Helpers.RequireRendererThread();
 
@@ -442,7 +437,6 @@
                 args.SetInt(0, contextId);
                 args.SetInt(1, requestId);
 
-                var frame = browser.GetFrame(frameId);
                 if (frame.IsValid)
                     frame.SendProcessMessage(CefProcessId.Browser, message);
 

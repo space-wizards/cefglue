@@ -29,10 +29,10 @@ namespace Xilium.CefGlue.Interop
         internal delegate* unmanaged<cef_browser_t*, int> _has_document;
         internal delegate* unmanaged<cef_browser_t*, cef_frame_t*> _get_main_frame;
         internal delegate* unmanaged<cef_browser_t*, cef_frame_t*> _get_focused_frame;
-        internal delegate* unmanaged<cef_browser_t*, long, cef_frame_t*> _get_frame_byident;
-        internal delegate* unmanaged<cef_browser_t*, cef_string_t*, cef_frame_t*> _get_frame;
+        internal delegate* unmanaged<cef_browser_t*, cef_string_t*, cef_frame_t*> _get_frame_by_identifier;
+        internal delegate* unmanaged<cef_browser_t*, cef_string_t*, cef_frame_t*> _get_frame_by_name;
         internal delegate* unmanaged<cef_browser_t*, UIntPtr> _get_frame_count;
-        internal delegate* unmanaged<cef_browser_t*, UIntPtr*, long*, void> _get_frame_identifiers;
+        internal delegate* unmanaged<cef_browser_t*, cef_string_list*, void> _get_frame_identifiers;
         internal delegate* unmanaged<cef_browser_t*, cef_string_list*, void> _get_frame_names;
         
         // AddRef
@@ -175,18 +175,18 @@ namespace Xilium.CefGlue.Interop
             return self->_get_focused_frame(self);
         }
         
-        // GetFrame
+        // GetFrameByIdentifier
         
-        public static cef_frame_t* get_frame_byident(cef_browser_t* self, long identifier)
+        public static cef_frame_t* get_frame_by_identifier(cef_browser_t* self, cef_string_t* identifier)
         {
-            return self->_get_frame_byident(self, identifier);
+            return self->_get_frame_by_identifier(self, identifier);
         }
         
-        // GetFrame
+        // GetFrameByName
         
-        public static cef_frame_t* get_frame(cef_browser_t* self, cef_string_t* name)
+        public static cef_frame_t* get_frame_by_name(cef_browser_t* self, cef_string_t* name)
         {
-            return self->_get_frame(self, name);
+            return self->_get_frame_by_name(self, name);
         }
         
         // GetFrameCount
@@ -198,9 +198,9 @@ namespace Xilium.CefGlue.Interop
         
         // GetFrameIdentifiers
         
-        public static void get_frame_identifiers(cef_browser_t* self, UIntPtr* identifiersCount, long* identifiers)
+        public static void get_frame_identifiers(cef_browser_t* self, cef_string_list* identifiers)
         {
-            self->_get_frame_identifiers(self, identifiersCount, identifiers);
+            self->_get_frame_identifiers(self, identifiers);
         }
         
         // GetFrameNames

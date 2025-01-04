@@ -181,6 +181,16 @@ namespace Xilium.CefGlue
         /// </summary>
         Layout_5_1_4_Downmix = 33,
 
+        /// <summary>
+        /// Front C, LFE
+        /// </summary>
+        Layout_1_1 = 34,
+
+        /// <summary>
+        /// Front L, Front R, LFE, Back C
+        /// </summary>
+        Layout_3_1_Back = 35,
+
         // Max value, must always equal the largest entry ever logged.
         //CEF_CHANNEL_LAYOUT_MAX = CEF_CHANNEL_LAYOUT_5_1_4_DOWNMIX
     }

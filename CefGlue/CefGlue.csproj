@@ -39,7 +39,6 @@
     <Compile Include="Classes.Handlers\CefDownloadImageCallback.cs" />
     <Compile Include="Classes.Handlers\CefDragHandler.cs" />
     <Compile Include="Classes.Handlers\CefEndTracingCallback.cs" />
-    <Compile Include="Classes.Handlers\CefExtensionHandler.cs" />
     <Compile Include="Classes.Handlers\CefFindHandler.cs" />
     <Compile Include="Classes.Handlers\CefFocusHandler.cs" />
     <Compile Include="Classes.Handlers\CefFrameHandler.cs" />
@@ -71,6 +70,7 @@
     <Compile Include="Classes.Handlers\CefSetCookieCallback.cs" />
     <Compile Include="Classes.Handlers\CefStringVisitor.cs" />
     <Compile Include="Classes.Handlers\CefTask.cs" />
+    <Compile Include="Classes.Handlers\CefUnresponsiveProcessCallback.cs" />
     <Compile Include="Classes.Handlers\CefUrlRequestClient.cs" />
     <Compile Include="Classes.Handlers\CefUserData.cs" />
     <Compile Include="Classes.Handlers\CefV8Accessor.cs" />
@@ -93,10 +93,8 @@
     <Compile Include="Classes.Proxies\CefDownloadItem.cs" />
     <Compile Include="Classes.Proxies\CefDownloadItemCallback.cs" />
     <Compile Include="Classes.Proxies\CefDragData.cs" />
-    <Compile Include="Classes.Proxies\CefExtension.cs" />
     <Compile Include="Classes.Proxies\CefFileDialogCallback.cs" />
     <Compile Include="Classes.Proxies\CefFrame.cs" />
-    <Compile Include="Classes.Proxies\CefGetExtensionResourceCallback.cs" />
     <Compile Include="Classes.Proxies\CefImage.cs" />
     <Compile Include="Classes.Proxies\CefJSDialogCallback.cs" />
     <Compile Include="Classes.Proxies\CefListValue.cs" />
@@ -134,6 +132,7 @@
     <Compile Include="Classes.Proxies\CefSslStatus.cs" />
     <Compile Include="Classes.Proxies\CefStreamReader.cs" />
     <Compile Include="Classes.Proxies\CefStreamWriter.cs" />
+    <Compile Include="Classes.Proxies\CefTaskManager.cs" />
     <Compile Include="Classes.Proxies\CefTaskRunner.cs" />
     <Compile Include="Classes.Proxies\CefUrlRequest.cs" />
     <Compile Include="Classes.Proxies\CefV8Context.cs" />
@@ -153,6 +152,7 @@
     <Compile Include="Enums\CefChromeToolbarType.cs" />
     <Compile Include="Enums\CefColorModel.cs" />
     <Compile Include="Enums\CefColorType.cs" />
+    <Compile Include="Enums\CefColorVariant.cs" />
     <Compile Include="Enums\CefCompositionUnderlineStyle.cs" />
     <Compile Include="Enums\CefContentSettingTypes.cs" />
     <Compile Include="Enums\CefContentSettingValues.cs" />
@@ -187,7 +187,7 @@
     <Compile Include="Enums\CefJsonWriterOptions.cs" />
     <Compile Include="Enums\CefKeyEventType.cs" />
     <Compile Include="Enums\CefLogSeverity.cs" />
-    <Compile Include="Enums\CefMainAxisAlignment.cs" />
+    <Compile Include="Enums\CefAxisAlignment.cs" />
     <Compile Include="Enums\CefMediaAccessPermissionTypes.cs" />
     <Compile Include="Enums\CefMediaRouteConnectionState.cs" />
     <Compile Include="Enums\CefMediaRouteCreateResult.cs" />
@@ -209,13 +209,16 @@
     <Compile Include="Enums\CefReferrerPolicy.cs" />
     <Compile Include="Enums\CefResourceType.cs" />
     <Compile Include="Enums\CefResponseFilterStatus.cs" />
+    <Compile Include="Enums\CefResultcode.cs" />
     <Compile Include="Enums\CefReturnValue.cs" />
+    <Compile Include="Enums\CefRuntimeStyle.cs" />
     <Compile Include="Enums\CefScaleFactor.cs" />
     <Compile Include="Enums\CefSchemeOptions.cs" />
     <Compile Include="Enums\CefSslContentStatus.cs" />
     <Compile Include="Enums\CefSslVersion.cs" />
     <Compile Include="Enums\CefState.cs" />
     <Compile Include="Enums\CefStorageType.cs" />
+    <Compile Include="Enums\CefTaskType.cs" />
     <Compile Include="Enums\CefTerminationStatus.cs" />
     <Compile Include="Enums\CefTextInputMode.cs" />
     <Compile Include="Enums\CefTextStyle.cs" />
@@ -226,7 +229,6 @@
     <Compile Include="Enums\CefUriUnescapeRules.cs" />
     <Compile Include="Enums\CefUrlRequestFlags.cs" />
     <Compile Include="Enums\CefUrlRequestStatus.cs" />
-    <Compile Include="Enums\CefV8AccessControl.cs" />
     <Compile Include="Enums\CefV8PropertyAttribute.cs" />
     <Compile Include="Enums\CefValueType.cs" />
     <Compile Include="Enums\CefWindowOpenDisposition.cs" />
@@ -238,7 +240,9 @@
     <Compile Include="Exceptions\CefVersionMismatchException.cs" />
     <Compile Include="Extensions\CefBrowserHostExtensions.cs" />
     <Compile Include="Interop\libcef.win.cs" />
+    <Compile Include="Interop\Structs\cef_accelerated_paint_info_t.cs" />
     <Compile Include="Interop\Structs\cef_insets_t.cs" />
+    <Compile Include="Interop\Structs\cef_task_info_t.cs" />
     <Compile Include="Interop\Structs\cef_touch_handle_state_t.cs" />
     <Compile Include="Interop\_Platform\NativeMethods.cs" />
     <Compile Include="Interop\_Platform\RECT.cs" />
@@ -285,7 +289,9 @@
     <Compile Include="Platform\Windows\WindowStyles.cs" />
     <Compile Include="Platform\Windows\WindowStylesEx.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="Structs\CefAcceleratedPaintInfo.cs" />
     <Compile Include="Structs\CefAudioParameters.cs" />
+    <Compile Include="Structs\CefTaskInfo.cs" />
     <Compile Include="Structs\CefTime.cs" />
     <Compile Include="Structs\CefBaseTime.cs" />
     <Compile Include="Structs\CefBrowserSettings.cs" />
