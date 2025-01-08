@@ -198,7 +198,8 @@ namespace Xilium.CefGlue
                 }
                 else
                 {
-                    throw ExceptionBuilder.CefRuntimeFailedToInitialize();
+                    var code = libcef.get_exit_code();
+                    throw ExceptionBuilder.CefRuntimeFailedToInitialize(code);
                 }
             }
             finally

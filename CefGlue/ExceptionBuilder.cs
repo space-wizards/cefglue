@@ -36,9 +36,9 @@
             return new InvalidOperationException("CEF runtime is not initialized.");
         }
 
-        public static Exception CefRuntimeFailedToInitialize()
+        public static Exception CefRuntimeFailedToInitialize(int code)
         {
-            return new InvalidOperationException("Failed to initialize CEF runtime.");
+            return new InvalidOperationException($"Failed to initialize CEF runtime, code: {code}");
         }
 
         public static Exception UnsupportedPlatform()
