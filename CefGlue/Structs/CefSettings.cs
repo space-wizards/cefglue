@@ -276,7 +276,7 @@
             {
                 var posix = cef_settings_t_posix.Alloc();
                 posix->disable_signal_handlers = DisableSignalHandlers ? 1 : 0;
-                ptr = &posix->main_settings;
+                ptr = (cef_settings_t*)posix;
             }
             else
             {

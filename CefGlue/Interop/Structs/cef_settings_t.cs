@@ -62,13 +62,41 @@ namespace Xilium.CefGlue.Interop
 
     internal unsafe struct cef_settings_t_posix
     {
-        public cef_settings_t main_settings;
+        public UIntPtr size;
+        public int no_sandbox;
+        public cef_string_t browser_subprocess_path;
+        public cef_string_t framework_dir_path;
+        public cef_string_t main_bundle_path;
+        public int multi_threaded_message_loop;
+        public int external_message_pump;
+        public int windowless_rendering_enabled;
+        public int command_line_args_disabled;
+        public cef_string_t cache_path;
+        public cef_string_t root_cache_path;
+        public int persist_session_cookies;
+        public cef_string_t user_agent;
+        public cef_string_t user_agent_product;
+        public cef_string_t locale;
+        public cef_string_t log_file;
+        public CefLogSeverity log_severity;
+        public CefLogItems log_items;
+        public cef_string_t javascript_flags;
+        public cef_string_t resources_dir_path;
+        public cef_string_t locales_dir_path;
+        public int remote_debugging_port;
+        public int uncaught_exception_stack_size;
+        public uint background_color;
+        public cef_string_t accept_language_list;
+        public cef_string_t cookieable_schemes_list;
+        public int cookieable_schemes_exclude_defaults;
+        public cef_string_t chrome_policy_id;
+        public int chrome_app_icon_id;
         public int disable_signal_handlers;
 
         public static cef_settings_t_posix* Alloc()
         {
             var ptr = (cef_settings_t_posix*)NativeMemory.AllocZeroed((nuint)sizeof(cef_settings_t_posix));
-            ptr->main_settings.size = (nuint)sizeof(cef_settings_t_posix);
+            ptr->size = (nuint)sizeof(cef_settings_t_posix);
             return ptr;
         }
 
