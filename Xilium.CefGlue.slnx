@@ -1,0 +1,19 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="CefGlue.Client/CefGlue.Client.csproj">
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="CefGlue.Demo.WinForms/CefGlue.Demo.WinForms.csproj">
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="CefGlue.Demo/CefGlue.Demo.csproj" />
+  <Project Path="CefGlue.Samples.WpfOsr/CefGlue.Samples.WpfOsr.csproj">
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="CefGlue.WindowsForms/CefGlue.WindowsForms.csproj" />
+  <Project Path="CefGlue.WPF/CefGlue.WPF.csproj" />
+  <Project Path="CefGlue/CefGlue.csproj" />
+</Solution>
