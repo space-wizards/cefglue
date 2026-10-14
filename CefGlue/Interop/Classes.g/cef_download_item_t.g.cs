@@ -18,6 +18,7 @@ namespace Xilium.CefGlue.Interop
         internal delegate* unmanaged<cef_download_item_t*, int> _is_complete;
         internal delegate* unmanaged<cef_download_item_t*, int> _is_canceled;
         internal delegate* unmanaged<cef_download_item_t*, int> _is_interrupted;
+        internal delegate* unmanaged<cef_download_item_t*, int> _is_paused;
         internal delegate* unmanaged<cef_download_item_t*, CefDownloadInterruptReason> _get_interrupt_reason;
         internal delegate* unmanaged<cef_download_item_t*, long> _get_current_speed;
         internal delegate* unmanaged<cef_download_item_t*, int> _get_percent_complete;
@@ -94,6 +95,13 @@ namespace Xilium.CefGlue.Interop
         public static int is_interrupted(cef_download_item_t* self)
         {
             return self->_is_interrupted(self);
+        }
+        
+        // IsPaused
+        
+        public static int is_paused(cef_download_item_t* self)
+        {
+            return self->_is_paused(self);
         }
         
         // GetInterruptReason

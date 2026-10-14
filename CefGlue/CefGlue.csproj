@@ -26,6 +26,7 @@
     <Compile Include="Classes.Handlers\CefBrowserProcessHandler.cs" />
     <Compile Include="Classes.Handlers\CefClient.cs" />
     <Compile Include="Classes.Handlers\CefCommandHandler.cs" />
+    <Compile Include="Classes.Handlers\CefComponentUpdateCallback.cs" />
     <Compile Include="Classes.Handlers\CefCompletionCallback.cs" />
     <Compile Include="Classes.Handlers\CefContextMenuHandler.cs" />
     <Compile Include="Classes.Handlers\CefCookieAccessFilter.cs" />
@@ -98,6 +99,8 @@
     <Compile Include="Classes.Proxies\CefFileDialogCallback.cs" />
     <Compile Include="Classes.Proxies\CefFrame.cs" />
     <Compile Include="Classes.Proxies\CefImage.cs" />
+    <Compile Include="Classes.Proxies\CefComponent.cs" />
+    <Compile Include="Classes.Proxies\CefComponentUpdater.cs" />
     <Compile Include="Classes.Proxies\CefJSDialogCallback.cs" />
     <Compile Include="Classes.Proxies\CefListValue.cs" />
     <Compile Include="Classes.Proxies\CefMediaAccessCallback.cs" />
@@ -141,6 +144,7 @@
     <Compile Include="Classes.Proxies\CefV8Exception.cs" />
     <Compile Include="Classes.Proxies\CefV8StackFrame.cs" />
     <Compile Include="Classes.Proxies\CefV8StackTrace.cs" />
+    <Compile Include="Classes.Proxies\CefV8BackingStore.cs" />
     <Compile Include="Classes.Proxies\CefV8Value.cs" />
     <Compile Include="Classes.Proxies\CefValue.cs" />
     <Compile Include="Classes.Proxies\CefX509Certificate.cs" />
@@ -155,6 +159,9 @@
     <Compile Include="Enums\CefColorModel.cs" />
     <Compile Include="Enums\CefColorType.cs" />
     <Compile Include="Enums\CefColorVariant.cs" />
+    <Compile Include="Enums\CefComponentState.cs" />
+    <Compile Include="Enums\CefComponentUpdateError.cs" />
+    <Compile Include="Enums\CefComponentUpdatePriority.cs" />
     <Compile Include="Enums\CefCompositionUnderlineStyle.cs" />
     <Compile Include="Enums\CefContentSettingTypes.cs" />
     <Compile Include="Enums\CefContentSettingValues.cs" />

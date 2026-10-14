@@ -127,6 +127,9 @@ classdef = {
     'CefResponseFilter': { 'role': ROLE_HANDLER, 'autodispose': True },
     # 2623
     'CefResolveCallback': { 'role': ROLE_HANDLER },
+    'CefComponentUpdateCallback': { 'role': ROLE_HANDLER },
+    'CefComponent': { 'role': ROLE_PROXY },
+    'CefComponentUpdater': { 'role': ROLE_PROXY },
     # 51 (without views)
 	'CefDownloadImageCallback': { 'role': ROLE_HANDLER },
 	'CefImage': { 'role': ROLE_PROXY },
@@ -186,4 +189,5 @@ classdef = {
     'CefUnresponsiveProcessCallback': { 'role': ROLE_PROXY },
     'CefPreferenceObserver': { 'role': ROLE_HANDLER },
     'CefSettingObserver': { 'role': ROLE_HANDLER },
+    'CefV8BackingStore': { 'role': ROLE_PROXY },
     }

@@ -1,4 +1,4 @@
-// Copyright (c) 2025 Marshall A. Greenblatt. All rights reserved.
+// Copyright (c) 2026 Marshall A. Greenblatt. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -35,18 +35,20 @@
 #ifndef CEF_INCLUDE_CEF_VERSION_H_
 #define CEF_INCLUDE_CEF_VERSION_H_
 
-#define CEF_VERSION "141.0.11+g7e73ac4+chromium-141.0.7390.123"
-#define CEF_VERSION_MAJOR 141
+#define CEF_VERSION "154.0.34+g14c5a08+chromium-154.0.8037.98"
+#define CEF_VERSION_MAJOR 154
 #define CEF_VERSION_MINOR 0
-#define CEF_VERSION_PATCH 11
-#define CEF_COMMIT_NUMBER 3299
-#define CEF_COMMIT_HASH "7e73ac45f2979537f677e785383a04998f90d51d"
-#define COPYRIGHT_YEAR 2025
+#define CEF_VERSION_PATCH 34
+#define CEF_COMMIT_NUMBER 3633
+#define CEF_COMMIT_HASH "14c5a089e8452874cb1a556dc3fde26ed2d87723"
+#define COPYRIGHT_YEAR 2026
 
-#define CHROME_VERSION_MAJOR 141
+#define CHROME_VERSION_MAJOR 154
 #define CHROME_VERSION_MINOR 0
-#define CHROME_VERSION_BUILD 7390
-#define CHROME_VERSION_PATCH 123
+#define CHROME_VERSION_BUILD 8037
+#define CHROME_VERSION_PATCH 98
+
+#define CEF_SANDBOX_COMPAT_HASH ""
 
 #define DO_MAKE_STRING(p) #p
 #define MAKE_STRING(p) DO_MAKE_STRING(p)

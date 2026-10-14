@@ -199,6 +199,16 @@ namespace Xilium.CefGlue
         }
 
         /// <summary>
+        /// Clears the HTTP cache. If |callback| is non-NULL it will be executed on
+        /// the UI thread after completion.
+        /// </summary>
+        public void ClearHttpCache(CefCompletionCallback callback)
+        {
+            var n_callback = callback != null ? callback.ToNative() : null;
+            cef_request_context_t.clear_http_cache(GetSelf(), n_callback);
+        }
+
+        /// <summary>
         /// Clears all HTTP authentication credentials that were added as part of
         /// handling GetAuthCredentials. If |callback| is non-NULL it will be executed
         /// on the UI thread after completion.

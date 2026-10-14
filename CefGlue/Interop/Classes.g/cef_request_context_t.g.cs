@@ -28,6 +28,7 @@ namespace Xilium.CefGlue.Interop
         internal delegate* unmanaged<cef_request_context_t*, cef_string_t*, cef_string_t*, cef_scheme_handler_factory_t*, int> _register_scheme_handler_factory;
         internal delegate* unmanaged<cef_request_context_t*, int> _clear_scheme_handler_factories;
         internal delegate* unmanaged<cef_request_context_t*, cef_completion_callback_t*, void> _clear_certificate_exceptions;
+        internal delegate* unmanaged<cef_request_context_t*, cef_completion_callback_t*, void> _clear_http_cache;
         internal delegate* unmanaged<cef_request_context_t*, cef_completion_callback_t*, void> _clear_http_auth_credentials;
         internal delegate* unmanaged<cef_request_context_t*, cef_completion_callback_t*, void> _close_all_connections;
         internal delegate* unmanaged<cef_request_context_t*, cef_string_t*, cef_resolve_callback_t*, void> _resolve_host;
@@ -185,6 +186,13 @@ namespace Xilium.CefGlue.Interop
         public static void clear_certificate_exceptions(cef_request_context_t* self, cef_completion_callback_t* callback)
         {
             self->_clear_certificate_exceptions(self, callback);
+        }
+        
+        // ClearHttpCache
+        
+        public static void clear_http_cache(cef_request_context_t* self, cef_completion_callback_t* callback)
+        {
+            self->_clear_http_cache(self, callback);
         }
         
         // ClearHttpAuthCredentials

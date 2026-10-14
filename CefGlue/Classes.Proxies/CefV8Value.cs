@@ -174,6 +174,22 @@ namespace Xilium.CefGlue
         }
 
         /// <summary>
+        /// Create a new CefV8Value object of type ArrayBuffer from a backing store
+        /// previously created with CefV8BackingStore::Create(). This is a zero-copy
+        /// operation. the ArrayBuffer uses the memory already allocated by the
+        /// backing store. The backing store is consumed and becomes invalid after
+        /// this call.
+        /// </summary>
+        public static CefV8Value CreateArrayBufferFromBackingStore(CefV8BackingStore backingStore)
+        {
+            if (backingStore == null) throw new ArgumentNullException(nameof(backingStore));
+
+            var n_value = cef_v8value_t.create_array_buffer_from_backing_store(backingStore.ToNative());
+
+            return CefV8Value.FromNative(n_value);
+        }
+
+        /// <summary>
         /// Create a new CefV8Value object of type function. This method should only
         /// be called from within the scope of a CefRenderProcessHandler, CefV8Handler
         /// or CefV8Accessor callback, or in combination with calling Enter() and

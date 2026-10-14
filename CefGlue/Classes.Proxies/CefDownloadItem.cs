@@ -51,6 +51,12 @@
             => cef_download_item_t.is_interrupted(_self) != 0;
 
         /// <summary>
+        /// Returns true if the download has been paused.
+        /// </summary>
+        public bool IsPaused
+            => cef_download_item_t.is_paused(_self) != 0;
+
+        /// <summary>
         /// Returns the most recent interrupt reason.
         /// </summary>
         public CefDownloadInterruptReason GetInterruptReason()
