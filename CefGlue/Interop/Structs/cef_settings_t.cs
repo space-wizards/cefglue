@@ -62,6 +62,7 @@ namespace Xilium.CefGlue.Interop
 
     internal unsafe struct cef_settings_t_posix
     {
+#pragma warning disable CS0649 // Fields unused, this is fine.
         public UIntPtr size;
         public int no_sandbox;
         public cef_string_t browser_subprocess_path;
@@ -92,6 +93,7 @@ namespace Xilium.CefGlue.Interop
         public cef_string_t chrome_policy_id;
         public int chrome_app_icon_id;
         public int disable_signal_handlers;
+#pragma warning restore CS0649
 
         public static cef_settings_t_posix* Alloc()
         {
